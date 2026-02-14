@@ -863,7 +863,7 @@ Dalam Layanan "Ganti Oli":
    ↓
 31. Status pesanan berubah menjadi "Dikonfirmasi"
    ↓
-32. User menerima notifikasi (email) bahwa pembayaran dikonfirmasi
+32. User menerima notifikasi bahwa pembayaran dikonfirmasi
    ↓
 33. [Saat jadwal kunjungan tiba] User datang ke bengkel dengan mobilnya
    ↓
@@ -1017,23 +1017,19 @@ Saat User Memilih Jadwal di Keranjang:
 ### 5.1 Technology Stack (Rekomendasi)
 
 **Frontend**:
-- Framework: React.js atau Next.js
-- State Management: Redux atau Context API
+- Framework: Nextjs untuk Frontend & Backend
 - UI Library: Tailwind CSS, Material-UI, atau Ant Design
 - HTTP Client: Axios
 
 **Backend**:
-- Framework: Node.js (Express.js) atau PHP (Laravel)
-- Database: MySQL atau PostgreSQL
-- ORM: Sequelize (Node.js) atau Eloquent (Laravel)
-- Authentication: JWT (JSON Web Token)
+- Framework: Nextjs
+- Database: Supabase
+- Authentication: Supabase
 
 **Additional Tools**:
-- File Upload: Multer atau Cloud Storage (AWS S3, Cloudinary)
+- File Upload: Multer atau Cloud Storage (Supabase)
 - PDF Generation: jsPDF atau PDFKit
 - Payment Gateway (fase 2): Midtrans SDK
-- Email Service: Nodemailer atau SendGrid
-- WhatsApp Notification (fase 2): Twilio atau WA Business API
 
 ### 5.2 Database Schema (High-Level)
 
@@ -1328,8 +1324,7 @@ Saat User Memilih Jadwal di Keranjang:
 - Payment status handling
 
 ### Phase 3: Notifications & Enhancements - 2-3 weeks
-- Email notifications
-- WhatsApp notifications (optional)
+- Dashboard notifications
 - Review & rating system (optional)
 - Promo/discount system (optional)
 - Dashboard analytics & reporting
@@ -1368,7 +1363,7 @@ Saat User Memilih Jadwal di Keranjang:
 **Risk**: User tidak melakukan pembayaran setelah booking
 **Mitigation**:
 - Set expiration time untuk booking (24 jam)
-- Reminder email sebelum expiration
+- Reminder di dashboard sebelum expiration
 - Sistem auto-cancel booking yang expired
 
 **Risk**: Slot booking tidak akurat (estimasi durasi tidak sesuai)
@@ -1379,24 +1374,7 @@ Saat User Memilih Jadwal di Keranjang:
 
 ---
 
-## 10. Future Enhancements (Post-MVP)
-
-1. **Mobile App** (iOS & Android)
-2. **Review & Rating System** untuk layanan
-3. **Loyalty Program** atau poin reward
-4. **Push Notifications** untuk reminder jadwal
-5. **Live Chat Support** antara customer dan admin
-6. **Promo & Discount System** (voucher, referral)
-7. **Service Package/Bundle** (contoh: paket hemat ganti oli + filter)
-8. **Membership/Subscription** untuk customer setia
-9. **Integration dengan Inventory Management System**
-10. **Advanced Analytics & Reporting Dashboard**
-11. **Multi-bengkel Support** (jika bisnis expand ke multiple locations)
-12. **Integration dengan Spare Parts Supplier** (otomatis update stok)
-
----
-
-## 11. Appendix
+# 11. Appendix
 
 ### 11.1 Glossary
 - **Bay**: Area/tempat di bengkel untuk mengerjakan satu mobil
@@ -1405,12 +1383,6 @@ Saat User Memilih Jadwal di Keranjang:
 - **Order**: Pesanan yang dibuat oleh user
 - **Checkout**: Proses finalisasi pesanan dan pembayaran
 - **Admin**: Pengelola bengkel yang menggunakan dashboard admin
-
-### 11.2 References
-- Midtrans Documentation: https://docs.midtrans.com/
-- React Documentation: https://react.dev/
-- Express.js Documentation: https://expressjs.com/
-- Laravel Documentation: https://laravel.com/docs
 
 ---
 
@@ -1426,14 +1398,3 @@ Saat User Memilih Jadwal di Keranjang:
 - [ ] Tech Lead
 - [ ] UI/UX Designer
 - [ ] Stakeholders
-
----
-
-**Notes**:
-Dokumen PRD ini adalah living document dan dapat di-update seiring dengan development process dan feedback dari stakeholders. Semua perubahan harus didokumentasikan dengan version control.
-
-**Next Steps**:
-1. Review PRD dengan tim development
-2. Finalisasi design mockups/wireframes
-3. Setup development environment
-4. Kick-off development Sprint 1
