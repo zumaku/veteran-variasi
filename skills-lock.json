@@ -1,6 +1,11 @@
 {
   "version": 1,
   "skills": {
+    "mysql": {
+      "source": "planetscale/database-skills",
+      "sourceType": "github",
+      "computedHash": "5bf4e44841b184cda17678d6469274b3c691fd3a48604015d46b1f43cd6a6a09"
+    },
     "prisma-cli": {
       "source": "prisma/skills",
       "sourceType": "github",
