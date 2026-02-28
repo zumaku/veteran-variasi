@@ -1,0 +1,124 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum Role {
+  ADMIN
+  CUSTOMER
+}
+
+model User {
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(255)
+  slug          String   @unique @db.VarChar(255)
+  email         String   @unique @db.VarChar(255)
+  password_hash String   @db.VarChar(255)
+  role          Role     @default(CUSTOMER)
+  phone         String?  @db.VarChar(50)
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  cars   Car[]
+  orders Order[]
+
+  @@map("users")
+}
+
+model Car {
+  id           Int      @id @default(autoincrement())
+  userId       Int      @map("user_id")
+  brand        String   @db.VarChar(100)
+  slug         String   @unique @db.VarChar(255)
+  model        String   @db.VarChar(100)
+  year         Int
+  licensePlate String   @map("license_plate") @db.VarChar(50)
+  image        String?  @db.VarChar(255)
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orders Order[]
+
+  @@map("cars")
+}
+
+enum ProductType {
+  ACCESSORY
+  SERVICE
+}
+
+model Product {
+  id          Int         @id @default(autoincrement())
+  name        String      @db.VarChar(255)
+  slug        String      @unique @db.VarChar(255)
+  type        ProductType
+  description String?     @db.Text
+  price       Decimal     @db.Decimal(10, 2)
+  stock       Int?
+
+  orderItems OrderItem[]
+
+  @@map("products")
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  PROCESSING
+  COMPLETED
+  CANCELLED
+}
+
+model Order {
+  id           Int         @id @default(autoincrement())
+  orderNumber  String      @unique @map("order_number") @db.VarChar(50) // External ID like ORD-123
+  userId       Int         @map("user_id")
+  carId        Int         @map("car_id")
+  bookingDate  DateTime    @map("booking_date") @db.Date
+  timeSlot     Int         @map("time_slot") // 1: 09:00-12:00, 2: 12:00-15:00, 3: 15:00-18:00
+  totalAmount  Decimal     @map("total_amount") @db.Decimal(10, 2)
+  status       OrderStatus @default(PENDING)
+  paymentToken String?     @map("payment_token") @db.VarChar(255)
+  expiredAt    DateTime?   @map("expired_at")
+  createdAt    DateTime    @default(now()) @map("created_at")
+
+  user   User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  car    Car         @relation(fields: [carId], references: [id], onDelete: Restrict)
+  items  OrderItem[]
+  review Review?
+
+  // Note: Partial index (status != 'CANCELLED') on (booking_date, time_slot) is omitted
+  // because MySQL does not support partial unique indexes natively. Concurrency should be handled in app logic.
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id             Int     @id @default(autoincrement())
+  orderId        Int     @map("order_id")
+  productId      Int     @map("product_id")
+  quantity       Int
+  priceAtBooking Decimal @map("price_at_booking") @db.Decimal(10, 2)
+
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+  @@map("order_items")
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  orderId   Int      @unique @map("order_id")
+  rating    Int      @db.TinyInt
+  comment   String?  @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@map("reviews")
+}
