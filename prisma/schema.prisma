@@ -60,6 +60,7 @@ model Product {
   description String?     @db.Text
   price       Decimal     @db.Decimal(10, 2)
   stock       Int?
+  image       String?     @db.VarChar(255)
 
   orderItems OrderItem[]
 
@@ -121,4 +122,28 @@ model Review {
   order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
   @@map("reviews")
+}
+
+model Faqs {
+  id          Int      @id @default(autoincrement())
+  question    String   @db.VarChar(255)
+  answer      String   @db.Text
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("faqs")
+}
+
+model Setting {
+  id          Int      @id @default(autoincrement())
+  topProducts Json     @map("top_products") // Array of product ids
+  whyChooseUs Json     @map("why_choose_us") // Array of { title, description }
+  alamat      String   @db.Text
+  jamBuka     String   @map("jam_buka") @db.VarChar(50)
+  jamTutup    String   @map("jam_tutup") @db.VarChar(50)
+  kontak      String   @db.VarChar(100)
+  whatsapp    String   @db.VarChar(50)
+  socialMedia Json     @map("social_media") // Array of { platform, url }
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("settings")
 }

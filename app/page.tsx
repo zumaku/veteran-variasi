@@ -1,65 +1,205 @@
 import Image from "next/image";
+import Link from "next/link";
+import { Check, ChevronRight, MapPin, Clock, Phone, Box } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Footer from "@/components/Footer";
+import TopThreeProducts from "@/features/catalog/components/TopThreeProducts";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
+      {/* Hero Section */}
+      <section className="px-4 h-fit md:h-fit flex flex-col justify-between md:justify-center items-center w-full max-w-[100vw] overflow-x-hidden">
+        <div className="flex flex-col items-center gap-4">
+          <h1 className="pt-12 md:pt-20 text-center text-3xl sm:text-4xl lg:text-6xl font-bold font-montserrat uppercase leading-[1.2] md:leading-[1.1] tracking-tight text-foreground max-w-4xl">
+            Aksesoris Modern Untuk <br className="hidden sm:block" /> Performa
+            Berkendara
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+
+          <Button variant="dark" size="xl" className="mt-4 rounded-full px-8">
+            <Box className="w-5 h-5" />
+            Lihat Koleksi
+          </Button>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        <div className="md:w-full w-xl max-w-5xl mt-32 md:mt-8 md:mt-14 px-2 sm:px-0">
+          <Image
+            src="/hero_image.png"
+            alt="Koleksi Aksesoris Mobil Premium"
+            width={1000}
+            height={500}
+            className="w-full h-auto object-contain"
+            priority
+          />
         </div>
-      </main>
+      </section>
+
+      {/* 3. Services Section */}
+      <TopThreeProducts />
+
+      {/* 4. Why Choose Us Section */}
+      {/* <section id="tentang-kami" className="py-20">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+              <div className="order-2 md:order-1 relative aspect-square md:aspect-[4/5] rounded-2xl bg-muted overflow-hidden">
+                <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
+                  Placeholder Image
+                </div>
+              </div>
+              <div className="order-1 md:order-2 flex flex-col gap-8">
+                <div>
+                  <h2 className="text-3xl md:text-4xl font-bold font-montserrat mb-4">
+                    Mengapa Memilih BengkelAim?
+                  </h2>
+                  <p className="text-muted-foreground">
+                    Kami berkomitmen memberikan kualitas pelayanan terbaik
+                    dengan menggunakan peralatan modern dan ditangani langsung
+                    oleh montir profesional.
+                  </p>
+                </div>
+
+                <div className="flex flex-col gap-6">
+                  {[
+                    "Teknisi Bersertifikat",
+                    "Peralatan Modern & Terkalibrasi",
+                    "Garansi Service 30 Hari",
+                  ].map((feature, i) => (
+                    <div key={i} className="flex gap-4 items-start">
+                      <div className="bg-primary/10 p-2 rounded-md shrink-0">
+                        <Check className="w-6 h-6 text-primary" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-lg mb-1">{feature}</h4>
+                        <p className="text-sm text-muted-foreground">
+                          Layanan kami memastikan detail pengerjaan memenuhi
+                          standar operasional terbaik di kelasnya.
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section> */}
+
+      {/* 5. Location Section */}
+      {/* <section className="bg-secondary text-secondary-foreground py-20 relative overflow-hidden">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+              <div className="flex flex-col gap-8">
+                <div>
+                  <h2 className="text-3xl md:text-4xl font-bold font-montserrat mb-4 text-white">
+                    Kunjungi Bengkel Kami
+                  </h2>
+                  <p className="text-secondary-foreground/70">
+                    Datang dan konsultasikan masalah kendaraan Anda langsung
+                    kepada tim ahli kami di lokasi.
+                  </p>
+                </div>
+
+                <div className="flex flex-col gap-6">
+                  <div className="flex gap-4">
+                    <MapPin className="w-6 h-6 text-primary shrink-0" />
+                    <div>
+                      <h4 className="font-bold mb-1 text-white">Alamat</h4>
+                      <p className="text-sm text-secondary-foreground/70">
+                        Jl. Veteran No. 123, Kota Makmur, Provinsi Maju 12345
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4">
+                    <Clock className="w-6 h-6 text-primary shrink-0" />
+                    <div>
+                      <h4 className="font-bold mb-1 text-white">
+                        Jam Operasional
+                      </h4>
+                      <p className="text-sm text-secondary-foreground/70">
+                        Senin - Sabtu: 08:00 - 17:00 WIB
+                        <br />
+                        Minggu: Tutup
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4">
+                    <Phone className="w-6 h-6 text-primary shrink-0" />
+                    <div>
+                      <h4 className="font-bold mb-1 text-white">Kontak</h4>
+                      <p className="text-sm text-secondary-foreground/70">
+                        (021) 555-0123 / +62 812-3456-7890
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <button className="bg-[#25D366] hover:bg-[#1ebd58] text-white px-6 py-3 rounded-md font-semibold transition-colors inline-flex items-center gap-2">
+                    Chat Whatsapp
+                  </button>
+                </div>
+              </div>
+              <div className="relative aspect-video md:aspect-square bg-secondary-foreground/5 rounded-2xl overflow-hidden border border-secondary-foreground/10 flex items-center justify-center">
+                <span className="text-secondary-foreground/50">
+                  Google Map Placeholder
+                </span>
+              </div>
+            </div>
+          </div>
+        </section> */}
+
+      {/* 6. FAQ Section */}
+      {/* <section id="faq" className="py-24">
+          <div className="container mx-auto px-4 max-w-3xl">
+            <h2 className="text-3xl md:text-4xl font-bold font-montserrat mb-12 text-center">
+              Pertanyaan Umum (FAQ)
+            </h2>
+            <div className="flex flex-col gap-4">
+              {[
+                {
+                  q: "Apakah perlu reservasi sebelum datang?",
+                  a: "Sangat disarankan untuk melakukan reservasi melalui tombol Booking di website kami agar Anda bisa langsung dilayani tanpa antri panjang.",
+                },
+                {
+                  q: "Berapa lama estimasi waktu tune up?",
+                  a: "Umumnya tune up memakan waktu 1-2 jam tergantung kondisi mesin kendaraan Anda.",
+                },
+                {
+                  q: "Apakah suku cadang yang digunakan original?",
+                  a: "Ya, kami hanya menggunakan suku cadang original atau OEM berkualitas yang bergaransi.",
+                },
+              ].map((faq, i) => (
+                <div
+                  key={i}
+                  className="border border-border rounded-lg p-6 bg-muted/20"
+                >
+                  <h4 className="font-bold text-lg mb-2 flex justify-between items-center cursor-pointer">
+                    {faq.q}
+                    <ChevronRight className="w-5 h-5 text-muted-foreground rotate-90" />
+                  </h4>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {faq.a}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section> */}
+
+      {/* 7. CTA Section */}
+      {/* <section className="bg-accent py-20 border-t border-border/50">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold font-montserrat mb-6">
+              Siap Merawat Mobil Kesayangan Anda?
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
+              Daftar sekarang untuk kemudahan pemesanan layanan, riwayat servis
+              yang tercatat, serta berbagai promo menarik khusus member.
+            </p>
+            <button className="bg-primary text-primary-foreground px-8 py-4 rounded-md font-bold text-lg hover:bg-primary-hover shadow-lg shadow-primary/20 transition-all">
+              Daftar Akun Sekarang
+            </button>
+          </div>
+        </section> */}
     </div>
   );
 }
