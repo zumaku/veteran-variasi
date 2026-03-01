@@ -1,9 +1,8 @@
 import { Product } from "@prisma/client";
 import Image from "next/image";
-import { rupiahConverter } from "../lib/rupiah-converter";
+import { rupiahConverter } from "@/features/catalog/lib";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
 
 /**
  * Displays a single product summary in a card layout to attract customers

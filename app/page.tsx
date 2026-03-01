@@ -4,6 +4,7 @@ import { Check, ChevronRight, MapPin, Clock, Phone, Box } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Footer from "@/components/Footer";
 import TopThreeProducts from "@/features/catalog/components/TopThreeProducts";
+import WhyChooseUs from "@/features/homepage/components/WhyChooseUs";
 
 export default function Home() {
   return (
@@ -38,50 +39,35 @@ export default function Home() {
       <TopThreeProducts />
 
       {/* 4. Why Choose Us Section */}
-      {/* <section id="tentang-kami" className="py-20">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-              <div className="order-2 md:order-1 relative aspect-square md:aspect-[4/5] rounded-2xl bg-muted overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
-                  Placeholder Image
-                </div>
+      <section id="tentang-kami" className="py-6">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+            <div className="order-2 md:order-1 relative aspect-square md:aspect-[4/3] rounded-2xl bg-muted overflow-hidden">
+              <Image
+                src="/images/why-choose-us-veteran-variasi.png"
+                alt="Mengapa Memilih Veteran Variasi"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </div>
+            <div className="order-1 md:order-2 flex flex-col gap-8">
+              <div>
+                <h2 className="text-3xl md:text-4xl font-bold font-montserrat mb-4">
+                  Mengapa Memilih Veteran Variasi?
+                </h2>
+                <p className="text-muted-foreground">
+                  Kami berkomitmen memberikan kualitas pelayanan terbaik dengan
+                  menggunakan peralatan modern dan ditangani langsung oleh
+                  montir profesional.
+                </p>
               </div>
-              <div className="order-1 md:order-2 flex flex-col gap-8">
-                <div>
-                  <h2 className="text-3xl md:text-4xl font-bold font-montserrat mb-4">
-                    Mengapa Memilih BengkelAim?
-                  </h2>
-                  <p className="text-muted-foreground">
-                    Kami berkomitmen memberikan kualitas pelayanan terbaik
-                    dengan menggunakan peralatan modern dan ditangani langsung
-                    oleh montir profesional.
-                  </p>
-                </div>
 
-                <div className="flex flex-col gap-6">
-                  {[
-                    "Teknisi Bersertifikat",
-                    "Peralatan Modern & Terkalibrasi",
-                    "Garansi Service 30 Hari",
-                  ].map((feature, i) => (
-                    <div key={i} className="flex gap-4 items-start">
-                      <div className="bg-primary/10 p-2 rounded-md shrink-0">
-                        <Check className="w-6 h-6 text-primary" />
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-lg mb-1">{feature}</h4>
-                        <p className="text-sm text-muted-foreground">
-                          Layanan kami memastikan detail pengerjaan memenuhi
-                          standar operasional terbaik di kelasnya.
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <WhyChooseUs />
             </div>
           </div>
-        </section> */}
+        </div>
+      </section>
 
       {/* 5. Location Section */}
       {/* <section className="bg-secondary text-secondary-foreground py-20 relative overflow-hidden">

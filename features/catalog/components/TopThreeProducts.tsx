@@ -25,10 +25,6 @@ export default async function TopThreeProducts() {
         </div>
 
         <div className="mt-12 flex justify-center">
-          {/* <Link href="/catalog" className="flex items-center gap-2 text-primary-foreground font-semibold hover:text-primary-foreground-hover transition-colors">
-            Lihat Layanan Lainnya
-            <ChevronRight className="w-4 h-4" />
-          </Link> */}
           <Button variant="link" asChild>
             <Link href="/catalog">
               Lihat Layanan Lainnya
