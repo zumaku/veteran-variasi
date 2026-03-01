@@ -64,7 +64,50 @@ async function main() {
     })
     
 
-  // 3. Create Products (Accessories)
+  // 3. Create Categories
+  console.log('Seeding dummy categories...')
+
+  const categoryService = await prisma.category.upsert({
+    where: { slug: 'service' },
+    update: {},
+    create: {
+      name: 'Service',
+      slug: 'service',
+      description: 'Layanan pemasangan dan perawatan rutin bengkel.',
+    },
+  })
+
+  const categoryAudio = await prisma.category.upsert({
+    where: { slug: 'audio' },
+    update: {},
+    create: {
+      name: 'Audio & Video',
+      slug: 'audio',
+      description: 'Aksesoris hiburan dan head unit mobil.',
+    },
+  })
+
+  const categoryEksterior = await prisma.category.upsert({
+    where: { slug: 'eksterior' },
+    update: {},
+    create: {
+      name: 'Eksterior',
+      slug: 'eksterior',
+      description: 'Aksesoris pelindung dan variasi bodi luar.',
+    },
+  })
+
+  const categoryInterior = await prisma.category.upsert({
+    where: { slug: 'interior' },
+    update: {},
+    create: {
+      name: 'Interior',
+      slug: 'interior',
+      description: 'Aksesoris dan variasi kabin mobil.',
+    },
+  })
+
+  // 4. Create Products (Accessories)
   console.log('Seeding dummy products...')
 
   const servisAc = await prisma.product.upsert({
@@ -78,6 +121,9 @@ async function main() {
       price: 250000,
       stock: null, // Service tidak memiliki stok fisik
       image: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80',
+      categories: {
+        connect: [{ id: categoryService.id }]
+      }
     },
   })
 
@@ -93,6 +139,9 @@ async function main() {
       price: 2500000,
       stock: 15,
       image: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80',
+      categories: {
+        connect: [{ id: categoryAudio.id }, { id: categoryInterior.id }]
+      }
     },
   })
 
@@ -108,6 +157,9 @@ async function main() {
       price: 1800000,
       stock: 20,
       image: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80',
+      categories: {
+        connect: [{ id: categoryEksterior.id }]
+      }
     },
   })
 
@@ -123,6 +175,9 @@ async function main() {
       price: 850000,
       stock: 35,
       image: 'https://images.unsplash.com/photo-1601362840469-51e4d8d58785?auto=format&fit=crop&w=800&q=80',
+      categories: {
+        connect: [{ id: categoryInterior.id }]
+      }
     },
   })
 
@@ -138,6 +193,9 @@ async function main() {
       price: 550000,
       stock: 50,
       image: 'https://images.unsplash.com/photo-1601362840468-51e4d8d58785?auto=format&fit=crop&w=800&q=80',
+      categories: {
+        connect: [{ id: categoryEksterior.id }]
+      }
     },
   })
 
@@ -153,6 +211,9 @@ async function main() {
       price: 750000,
       stock: 12,
       image: 'https://images.unsplash.com/photo-1533558701576-23c65e0272fb?auto=format&fit=crop&w=800&q=80',
+      categories: {
+        connect: [{ id: categoryEksterior.id }]
+      }
     },
   })
 
@@ -168,6 +229,9 @@ async function main() {
       price: 1500000,
       stock: 8,
       image: 'https://images.unsplash.com/photo-1580274455191-1c62238fa333?auto=format&fit=crop&w=800&q=80',
+      categories: {
+        connect: [{ id: categoryInterior.id }]
+      }
     },
   })
 
@@ -183,6 +247,9 @@ async function main() {
       price: 250000,
       stock: 40,
       image: 'https://images.unsplash.com/photo-1541443131876-44b03de101c5?auto=format&fit=crop&w=800&q=80',
+      categories: {
+        connect: [{ id: categoryEksterior.id }]
+      }
     },
   })
 
@@ -198,6 +265,9 @@ async function main() {
       price: 600000,
       stock: 25,
       image: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=800&q=80',
+      categories: {
+        connect: [{ id: categoryEksterior.id }]
+      }
     },
   })
 
@@ -213,11 +283,14 @@ async function main() {
       price: 450000,
       stock: 18,
       image: 'https://images.unsplash.com/photo-1533558701576-23c65e0272fb?auto=format&fit=crop&w=800&q=80',
+      categories: {
+        connect: [{ id: categoryEksterior.id }]
+      }
     },
   })
 
 
-  // 4. Create Order & Order Items
+  // 5. Create Order & Order Items
   console.log('Seeding dummy orders...')
 
   const order = await prisma.order.upsert({
@@ -254,77 +327,30 @@ async function main() {
     },
   })
 
-
-  // 5. Create Site Settings
-  // Using findFirst because Settings shouldn't have multiple rows typically
-  console.log('Seeding dummy settings...')
-
-  const existingSetting = await prisma.setting.findFirst()
-  if (!existingSetting) {
-    await prisma.setting.create({
-      data: {
-        topProducts: [servisAc.id, headUnit.id, spoilerWing.id], // Array of product ids stored as JSON
-        whyChooseUs: [
-          {
-            title: "Bebas Antre dengan Booking Pasti",
-            description: "Pesan jadwal online, langsung dikerjakan tanpa antre."
-          },
-          {
-            title: "Harga Transparan & Pasti",
-            description: "Harga tertera sudah termasuk semua biaya pemasangan."
-          },
-          {
-            title: "Variasi & Servis AC Terpadu",
-            description: "Pasang aksesoris dan servis AC dalam satu kunjungan."
-          }
-        ],
-        alamat: "Jl. Veteran Selatan No.354, Mamajang Dalam, Kec. Mamajang, Kota Makassar, Sulawesi Selatan 90132",
-        jamBuka: "09:00",
-        jamTutup: "18:00",
-        kontak: "(0411)0871660",
-        whatsapp: "6281234567890",
-        socialMedia: [
-          {
-            platform: "instagram",
-            url: "https://instagram.com/veteran_variasi"
-          },
-          {
-            platform: "facebook",
-            url: "https://facebook.com/veteranvariasi"
-          }
-        ]
-      }
-    })
-  }
-
   // 6. Create Faqs
   console.log('Seeding dummy faqs...')
 
   const faqs = await prisma.faqs.createMany({
     data: [
       {
-        question: "Apakah saya perlu antre untuk memesan layanan?",
-        answer: "Tidak, Anda hanya perlu memesan jadwal online dan layanan akan langsung dikerjakan tanpa antre."
+        question: "Apakah saya harus antre panjang saat datang ke bengkel?",
+        answer: "Tidak perlu! Dengan sistem booking online kami, Anda akan memilih slot waktu pengerjaan secara spesifik (durasi 3 jam). Selama Anda datang sesuai jadwal yang tertera di Kode Booking, teknisi kami akan langsung mengerjakan mobil Anda tanpa antrean."
       },
       {
-        question: "Apakah harga sudah termasuk semua biaya pemasangan?",
-        answer: "Ya, harga yang tertera sudah termasuk semua biaya pemasangan."
+        question: "Apakah harga aksesoris di website sudah termasuk biaya pasang?",
+        answer: "Ya, betul. Semua harga aksesoris variasi yang tertera di website Veteran Variasi adalah harga final yang sudah mencakup biaya jasa pemasangan profesional. Anda tidak akan dikenakan biaya tambahan apa pun saat tiba di bengkel."
       },
       {
-        question: "Apakah saya perlu antre untuk memesan layanan?",
-        answer: "Tidak, Anda hanya perlu memesan jadwal online dan layanan akan langsung dikerjakan tanpa antre."
+        question: "Berapa biaya untuk servis cuci AC mobil saya?",
+        answer: "Kami memberlakukan sistem harga flat (sama rata) untuk layanan servis pembersihan dan perawatan AC, yaitu Rp250.000 untuk semua jenis dan merek mobil, dari city car hingga SUV besar."
       },
       {
-        question: "Apakah harga sudah termasuk semua biaya pemasangan?",
-        answer: "Ya, harga yang tertera sudah termasuk semua biaya pemasangan."
+        question: "Apakah saya bisa membeli aksesoris saja dan dikirim ke rumah untuk dipasang sendiri?",
+        answer: "Saat ini, semua pembelian aksesoris melalui platform Veteran Variasi diwajibkan untuk dipasang langsung di bengkel kami. Hal ini kami lakukan untuk memastikan kualitas, presisi, dan garansi pemasangan yang optimal bagi mobil Anda."
       },
       {
-        question: "Apakah saya perlu antre untuk memesan layanan?",
-        answer: "Tidak, Anda hanya perlu memesan jadwal online dan layanan akan langsung dikerjakan tanpa antre."
-      },
-      {
-        question: "Apakah harga sudah termasuk semua biaya pemasangan?",
-        answer: "Ya, harga yang tertera sudah termasuk semua biaya pemasangan."
+        question: "Bagaimana jika saya belum membayar hingga batas waktu habis?",
+        answer: "Setelah Anda memilih jadwal dan menekan tombol bayar, sistem akan mengunci slot waktu Anda selama 15 menit. Jika pembayaran tidak diselesaikan dalam batas waktu tersebut, pesanan akan otomatis dibatalkan dan slot jadwal akan kembali terbuka untuk pelanggan lain. Anda dapat melakukan proses checkout ulang jika slot masih tersedia."
       },
     ]
   })
