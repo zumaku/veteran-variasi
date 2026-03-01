@@ -62,9 +62,21 @@ model Product {
   stock       Int?
   image       String?     @db.VarChar(255)
 
+  categories Category[]
   orderItems OrderItem[]
 
   @@map("products")
+}
+
+model Category {
+  id          Int     @id @default(autoincrement())
+  name        String  @db.VarChar(100)
+  slug        String  @unique @db.VarChar(100)
+  description String? @db.Text
+
+  products Product[]
+
+  @@map("categories")
 }
 
 enum OrderStatus {
@@ -125,25 +137,10 @@ model Review {
 }
 
 model Faqs {
-  id          Int      @id @default(autoincrement())
-  question    String   @db.VarChar(255)
-  answer      String   @db.Text
-  createdAt   DateTime @default(now()) @map("created_at")
+  id        Int      @id @default(autoincrement())
+  question  String   @db.VarChar(255)
+  answer    String   @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
 
   @@map("faqs")
-}
-
-model Setting {
-  id          Int      @id @default(autoincrement())
-  topProducts Json     @map("top_products") // Array of product ids
-  whyChooseUs Json     @map("why_choose_us") // Array of { title, description }
-  alamat      String   @db.Text
-  jamBuka     String   @map("jam_buka") @db.VarChar(50)
-  jamTutup    String   @map("jam_tutup") @db.VarChar(50)
-  kontak      String   @db.VarChar(100)
-  whatsapp    String   @db.VarChar(50)
-  socialMedia Json     @map("social_media") // Array of { platform, url }
-  updatedAt   DateTime @updatedAt @map("updated_at")
-
-  @@map("settings")
 }
