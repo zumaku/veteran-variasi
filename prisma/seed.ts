@@ -327,6 +327,107 @@ async function main() {
     },
   })
 
+  // Dummy order 2
+  const order2 = await prisma.order.upsert({
+    where: { orderNumber: 'ORD-20260228-002' },
+    update: {},
+    create: {
+      orderNumber: 'ORD-20260228-002',
+      userId: customerUser.id,
+      carId: customerCar.id,
+      bookingDate: new Date('2026-03-02T00:00:00Z'),
+      timeSlot: 2,
+      totalAmount: 2500000,
+      status: OrderStatus.COMPLETED,
+      items: {
+        create: [
+          {
+            productId: headUnit.id,
+            quantity: 1,
+            priceAtBooking: 2500000,
+          }
+        ]
+      }
+    },
+  })
+
+  // Dummy order 3
+  const order3 = await prisma.order.upsert({
+    where: { orderNumber: 'ORD-20260228-003' },
+    update: {},
+    create: {
+      orderNumber: 'ORD-20260228-003',
+      userId: customerUser.id,
+      carId: customerCar.id,
+      bookingDate: new Date('2026-03-03T00:00:00Z'),
+      timeSlot: 3,
+      totalAmount: 1400000,
+      status: OrderStatus.COMPLETED,
+      items: {
+        create: [
+          {
+            productId: servisAc.id, // Servis AC again
+            quantity: 1,
+            priceAtBooking: 550000,
+          },
+          {
+            productId: karpetMobil.id,
+            quantity: 1,
+            priceAtBooking: 850000,
+          }
+        ]
+      }
+    },
+  })
+
+  // Dummy order 4
+  const order4 = await prisma.order.upsert({
+    where: { orderNumber: 'ORD-20260228-004' },
+    update: {},
+    create: {
+      orderNumber: 'ORD-20260228-004',
+      userId: customerUser.id,
+      carId: customerCar.id,
+      bookingDate: new Date('2026-03-04T00:00:00Z'),
+      timeSlot: 1,
+      totalAmount: 750000,
+      status: OrderStatus.COMPLETED,
+      items: {
+        create: [
+          {
+            productId: roofRack.id,
+            quantity: 1,
+            priceAtBooking: 750000,
+          }
+        ]
+      }
+    },
+  })
+
+  // Dummy order 5
+  const order5 = await prisma.order.upsert({
+    where: { orderNumber: 'ORD-20260228-005' },
+    update: {},
+    create: {
+      orderNumber: 'ORD-20260228-005',
+      userId: customerUser.id,
+      carId: customerCar.id,
+      bookingDate: new Date('2026-03-05T00:00:00Z'),
+      timeSlot: 2,
+      totalAmount: 350000,
+      status: OrderStatus.COMPLETED,
+      items: {
+        create: [
+          {
+            productId: servisAc.id, // Servis AC again! 3 times total now
+            quantity: 1,
+            priceAtBooking: 350000,
+          }
+        ]
+      }
+    },
+  })
+
   // 6. Create Faqs
   console.log('Seeding dummy faqs...')
 

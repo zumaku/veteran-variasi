@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, Search, X } from "lucide-react";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -45,7 +45,7 @@ export default function Navbar() {
         </Link>
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
           <Link
-            href="#catalog"
+            href="/catalog"
             className="text-foreground/80 hover:text-primary transition-colors"
           >
             Catalog
@@ -64,6 +64,14 @@ export default function Navbar() {
           </Link>
         </nav>
         <div className="hidden md:flex items-center gap-4">
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="Search"
+            className="text-muted-foreground hover:text-foreground"
+          >
+            <Search className="h-5 w-5" />
+          </Button>
           <Button variant={"outline"}>Masuk</Button>
           <Button>Daftar</Button>
         </div>
@@ -107,6 +115,13 @@ export default function Navbar() {
               FAQ
             </Link>
             <div className="flex flex-col gap-3 pt-4 border-t">
+              <Button
+                variant="ghost"
+                className="w-full justify-start gap-2 px-4"
+              >
+                <Search className="h-5 w-5" />
+                Cari Produk
+              </Button>
               <Button variant="outline" className="w-full justify-center">
                 Masuk
               </Button>
