@@ -19,27 +19,29 @@ async function main() {
   // 1. Create Users
   console.log('Seeding dummy users...')
 
+  // Admin Pw: admin123
   const adminUser = await prisma.user.upsert({
-    where: { slug: 'admin-user' },
+    where: { username: 'admin' },
     update: {},
     create: {
-      name: 'Admin Veteran',
-      slug: 'admin-user',
+      name: 'Admin Veteran Variasi',
+      username: 'adminveteranvariasi',
       email: 'admin@veteranvariasi.com',
-      password_hash: 'hashed_password_placeholder',
+      password_hash: '$2b$10$0b9xr/E8qgQA9wUgVm/mQuhkZF4naO3bocnOYt96qeOJyKkA6jlaq',
       role: Role.ADMIN,
       phone: '081234567890',
     },
   })
 
+  // Customer Pw: uservv123
   const customerUser = await prisma.user.upsert({
-    where: { slug: 'nuaim-mujmir' },
+    where: { username: 'userveteranvariasi' },
     update: {},
     create: {
-      name: 'Nuaim Mujmir',
-      slug: 'nuaim-mujmir',
-      email: 'nuaim@example.com',
-      password_hash: 'hashed_password_placeholder',
+      name: 'User Veteran Variasi',
+      username: 'userveteranvariasi',
+      email: 'user@veteranvariasi.com',
+      password_hash: '$2b$10$6G9NUN42SD.XKIG1V2s3HeWt6xoWg/C4DRlOO8pK5md1oksXl7cLu',
       role: Role.CUSTOMER,
       phone: '089876543210',
     },

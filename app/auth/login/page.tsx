@@ -1,9 +1,13 @@
+"use client";
+
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { LogIn } from "lucide-react";
 import Link from "next/link";
+import { useActionState } from "react";
+import { login } from "@/app/auth/actions";
+import { Loader2, LogIn } from "lucide-react";
 /**
  * Renders the main login page for the authentication flow.
  * We use a distinctive gradient background and elevated card layout
@@ -11,13 +15,15 @@ import Link from "next/link";
  * @returns The login page JSX
  */
 export default function LoginPage() {
+  const [state, formAction, isPending] = useActionState(login, null);
+
   return (
     <section className="flex min-h-screen items-center justify-center bg-zinc-50 px-4 py-16 md:py-32 dark:bg-zinc-950">
       {/* Background decoration to add depth */}
       <div className="absolute inset-0 -z-10 h-full w-full bg-white dark:bg-zinc-950 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#27272a_1px,transparent_1px)] [background-size:16px_16px]"></div>
 
       <form
-        action=""
+        action={formAction}
         className="relative m-auto h-fit w-full max-w-sm overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-2xl shadow-zinc-900/10 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-zinc-950/50"
       >
         <div className="p-8 pb-6">
@@ -33,21 +39,29 @@ export default function LoginPage() {
             </p>
           </div>
 
-          <div className="mt-8 space-y-6">
+          <div className="mt-8 space-y-4">
+            {state?.error && (
+              <div className="p-3 bg-red-50 text-red-600 border border-red-200 rounded-md text-sm dark:bg-red-950/50 dark:border-red-900 dark:text-red-400">
+                {state.error}
+              </div>
+            )}
+
             <div className="space-y-2">
               <Label
                 htmlFor="email"
                 className="block text-sm font-medium text-zinc-700 dark:text-zinc-300"
               >
-                Username
+                Email
               </Label>
               <Input
                 type="email"
                 required
                 name="email"
                 id="email"
+                pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"
+                title="Masukkan alamat email yang valid (contoh: nama@email.com)"
                 className="w-full transition-colors focus-visible:ring-primary"
-                placeholder="Masukkan username Anda"
+                placeholder="Masukkan email Anda"
               />
             </div>
 
@@ -69,8 +83,9 @@ export default function LoginPage() {
               <Input
                 type="password"
                 required
-                name="pwd"
-                id="pwd"
+                name="password"
+                id="password"
+                defaultValue={""}
                 className="w-full transition-colors focus-visible:ring-primary"
                 placeholder="••••••••"
               />
@@ -78,10 +93,15 @@ export default function LoginPage() {
 
             <Button
               variant="dark"
+              disabled={isPending}
               className="w-full font-semibold shadow-sm transition-all hover:scale-[1.02]"
             >
-                <LogIn className="w-4 h-4" />
-              Masuk
+              {isPending ? (
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              ) : (
+                <LogIn className="w-4 h-4 mr-2" />
+              )}
+              {isPending ? "Masuk..." : "Masuk"}
             </Button>
           </div>
         </div>
