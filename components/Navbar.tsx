@@ -3,11 +3,34 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
 import { Menu, Search, X } from "lucide-react";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const router = useRouter();
+
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const searchQuery = formData.get("q") as string;
+
+    if (searchQuery.trim()) {
+      setIsSearchOpen(false);
+      if (isMobileMenuOpen) setIsMobileMenuOpen(false);
+      router.push(`/catalog?q=${encodeURIComponent(searchQuery)}`);
+    }
+  };
 
   // Disable scrolling when mobile menu is open
   useEffect(() => {
@@ -64,14 +87,32 @@ export default function Navbar() {
           </Link>
         </nav>
         <div className="hidden md:flex items-center gap-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            aria-label="Search"
-            className="text-muted-foreground hover:text-foreground"
-          >
-            <Search className="h-5 w-5" />
-          </Button>
+          <Dialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>
+            <DialogTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                aria-label="Search"
+                className="text-muted-foreground hover:text-foreground"
+              >
+                <Search className="h-5 w-5" />
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Cari Produk</DialogTitle>
+              </DialogHeader>
+              <form onSubmit={handleSearch} className="flex gap-2">
+                <Input
+                  name="q"
+                  placeholder="Ketik kata kunci..."
+                  className="flex-1"
+                  autoFocus
+                />
+                <Button type="submit">Cari</Button>
+              </form>
+            </DialogContent>
+          </Dialog>
           <Button variant={"outline"}>Masuk</Button>
           <Button>Daftar</Button>
         </div>
@@ -115,13 +156,31 @@ export default function Navbar() {
               FAQ
             </Link>
             <div className="flex flex-col gap-3 pt-4 border-t">
-              <Button
-                variant="ghost"
-                className="w-full justify-start gap-2 px-4"
-              >
-                <Search className="h-5 w-5" />
-                Cari Produk
-              </Button>
+              <Dialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>
+                <DialogTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start gap-2 px-4"
+                  >
+                    <Search className="h-5 w-5" />
+                    Cari Produk
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="w-[90vw] rounded-lg sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle>Cari Produk</DialogTitle>
+                  </DialogHeader>
+                  <form onSubmit={handleSearch} className="flex gap-2">
+                    <Input
+                      name="q"
+                      placeholder="Ketik kata kunci..."
+                      className="flex-1"
+                      autoFocus
+                    />
+                    <Button type="submit">Cari</Button>
+                  </form>
+                </DialogContent>
+              </Dialog>
               <Button variant="outline" className="w-full justify-center">
                 Masuk
               </Button>
