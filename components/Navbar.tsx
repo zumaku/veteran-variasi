@@ -113,8 +113,14 @@ export default function Navbar() {
               </form>
             </DialogContent>
           </Dialog>
-          <Button variant={"outline"}>Masuk</Button>
-          <Button>Daftar</Button>
+          <Link href="/auth/login">
+            <Button variant={"outline"} className="cursor-pointer">
+              Masuk
+            </Button>
+          </Link>
+          <Link href="/auth/register">
+            <Button className="cursor-pointer">Daftar</Button>
+          </Link>
         </div>
 
         {/* Mobile menu button */}
@@ -181,10 +187,19 @@ export default function Navbar() {
                   </form>
                 </DialogContent>
               </Dialog>
-              <Button variant="outline" className="w-full justify-center">
-                Masuk
-              </Button>
-              <Button className="w-full justify-center">Daftar</Button>
+              <Link href="/auth/login">
+                <Button
+                  variant="outline"
+                  className="w-full justify-center cursor-pointer"
+                >
+                  Masuk
+                </Button>
+              </Link>
+              <Link href="/auth/register">
+                <Button className="w-full justify-center cursor-pointer">
+                  Daftar
+                </Button>
+              </Link>
             </div>
           </nav>
         </div>
