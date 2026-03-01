@@ -120,7 +120,7 @@ async function main() {
       description: 'Layanan pembersihan dan perawatan AC mobil secara menyeluruh. Harga flat untuk semua jenis mobil.',
       price: 250000,
       stock: null, // Service tidak memiliki stok fisik
-      image: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80',
+      images: { create: [{ url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }] },
       categories: {
         connect: [{ id: categoryService.id }]
       }
@@ -138,7 +138,7 @@ async function main() {
       description: 'Head unit layar sentuh 10 inch berbasis Android. Mendukung Apple CarPlay dan Android Auto.',
       price: 2500000,
       stock: 15,
-      image: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80',
+      images: { create: [{ url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }] },
       categories: {
         connect: [{ id: categoryAudio.id }, { id: categoryInterior.id }]
       }
@@ -156,7 +156,7 @@ async function main() {
       description: 'Kaca film original 3M tahan panas UV hingga 99%. Tersedia tingkat kegelapan 40%, 60%, dan 80%.',
       price: 1800000,
       stock: 20,
-      image: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80',
+      images: { create: [{ url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }] },
       categories: {
         connect: [{ id: categoryEksterior.id }]
       }
@@ -174,7 +174,7 @@ async function main() {
       description: 'Karpet dasar mobil 5D presisi, anti air, mudah dibersihkan, dan membuat kabin lebih kedap suara.',
       price: 850000,
       stock: 35,
-      image: 'https://images.unsplash.com/photo-1601362840469-51e4d8d58785?auto=format&fit=crop&w=800&q=80',
+      images: { create: [{ url: 'https://images.unsplash.com/photo-1601362840469-51e4d8d58785?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }] },
       categories: {
         connect: [{ id: categoryInterior.id }]
       }
@@ -192,7 +192,7 @@ async function main() {
       description: 'Lampu utama LED H4 dengan lensa projector mini. Cahaya putih terang dan cut-off rapi.',
       price: 550000,
       stock: 50,
-      image: 'https://images.unsplash.com/photo-1601362840468-51e4d8d58785?auto=format&fit=crop&w=800&q=80',
+      images: { create: [{ url: 'https://images.unsplash.com/photo-1601362840468-51e4d8d58785?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }] },
       categories: {
         connect: [{ id: categoryEksterior.id }]
       }
@@ -210,7 +210,7 @@ async function main() {
       description: 'Rak atap mobil berbahan aluminium solid. Cocok untuk membawa barang ekstra saat perjalanan jauh.',
       price: 750000,
       stock: 12,
-      image: 'https://images.unsplash.com/photo-1533558701576-23c65e0272fb?auto=format&fit=crop&w=800&q=80',
+      images: { create: [{ url: 'https://images.unsplash.com/photo-1533558701576-23c65e0272fb?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }] },
       categories: {
         connect: [{ id: categoryEksterior.id }]
       }
@@ -228,7 +228,7 @@ async function main() {
       description: 'Sarung pelindung jok mobil dari bahan kulit sintetis premium MBtech. Tahan air dan anti gores.',
       price: 1500000,
       stock: 8,
-      image: 'https://images.unsplash.com/photo-1580274455191-1c62238fa333?auto=format&fit=crop&w=800&q=80',
+      images: { create: [{ url: 'https://images.unsplash.com/photo-1580274455191-1c62238fa333?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }] },
       categories: {
         connect: [{ id: categoryInterior.id }]
       }
@@ -246,7 +246,7 @@ async function main() {
       description: 'Kamera parkir belakang dengan fitur night vision. Tampilan sangat jelas meski di kondisi gelap.',
       price: 250000,
       stock: 40,
-      image: 'https://images.unsplash.com/photo-1541443131876-44b03de101c5?auto=format&fit=crop&w=800&q=80',
+      images: { create: [{ url: 'https://images.unsplash.com/photo-1541443131876-44b03de101c5?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }] },
       categories: {
         connect: [{ id: categoryEksterior.id }]
       }
@@ -264,7 +264,7 @@ async function main() {
       description: 'Pelindung bumper depan mobil dari benturan ringan. Menambah kesan gagah dan sporty pada kendaraan.',
       price: 600000,
       stock: 25,
-      image: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=800&q=80',
+      images: { create: [{ url: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }] },
       categories: {
         connect: [{ id: categoryEksterior.id }]
       }
@@ -282,7 +282,7 @@ async function main() {
       description: 'Sayap belakang mobil dengan lapisan motif carbon fiber. Meningkatkan aerodinamis kendaraan.',
       price: 450000,
       stock: 18,
-      image: 'https://images.unsplash.com/photo-1533558701576-23c65e0272fb?auto=format&fit=crop&w=800&q=80',
+      images: { create: [{ url: 'https://images.unsplash.com/photo-1533558701576-23c65e0272fb?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }] },
       categories: {
         connect: [{ id: categoryEksterior.id }]
       }
