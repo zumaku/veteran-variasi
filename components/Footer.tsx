@@ -1,82 +1,97 @@
-import Link from "next/link";
+import Link from 'next/link'
+import Logo from './Logo'
+import { FacebookIcon, InstagramIcon, LinkedInIcon, ThreadIcon, TikTokIcon, XIcon } from './icons'
+import { prisma } from '@/lib/prisma'
 
-export default function Footer() {
-  return (
-    <footer className="bg-background border-t border-border py-12 md:py-16">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 mb-12">
-          <div className="md:col-span-2">
-            <div className="bg-primary text-primary-foreground font-bold font-montserrat px-3 py-1.5 rounded-md inline-block mb-4">
-              Veteran Variasi
+const links = [
+    {
+        title: 'Catalog',
+        href: '/catalog',
+    },
+    {
+        title: 'Tentang Kami',
+        href: '#tentang-kami',
+    },
+    {
+        title: 'FAQ',
+        href: '#faq',
+    },
+]
+
+export default async function Footer() {
+    return (
+        <footer className="py-16 md:py-32">
+            <div className="mx-auto max-w-5xl px-6">
+                <Link
+                    href="/"
+                    aria-label="go home"
+                    className="mx-auto block size-fit flex items-center gap-2">
+                    <Logo size={32} />
+                    <p className='text-2xl font-bold'>Veteran Variasi</p>
+                </Link>
+
+                <div className="my-8 flex flex-wrap justify-center gap-6 text-sm">
+                    {links.map((link, index) => (
+                        <Link
+                            key={index}
+                            href={link.href}
+                            className="text-muted-foreground hover:text-primary block duration-150">
+                            <span>{link.title}</span>
+                        </Link>
+                    ))}
+                </div>
+                <div className="my-8 flex flex-wrap justify-center gap-6 text-sm">
+                    <Link
+                        href="#"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="X/Twitter"
+                        className="text-muted-foreground hover:text-primary block">
+                        <XIcon />
+                    </Link>
+                    <Link
+                        href="#"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="LinkedIn"
+                        className="text-muted-foreground hover:text-primary block">
+                        <LinkedInIcon />
+                    </Link>
+                    <Link
+                        href="#"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Facebook"
+                        className="text-muted-foreground hover:text-primary block">
+                        <FacebookIcon />
+                    </Link>
+                    <Link
+                        href="#"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Threads"
+                        className="text-muted-foreground hover:text-primary block">
+                        <ThreadIcon />
+                    </Link>
+                    <Link
+                        href="#"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Instagram"
+                        className="text-muted-foreground hover:text-primary block">
+                        <InstagramIcon />
+                    </Link>
+                    <Link
+                        href="#"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="TikTok"
+                        className="text-muted-foreground hover:text-primary block">
+                        <TikTokIcon />
+                    </Link>
+                </div>
+                <span className="text-muted-foreground block text-center text-sm">Copyright © {new Date().getFullYear()} Veteran Variasi, All rights reserved</span>
             </div>
-            <p className="text-muted-foreground text-sm max-w-sm mt-4 leading-relaxed">
-              Solusi terbaik untuk perawatan dan perbaikan kendaraan Anda. Kami
-              hadir dengan pelayanan prima dan fasilitas lengkap.
-            </p>
-          </div>
-          <div>
-            <h4 className="font-bold font-montserrat mb-4">Layanan</h4>
-            <ul className="flex flex-col gap-3 text-sm text-muted-foreground">
-              <li>
-                <Link href="#" className="hover:text-primary transition-colors">
-                  Tune Up
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-primary transition-colors">
-                  Ganti Oli
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-primary transition-colors">
-                  Service Berkala
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-primary transition-colors">
-                  Variasi & Audio
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-bold font-montserrat mb-4">Perusahaan</h4>
-            <ul className="flex flex-col gap-3 text-sm text-muted-foreground">
-              <li>
-                <Link href="#" className="hover:text-primary transition-colors">
-                  Tentang Kami
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-primary transition-colors">
-                  Karir
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-primary transition-colors">
-                  Syarat & Ketentuan
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-primary transition-colors">
-                  Kebijakan Privasi
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div className="pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-          <p>
-            &copy; {new Date().getFullYear()} Veteran Variasi. All rights
-            reserved.
-          </p>
-          <div className="flex gap-4">
-            <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors cursor-pointer" />
-            <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors cursor-pointer" />
-            <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors cursor-pointer" />
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
+        </footer>
+    )
 }

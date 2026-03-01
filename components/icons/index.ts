@@ -1,0 +1,6 @@
+export * from './XIcon'
+export * from './LinkedInIcon'
+export * from './FacebookIcon'
+export * from './ThreadIcon'
+export * from './InstagramIcon'
+export * from './TikTokIcon'

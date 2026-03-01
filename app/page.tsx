@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Check, ChevronRight, MapPin, Clock, Phone, Box, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import TopThreeProducts from "@/features/catalog/components/TopThreeProducts";
-import { WhatsappIcon } from "@/components/icons/la-whatsapp";
+import { WhatsappIcon } from "@/components/icons/WhatsappIcon";
 import FAQs from "@/features/faqs/components/FAQs";
 
 export default function Home() {
