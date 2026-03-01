@@ -60,12 +60,12 @@ export default function ProductGallery({
       <Carousel
         setApi={setApi}
         opts={{ loop: true }}
-        className="w-full relative group shadow-sm bg-muted rounded-3xl overflow-hidden aspect-[4/5]"
+        className="w-full relative group shadow-sm bg-muted rounded-3xl overflow-hidden aspect-[4/3]"
       >
         <CarouselContent className="ml-0">
           {allImages.map((img, idx) => (
             <CarouselItem key={idx} className="pl-0 flex-none w-full">
-              <div className="w-full h-full aspect-[4/5] relative">
+              <div className="w-full h-full aspect-[4/3] relative">
                 <Image
                   src={img}
                   alt={`${productName} - Image ${idx + 1}`}
