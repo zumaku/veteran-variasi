@@ -51,6 +51,9 @@ export async function getCatalogProducts({
       skip,
       take,
       orderBy: { id: "desc" },
+      include: {
+        images: true,
+      },
     }),
     prisma.product.count({ where }),
   ]);

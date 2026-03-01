@@ -1,23 +1,33 @@
-import { Product } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import Image from "next/image";
 import { rupiahConverter } from "@/features/catalog/lib";
 import AddToCartButton from "./AddToCartButton";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
+type ProductWithImages = Prisma.ProductGetPayload<{
+  include: { images: true };
+}>;
+
 /**
  * Displays a single product summary in a card layout to attract customers
  * @param props.product - The product data to display
  * @returns The rendered product card component
  */
-export default function ProductCard({ product }: { product: Product }) {
+export default function ProductCard({
+  product,
+}: {
+  product: ProductWithImages;
+}) {
+  const primaryImageUrl = product.images?.[0]?.url || null;
+
   return (
     <div className="bg-background rounded-xl overflow-hidden shadow-sm border border-border/50 hover:shadow-md transition-shadow group flex flex-col items-center">
       {/* Container requires relative positioning and overflow hidden for next/image fill property to respect boundaries during hover scaling */}
       <div className="w-full aspect-[4/3] bg-muted relative overflow-hidden">
-        {product.image ? (
+        {primaryImageUrl ? (
           <Image
-            src={product.image}
+            src={primaryImageUrl}
             alt={product.name}
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-105"

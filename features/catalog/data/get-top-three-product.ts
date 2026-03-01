@@ -13,6 +13,9 @@ export default async function getTopThreeProduct() {
         _count: 'desc',
       },
     },
+    include: {
+      images: true,
+    }
   });
 
   return topProducts;
