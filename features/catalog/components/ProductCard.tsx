@@ -1,8 +1,9 @@
 import { Product } from "@prisma/client";
 import Image from "next/image";
 import { rupiahConverter } from "@/features/catalog/lib";
-import { Button } from "@/components/ui/button";
+import AddToCartButton from "./AddToCartButton";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 /**
  * Displays a single product summary in a card layout to attract customers
@@ -29,7 +30,9 @@ export default function ProductCard({ product }: { product: Product }) {
         )}
       </div>
       <div className="p-6 text-left w-full">
-        <h3 className="text-xl font-bold mb-2">{product.name}</h3>
+        <Link href={`/catalog/${product.slug}`}>
+          <h3 className="text-xl font-bold mb-2">{product.name}</h3>
+        </Link>
         <p className="text-muted-foreground text-sm mb-6 line-clamp-3">
           {product.description}
         </p>
@@ -37,11 +40,14 @@ export default function ProductCard({ product }: { product: Product }) {
           <span className="text-xl font-bold font-montserrat text-foreground">
             {rupiahConverter(product.price.toNumber())}
           </span>
-          <Button>
+          <div className="flex gap-2">
             <Link href={`/catalog/${product.slug}`}>
-              Pesan
+              <Button variant="outline" className="cursor-pointer">
+                Detail
+              </Button>
             </Link>
-          </Button>
+            <AddToCartButton productId={product.id} />
+          </div>
         </div>
       </div>
     </div>
