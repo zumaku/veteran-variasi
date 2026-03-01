@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Check, ChevronRight, MapPin, Clock, Phone, Box } from "lucide-react";
+import { Check, ChevronRight, MapPin, Clock, Phone, Box, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Footer from "@/components/Footer";
 import TopThreeProducts from "@/features/catalog/components/TopThreeProducts";
-import WhyChooseUs from "@/features/homepage/components/WhyChooseUs";
+import { WhatsappIcon } from "@/components/icons/la-whatsapp";
+import FAQs from "@/features/faqs/components/FAQs";
 
 export default function Home() {
   return (
@@ -63,129 +63,143 @@ export default function Home() {
                 </p>
               </div>
 
-              <WhyChooseUs />
+              <div className="flex gap-4 items-start">
+                <div className="bg-primary/10 p-2 rounded-md shrink-0">
+                  <Check className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-lg mb-1">
+                    Bebas Antre dengan Booking Pasti
+                  </h4>
+                  <p className="text-sm text-muted-foreground">
+                    Pesan jadwal online, langsung dikerjakan tanpa antre.
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-4 items-start">
+                <div className="bg-primary/10 p-2 rounded-md shrink-0">
+                  <Check className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-lg mb-1">
+                    Harga Transparan & Pasti
+                  </h4>
+                  <p className="text-sm text-muted-foreground">
+                    Harga tertera sudah termasuk semua biaya pemasangan.
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-4 items-start">
+                <div className="bg-primary/10 p-2 rounded-md shrink-0">
+                  <Check className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-lg mb-1">
+                    Variasi & Servis AC Terpadu
+                  </h4>
+                  <p className="text-sm text-muted-foreground">
+                    Pasang aksesoris dan servis AC dalam satu kunjungan.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* 5. Location Section */}
-      {/* <section className="bg-secondary text-secondary-foreground py-20 relative overflow-hidden">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-              <div className="flex flex-col gap-8">
-                <div>
-                  <h2 className="text-3xl md:text-4xl font-bold font-montserrat mb-4 text-white">
-                    Kunjungi Bengkel Kami
-                  </h2>
-                  <p className="text-secondary-foreground/70">
-                    Datang dan konsultasikan masalah kendaraan Anda langsung
-                    kepada tim ahli kami di lokasi.
-                  </p>
-                </div>
+      <section className="bg-secondary text-secondary-foreground py-20 relative overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div className="flex flex-col gap-8">
+              <div>
+                <h2 className="text-3xl md:text-4xl font-bold font-montserrat mb-4">
+                  Kunjungi Bengkel Kami
+                </h2>
+                <p className="text-secondary-foreground/70">
+                  Datang dan konsultasikan masalah kendaraan Anda langsung
+                  kepada tim ahli kami di lokasi.
+                </p>
+              </div>
 
-                <div className="flex flex-col gap-6">
-                  <div className="flex gap-4">
-                    <MapPin className="w-6 h-6 text-primary shrink-0" />
-                    <div>
-                      <h4 className="font-bold mb-1 text-white">Alamat</h4>
-                      <p className="text-sm text-secondary-foreground/70">
-                        Jl. Veteran No. 123, Kota Makmur, Provinsi Maju 12345
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex gap-4">
-                    <Clock className="w-6 h-6 text-primary shrink-0" />
-                    <div>
-                      <h4 className="font-bold mb-1 text-white">
-                        Jam Operasional
-                      </h4>
-                      <p className="text-sm text-secondary-foreground/70">
-                        Senin - Sabtu: 08:00 - 17:00 WIB
-                        <br />
-                        Minggu: Tutup
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex gap-4">
-                    <Phone className="w-6 h-6 text-primary shrink-0" />
-                    <div>
-                      <h4 className="font-bold mb-1 text-white">Kontak</h4>
-                      <p className="text-sm text-secondary-foreground/70">
-                        (021) 555-0123 / +62 812-3456-7890
-                      </p>
-                    </div>
+              <div className="flex flex-col gap-6">
+                <div className="flex gap-4">
+                  <MapPin className="w-6 h-6 text-primary shrink-0" />
+                  <div>
+                    <h4 className="font-bold mb-1 text-foreground">Alamat</h4>
+                    <p className="text-sm text-secondary-foreground/70">
+                      Jl. Veteran Selatan No.354, Mamajang Dalam, Kec. Mamajang,
+                      Kota Makassar, Sulawesi Selatan 90132
+                    </p>
                   </div>
                 </div>
-
-                <div>
-                  <button className="bg-[#25D366] hover:bg-[#1ebd58] text-white px-6 py-3 rounded-md font-semibold transition-colors inline-flex items-center gap-2">
-                    Chat Whatsapp
-                  </button>
+                <div className="flex gap-4">
+                  <Clock className="w-6 h-6 text-primary shrink-0" />
+                  <div>
+                    <h4 className="font-bold mb-1 text-foreground">
+                      Jam Operasional
+                    </h4>
+                    <p className="text-sm text-secondary-foreground/70">
+                      Senin - Sabtu: 09:00 - 18:00 WIB
+                      <br />
+                      Minggu: Tutup
+                    </p>
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <Phone className="w-6 h-6 text-primary shrink-0" />
+                  <div>
+                    <h4 className="font-bold mb-1 text-foreground">Kontak</h4>
+                    <p className="text-sm text-secondary-foreground/70">
+                      (0411)0871660 / +62 812-3456-7890
+                    </p>
+                  </div>
                 </div>
               </div>
-              <div className="relative aspect-video md:aspect-square bg-secondary-foreground/5 rounded-2xl overflow-hidden border border-secondary-foreground/10 flex items-center justify-center">
-                <span className="text-secondary-foreground/50">
-                  Google Map Placeholder
-                </span>
-              </div>
+
+              <Link href="https://wa.me/6281234567890" className="flex">
+                <Button
+                  size="lg"
+                  className="bg-green-600 hover:bg-green-700 text-white cursor-pointer"
+                >
+                  <WhatsappIcon className="w-6 h-6" />
+                  Chat Whatsapp
+                </Button>
+              </Link>
+            </div>
+            <div className="relative aspect-square md:aspect-[4/3] bg-secondary-foreground/5 rounded-2xl overflow-hidden border border-secondary-foreground/10 flex items-center justify-center">
+              <iframe
+                className="embed-map-frame w-full h-full"
+                src="https://maps.google.com/maps?width=600&height=400&hl=en&q=Veteran%20Variasi&t=&z=16&ie=UTF8&iwloc=B&output=embed"
+              ></iframe>
             </div>
           </div>
-        </section> */}
+        </div>
+      </section>
 
       {/* 6. FAQ Section */}
-      {/* <section id="faq" className="py-24">
-          <div className="container mx-auto px-4 max-w-3xl">
-            <h2 className="text-3xl md:text-4xl font-bold font-montserrat mb-12 text-center">
-              Pertanyaan Umum (FAQ)
-            </h2>
-            <div className="flex flex-col gap-4">
-              {[
-                {
-                  q: "Apakah perlu reservasi sebelum datang?",
-                  a: "Sangat disarankan untuk melakukan reservasi melalui tombol Booking di website kami agar Anda bisa langsung dilayani tanpa antri panjang.",
-                },
-                {
-                  q: "Berapa lama estimasi waktu tune up?",
-                  a: "Umumnya tune up memakan waktu 1-2 jam tergantung kondisi mesin kendaraan Anda.",
-                },
-                {
-                  q: "Apakah suku cadang yang digunakan original?",
-                  a: "Ya, kami hanya menggunakan suku cadang original atau OEM berkualitas yang bergaransi.",
-                },
-              ].map((faq, i) => (
-                <div
-                  key={i}
-                  className="border border-border rounded-lg p-6 bg-muted/20"
-                >
-                  <h4 className="font-bold text-lg mb-2 flex justify-between items-center cursor-pointer">
-                    {faq.q}
-                    <ChevronRight className="w-5 h-5 text-muted-foreground rotate-90" />
-                  </h4>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {faq.a}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section> */}
+      <section className="py-16 md:py-24" id="faq">
+        <FAQs />
+      </section>
 
       {/* 7. CTA Section */}
-      {/* <section className="bg-accent py-20 border-t border-border/50">
+      <section className="bg-primary py-20 border-t border-border/50">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl md:text-4xl font-bold font-montserrat mb-6">
               Siap Merawat Mobil Kesayangan Anda?
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
+            <p className="text-primary-foreground max-w-2xl mx-auto mb-8">
               Daftar sekarang untuk kemudahan pemesanan layanan, riwayat servis
               yang tercatat, serta berbagai promo menarik khusus member.
             </p>
-            <button className="bg-primary text-primary-foreground px-8 py-4 rounded-md font-bold text-lg hover:bg-primary-hover shadow-lg shadow-primary/20 transition-all">
+            <Link href="/auth/login">
+            <Button variant="dark" className="cursor-pointer">
+              <LogIn />
               Daftar Akun Sekarang
-            </button>
+            </Button>
+            </Link>
           </div>
-        </section> */}
+        </section>
     </div>
   );
 }
