@@ -1,6 +1,8 @@
 import { ChevronRight } from "lucide-react";
 import ProductCard from "./ProductCard";
 import getTopThreeProduct from "../data/get-top-three-product";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default async function TopThreeProducts() {
   const topProducts = await getTopThreeProduct();
@@ -23,10 +25,16 @@ export default async function TopThreeProducts() {
         </div>
 
         <div className="mt-12 flex justify-center">
-          <button className="flex items-center gap-2 text-primary font-semibold hover:text-primary-hover transition-colors">
+          {/* <Link href="/catalog" className="flex items-center gap-2 text-primary-foreground font-semibold hover:text-primary-foreground-hover transition-colors">
             Lihat Layanan Lainnya
             <ChevronRight className="w-4 h-4" />
-          </button>
+          </Link> */}
+          <Button variant="link" asChild>
+            <Link href="/catalog">
+              Lihat Layanan Lainnya
+              <ChevronRight className="w-4 h-4" />
+            </Link>
+          </Button>
         </div>
       </div>
     </section>
