@@ -20,7 +20,7 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
   const q = typeof params.q === "string" ? params.q : "";
   const category = typeof params.category === "string" ? params.category : "";
   const page = typeof params.page === "string" ? Number(params.page) : 1;
-  const take = 9;
+  const take = 12;
   const skip = (page - 1) * take;
 
   const [categories, { products, totalProducts }] = await Promise.all([
@@ -47,7 +47,7 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
       <CatalogFilters categories={categories} />
 
       {products.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

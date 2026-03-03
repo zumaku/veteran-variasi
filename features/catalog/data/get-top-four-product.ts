@@ -5,9 +5,9 @@ import { prisma } from "@/lib/prisma";
  * This automatically fetches products with the most order items.
  * @returns Array of the featured products
  */
-export default async function getTopThreeProduct() {
+export default async function getTopFourProduct() {
   const topProducts = await prisma.product.findMany({
-    take: 3,
+    take: 4,
     orderBy: {
       orderItems: {
         _count: 'desc',
@@ -15,6 +15,15 @@ export default async function getTopThreeProduct() {
     },
     include: {
       images: true,
+      orderItems: {
+        include: {
+          order: {
+            include: {
+              review: true,
+            },
+          },
+        },
+      },
     }
   });
 

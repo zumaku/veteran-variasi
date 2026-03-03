@@ -1,12 +1,24 @@
-import { Prisma } from "@prisma/client";
+import { Prisma, Review } from "@prisma/client";
 import Image from "next/image";
-import { rupiahConverter } from "@/features/catalog/lib";
+import { rupiahConverter, calculateRatingStats } from "@/features/catalog/lib";
 import AddToCartButton from "./AddToCartButton";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Star } from "lucide-react";
 
 type ProductWithImages = Prisma.ProductGetPayload<{
-  include: { images: true };
+  include: {
+    images: true;
+    orderItems: {
+      include: {
+        order: {
+          include: {
+            review: true;
+          };
+        };
+      };
+    };
+  };
 }>;
 
 /**
@@ -21,9 +33,14 @@ export default function ProductCard({
 }) {
   const primaryImageUrl = product.images?.[0]?.url || null;
 
+  const reviews: Review[] = product.orderItems
+    .flatMap((item) => item.order.review)
+    .filter((review): review is Review => review !== null);
+
+  const ratingStats = calculateRatingStats(reviews);
+
   return (
     <div className="bg-background rounded-xl overflow-hidden shadow-sm border border-border/50 hover:shadow-md transition-shadow group flex flex-col items-center">
-      {/* Container requires relative positioning and overflow hidden for next/image fill property to respect boundaries during hover scaling */}
       <div className="w-full aspect-[4/3] bg-muted relative overflow-hidden">
         {primaryImageUrl ? (
           <Image
@@ -40,10 +57,26 @@ export default function ProductCard({
         )}
       </div>
       <div className="p-6 text-left w-full">
+        <div className="flex items-center gap-1 mb-2">
+          {[...Array(5)].map((_, i) => (
+            <Star
+              key={i}
+              className={`w-4 h-4 ${
+                i < Math.round(ratingStats.average)
+                  ? "fill-primary text-primary"
+                  : "fill-muted text-muted"
+              }`}
+            />
+          ))}
+          <span className="text-sm text-muted-foreground ml-1">
+            {ratingStats.average > 0 ? ratingStats.average.toFixed(1) : 0} (
+            {ratingStats.total})
+          </span>
+        </div>
         <Link href={`/catalog/${product.slug}`}>
           <h3 className="text-xl font-bold mb-2">{product.name}</h3>
         </Link>
-        <p className="text-muted-foreground text-sm mb-6 line-clamp-3">
+        <p className="text-muted-foreground text-sm mb-6 line-clamp-2">
           {product.description}
         </p>
         <div className="flex items-center justify-between">

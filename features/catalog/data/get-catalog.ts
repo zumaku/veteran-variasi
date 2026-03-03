@@ -53,6 +53,15 @@ export async function getCatalogProducts({
       orderBy: { id: "desc" },
       include: {
         images: true,
+        orderItems: {
+          include: {
+            order: {
+              include: {
+                review: true,
+              },
+            },
+          },
+        },
       },
     }),
     prisma.product.count({ where }),
