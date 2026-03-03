@@ -13,9 +13,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
-import { Menu, Search, X } from "lucide-react";
+import { Menu, Search, X, LogOut } from "lucide-react";
+import { logout } from "@/app/auth/actions";
 
-export default function Navbar() {
+export default function Navbar({
+  user,
+}: {
+  user?: { name: string; role: string } | null;
+}) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const router = useRouter();
@@ -113,14 +118,41 @@ export default function Navbar() {
               </form>
             </DialogContent>
           </Dialog>
-          <Link href="/auth/login">
-            <Button variant={"outline"} className="cursor-pointer">
-              Masuk
-            </Button>
-          </Link>
-          <Link href="/auth/register">
-            <Button className="cursor-pointer">Daftar</Button>
-          </Link>
+          {user ? (
+            <div className="flex items-center gap-4">
+              <Link
+                href="/dashboard"
+                className="text-sm font-medium hover:text-primary transition-colors"
+                onClick={() => {
+                  if (isMobileMenuOpen) setIsMobileMenuOpen(false);
+                }}
+              >
+                {user.name}
+              </Link>
+              <form action={logout}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  type="submit"
+                  className="gap-2 cursor-pointer"
+                >
+                  <LogOut className="h-4 w-4" />
+                  Keluar
+                </Button>
+              </form>
+            </div>
+          ) : (
+            <>
+              <Link href="/auth/login">
+                <Button variant={"outline"} className="cursor-pointer">
+                  Masuk
+                </Button>
+              </Link>
+              <Link href="/auth/register">
+                <Button className="cursor-pointer">Daftar</Button>
+              </Link>
+            </>
+          )}
         </div>
 
         {/* Mobile menu button */}
@@ -187,19 +219,45 @@ export default function Navbar() {
                   </form>
                 </DialogContent>
               </Dialog>
-              <Link href="/auth/login">
-                <Button
-                  variant="outline"
-                  className="w-full justify-center cursor-pointer"
-                >
-                  Masuk
-                </Button>
-              </Link>
-              <Link href="/auth/register">
-                <Button className="w-full justify-center cursor-pointer">
-                  Daftar
-                </Button>
-              </Link>
+              {user ? (
+                <div className="flex flex-col gap-3">
+                  <Link href="/dashboard" passHref>
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-center font-medium cursor-pointer"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Dashboard ({user.name})
+                    </Button>
+                  </Link>
+                  <form action={logout} className="w-full">
+                    <Button
+                      variant="outline"
+                      className="w-full justify-center gap-2 cursor-pointer"
+                      type="submit"
+                    >
+                      <LogOut className="h-4 w-4" />
+                      Keluar
+                    </Button>
+                  </form>
+                </div>
+              ) : (
+                <>
+                  <Link href="/auth/login">
+                    <Button
+                      variant="outline"
+                      className="w-full justify-center cursor-pointer"
+                    >
+                      Masuk
+                    </Button>
+                  </Link>
+                  <Link href="/auth/register">
+                    <Button className="w-full justify-center cursor-pointer">
+                      Daftar
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
           </nav>
         </div>

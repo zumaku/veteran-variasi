@@ -2,7 +2,7 @@ import { getSession } from "@/lib/session";
 import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { LayoutDashboard, LogOut, Settings, User } from "lucide-react";
+import { LayoutDashboard, Settings, User } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 
 /**
@@ -28,25 +28,6 @@ export default async function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-foreground">
-      {/* Top Navbar */}
-      <header className="border-b bg-white dark:bg-zinc-900 px-6 py-4 flex items-center justify-between sticky top-0">
-        <div className="flex items-center gap-2">
-          <LayoutDashboard className="text-primary h-6 w-6" />
-          <h1 className="text-xl font-bold tracking-tight">Dashboard</h1>
-        </div>
-        <div className="flex items-center gap-4">
-          <span className="text-sm font-medium hidden md:block">
-            {user.name}
-          </span>
-          {/* We'd typically have a logout server action, but for now linking to a logout route or dummy */}
-          <Button variant="outline" size="sm" asChild>
-            <Link href="/" className="gap-2">
-              <LogOut className="h-4 w-4" />
-              Keluar
-            </Link>
-          </Button>
-        </div>
-      </header>
 
       <main className="max-w-7xl mx-auto px-6 py-8">
         <div className="mb-8">
