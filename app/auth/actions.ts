@@ -61,3 +61,9 @@ export async function register(prevState: AuthState | null, formData: FormData):
 
   redirect("/dashboard");
 }
+
+export async function logout() {
+  const { deleteSession } = await import("@/lib/session");
+  await deleteSession();
+  redirect("/");
+}
