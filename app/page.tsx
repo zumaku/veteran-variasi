@@ -1,6 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Check, ChevronRight, MapPin, Clock, Phone, Box, LogIn } from "lucide-react";
+import {
+  Check,
+  ChevronRight,
+  MapPin,
+  Clock,
+  Phone,
+  Box,
+  LogIn,
+  Tag,
+  Headset,
+  Award,
+  Wrench,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import TopThreeProducts from "@/features/catalog/components/TopThreeProducts";
 import { WhatsappIcon } from "@/components/icons/WhatsappIcon";
@@ -35,77 +47,104 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 3. Services Section */}
-      <TopThreeProducts />
-
       {/* 4. Why Choose Us Section */}
-      <section id="tentang-kami" className="py-6">
+      <section id="tentang-kami" className="py-16 bg-background">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-            <div className="order-2 md:order-1 relative aspect-square md:aspect-[4/3] rounded-2xl bg-muted overflow-hidden">
-              <Image
-                src="/images/why-choose-us-veteran-variasi.png"
-                alt="Mengapa Memilih Veteran Variasi"
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-            </div>
-            <div className="order-1 md:order-2 flex flex-col gap-8">
-              <div>
-                <h2 className="text-3xl md:text-4xl font-bold font-montserrat mb-4">
-                  Mengapa Memilih Veteran Variasi?
-                </h2>
-                <p className="text-muted-foreground">
-                  Kami berkomitmen memberikan kualitas pelayanan terbaik dengan
-                  menggunakan peralatan modern dan ditangani langsung oleh
-                  montir profesional.
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-montserrat uppercase tracking-wide">
+              Kami Siap Melayani. Jaminan Mobil Layak, Layanan Profesional
+            </h2>
+          </div>
+
+          <div className="flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-8 relative">
+            {/* Left Side Reasons */}
+            <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-10 w-full order-2 lg:order-1">
+              <div className="flex flex-col items-center text-center">
+                <div className="inline-flex items-center justify-center bg-white dark:bg-zinc-800 shadow-[0_4px_20px_rgba(0,0,0,0.08)] p-4 rounded-2xl mb-4 text-primary">
+                  <MapPin className="w-8 h-8" />
+                </div>
+                <h4 className="font-bold text-lg mb-2">Lokasi Strategis</h4>
+                <p className="text-sm text-muted-foreground max-w-[250px]">
+                  Berlokasi di area strategis untuk memudahkan Anda menjangkau
+                  kami dengan cepat.
                 </p>
               </div>
 
-              <div className="flex gap-4 items-start">
-                <div className="bg-primary/10 p-2 rounded-md shrink-0">
-                  <Check className="w-6 h-6 text-primary" />
+              <div className="flex flex-col items-center text-center">
+                <div className="inline-flex items-center justify-center bg-white dark:bg-zinc-800 shadow-[0_4px_20px_rgba(0,0,0,0.08)] p-4 rounded-2xl mb-4 text-primary">
+                  <Tag className="w-8 h-8" />
                 </div>
-                <div>
-                  <h4 className="font-bold text-lg mb-1">
-                    Bebas Antre dengan Booking Pasti
-                  </h4>
-                  <p className="text-sm text-muted-foreground">
-                    Pesan jadwal online, langsung dikerjakan tanpa antre.
-                  </p>
-                </div>
+                <h4 className="font-bold text-lg mb-2">Harga Terbaik</h4>
+                <p className="text-sm text-muted-foreground max-w-[250px]">
+                  Layanan premium kami disesuaikan dengan kebutuhan Anda dengan
+                  penawaran harga terbaik.
+                </p>
               </div>
-              <div className="flex gap-4 items-start">
-                <div className="bg-primary/10 p-2 rounded-md shrink-0">
-                  <Check className="w-6 h-6 text-primary" />
+
+              <div className="flex flex-col items-center text-center md:col-span-2 lg:col-span-1">
+                <div className="inline-flex items-center justify-center bg-white dark:bg-zinc-800 shadow-[0_4px_20px_rgba(0,0,0,0.08)] p-4 rounded-2xl mb-4 text-primary">
+                  <Headset className="w-8 h-8" />
                 </div>
-                <div>
-                  <h4 className="font-bold text-lg mb-1">
-                    Harga Transparan & Pasti
-                  </h4>
-                  <p className="text-sm text-muted-foreground">
-                    Harga tertera sudah termasuk semua biaya pemasangan.
-                  </p>
-                </div>
+                <h4 className="font-bold text-lg mb-2">Dukungan Pelanggan</h4>
+                <p className="text-sm text-muted-foreground max-w-[250px]">
+                  Tim kami selalu siap membantu permasalahan dan memberikan
+                  solusi terbaik untuk mobil Anda.
+                </p>
               </div>
-              <div className="flex gap-4 items-start">
-                <div className="bg-primary/10 p-2 rounded-md shrink-0">
-                  <Check className="w-6 h-6 text-primary" />
+            </div>
+
+            {/* Center Car Image */}
+            <div className="flex-shrink-0 lg:w-96 relative order-1 lg:order-2">
+              <Image
+                src="/top-down-car.png"
+                alt="Mobil Veteran Variasi"
+                width={1000}
+                height={1000}
+                className="w-full h-auto object-contain"
+              />
+            </div>
+
+            {/* Right Side Reasons */}
+            <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-10 w-full order-3 lg:order-3">
+              <div className="flex flex-col items-center text-center">
+                <div className="inline-flex items-center justify-center bg-white dark:bg-zinc-800 shadow-[0_4px_20px_rgba(0,0,0,0.08)] p-4 rounded-2xl mb-4 text-primary">
+                  <Clock className="w-8 h-8" />
                 </div>
-                <div>
-                  <h4 className="font-bold text-lg mb-1">
-                    Variasi & Servis AC Terpadu
-                  </h4>
-                  <p className="text-sm text-muted-foreground">
-                    Pasang aksesoris dan servis AC dalam satu kunjungan.
-                  </p>
+                <h4 className="font-bold text-lg mb-2">Bebas Antre</h4>
+                <p className="text-sm text-muted-foreground max-w-[250px]">
+                  Pesan jadwal layanan secara online dan langsung dikerjakan
+                  tanpa perlu menunggu antrean.
+                </p>
+              </div>
+
+              <div className="flex flex-col items-center text-center">
+                <div className="inline-flex items-center justify-center bg-white dark:bg-zinc-800 shadow-[0_4px_20px_rgba(0,0,0,0.08)] p-4 rounded-2xl mb-4 text-primary">
+                  <Award className="w-8 h-8" />
                 </div>
+                <h4 className="font-bold text-lg mb-2">Merek Terverifikasi</h4>
+                <p className="text-sm text-muted-foreground max-w-[250px]">
+                  Beraneka ragam suku cadang dan produk terjamin keasliannya
+                  dari merek ternama.
+                </p>
+              </div>
+
+              <div className="flex flex-col items-center text-center md:col-span-2 lg:col-span-1">
+                <div className="inline-flex items-center justify-center bg-white dark:bg-zinc-800 shadow-[0_4px_20px_rgba(0,0,0,0.08)] p-4 rounded-2xl mb-4 text-primary">
+                  <Wrench className="w-8 h-8" />
+                </div>
+                <h4 className="font-bold text-lg mb-2">Montir Ahli</h4>
+                <p className="text-sm text-muted-foreground max-w-[250px]">
+                  Dikerjakan oleh teknisi ahli berpengalaman untuk memastikan
+                  mobil Anda dalam kondisi optimal.
+                </p>
               </div>
             </div>
           </div>
         </div>
       </section>
+
+      {/* 3. Services Section */}
+      <TopThreeProducts />
 
       {/* 5. Location Section */}
       <section className="bg-secondary text-secondary-foreground py-20 relative overflow-hidden">
@@ -184,22 +223,22 @@ export default function Home() {
 
       {/* 7. CTA Section */}
       <section className="bg-primary py-20 border-t border-border/50">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold font-montserrat mb-6">
-              Siap Merawat Mobil Kesayangan Anda?
-            </h2>
-            <p className="text-primary-foreground max-w-2xl mx-auto mb-8">
-              Daftar sekarang untuk kemudahan pemesanan layanan, riwayat servis
-              yang tercatat, serta berbagai promo menarik khusus member.
-            </p>
-            <Link href="/auth/login">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold font-montserrat mb-6">
+            Siap Merawat Mobil Kesayangan Anda?
+          </h2>
+          <p className="text-primary-foreground max-w-2xl mx-auto mb-8">
+            Daftar sekarang untuk kemudahan pemesanan layanan, riwayat servis
+            yang tercatat, serta berbagai promo menarik khusus member.
+          </p>
+          <Link href="/auth/login">
             <Button variant="dark" className="cursor-pointer">
               <LogIn />
               Daftar Akun Sekarang
             </Button>
-            </Link>
-          </div>
-        </section>
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }

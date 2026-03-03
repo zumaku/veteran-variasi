@@ -1,9 +1,7 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
-import { hash } from "bcryptjs";
-import { createSession } from "@/lib/session";
 import { redirect } from "next/navigation";
+import { AuthService } from "@/features/auth/lib/auth-service";
 
 export type AuthState = {
   error?: string;
@@ -19,31 +17,10 @@ export async function login(prevState: AuthState | null, formData: FormData): Pr
   }
 
   try {
-    const user = await prisma.user.findFirst({
-      where: {
-        OR: [
-          { email: identifier },
-          { username: identifier }
-        ]
-      },
-    });
-
-    if (!user) {
-      return { error: "Akun tidak ditemukan atau password salah." };
-    }
-
-    const { compare } = await import("bcryptjs");
-    const isPasswordValid = await compare(password, user.password_hash);
-
-    if (!isPasswordValid) {
-      return { error: "Akun tidak ditemukan atau password salah." };
-    }
-
-    await createSession(user.id, user.role);
-
-  } catch (error) {
+    await AuthService.login(identifier, password);
+  } catch (error: any) {
     console.error("Login error:", error);
-    return { error: "Terjadi kesalahan saat masuk. Silakan coba lagi." };
+    return { error: error.message || "Terjadi kesalahan saat masuk. Silakan coba lagi." };
   }
 
   redirect("/dashboard");
@@ -70,41 +47,16 @@ export async function register(prevState: AuthState | null, formData: FormData):
   }
 
   try {
-    const existingUser = await prisma.user.findFirst({
-      where: {
-        OR: [
-          { email },
-          { username }
-        ]
-      },
+    await AuthService.register({
+      name,
+      username,
+      email,
+      phone: phone || null,
+      passwordRaw: password,
     });
-
-    if (existingUser) {
-      if (existingUser.email === email) {
-        return { error: "Email sudah terdaftar." };
-      }
-      if (existingUser.username === username) {
-        return { error: "Username sudah terdaftar. Silakan pilih username lain." };
-      }
-    }
-
-    const password_hash = await hash(password, 10);
-
-    const user = await prisma.user.create({
-      data: {
-        name,
-        username,
-        email,
-        phone: phone || null,
-        password_hash,
-      },
-    });
-
-    await createSession(user.id, user.role);
-    
-  } catch (error) {
+  } catch (error: any) {
     console.error("Registration error:", error);
-    return { error: "Terjadi kesalahan saat mendaftar. Silakan coba lagi." };
+    return { error: error.message || "Terjadi kesalahan saat mendaftar. Silakan coba lagi." };
   }
 
   redirect("/dashboard");
