@@ -1,4 +1,4 @@
-import { ProductForm } from "@/features/admin/products/components/ProductForm";
+import { CategoryForm } from "@/features/admin/categories/components/CategoryForm";
 import { getSession } from "@/lib/session";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
@@ -7,13 +7,10 @@ import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const metadata = {
-  title: "Edit Produk | Admin Dashboard",
+  title: "Tambah Kategori | Admin Dashboard",
 };
 
-export default async function EditProductPage(props: {
-  params: Promise<{ slug: string }>;
-}) {
-  const params = await props.params;
+export default async function CreateCategoryPage() {
   const session = await getSession();
 
   if (!session) {
@@ -29,41 +26,20 @@ export default async function EditProductPage(props: {
     redirect("/dashboard");
   }
 
-  const product = await prisma.product.findUnique({
-    where: { slug: params.slug },
-    include: {
-      images: true,
-      categories: true,
-    },
-  });
-
-  if (!product) {
-    redirect("/dashboard/admin/products");
-  }
-
-  const serializedProduct = {
-    ...product,
-    price: Number(product.price),
-  };
-
-  const categories = await prisma.category.findMany({
-    orderBy: { name: "asc" },
-  });
-
   return (
     <div className="flex-1 space-y-4 p-8 pt-6">
       <div className="flex items-center space-x-4">
         <Button variant="outline" size="icon" asChild>
-          <Link href="/dashboard/admin/products">
+          <Link href="/dashboard/admin/categories">
             <ArrowLeft className="h-4 w-4" />
           </Link>
         </Button>
         <h2 className="text-3xl font-bold tracking-tight">
-          Edit Produk: {product.name}
+          Tambah Kategori Baru
         </h2>
       </div>
       <div className="mt-8 border rounded-xl p-6 bg-white dark:bg-zinc-950">
-        <ProductForm initialData={serializedProduct} categories={categories} />
+        <CategoryForm />
       </div>
     </div>
   );

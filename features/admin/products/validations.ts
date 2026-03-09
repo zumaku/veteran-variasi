@@ -9,6 +9,7 @@ export const createProductSchema = z.object({
   description: z.string().nullable().optional(),
   price: z.coerce.number().min(0, "Price must be greater than or equal to 0"),
   stock: z.coerce.number().int().min(0, "Stock must be greater than or equal to 0").nullable().optional(),
+  categoryIds: z.array(z.coerce.number().int()).min(1, "Minimal 1 kategori harus dipilih"),
 });
 
 export const updateProductSchema = z.object({
@@ -21,6 +22,7 @@ export const updateProductSchema = z.object({
   description: z.string().nullable().optional(),
   price: z.coerce.number().min(0, "Price must be greater than or equal to 0"),
   stock: z.coerce.number().int().min(0, "Stock must be greater than or equal to 0").nullable().optional(),
+  categoryIds: z.array(z.coerce.number().int()).min(1, "Minimal 1 kategori harus dipilih"),
 });
 
 export type CreateProductInput = z.infer<typeof createProductSchema>;

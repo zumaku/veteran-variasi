@@ -23,6 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   createProductSchema,
   updateProductSchema,
@@ -36,10 +37,12 @@ import { ImageUpload } from "./ImageUpload";
 type SerializedProduct = Omit<Product, "price"> & {
   price: number;
   images?: { id: number; url: string }[];
+  categories?: { id: number; name: string }[];
 };
 
 interface ProductFormProps {
   initialData?: SerializedProduct | null;
+  categories: { id: number; name: string }[];
 }
 
 /**
@@ -47,7 +50,7 @@ interface ProductFormProps {
  * @param initialData - Existing product data if editing
  * @returns Form component
  */
-export function ProductForm({ initialData }: ProductFormProps) {
+export function ProductForm({ initialData, categories }: ProductFormProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
@@ -65,6 +68,7 @@ export function ProductForm({ initialData }: ProductFormProps) {
           description: initialData.description,
           price: initialData.price,
           stock: initialData.stock,
+          categoryIds: initialData.categories?.map((c) => c.id) || [],
         }
       : {
           name: "",
@@ -72,6 +76,7 @@ export function ProductForm({ initialData }: ProductFormProps) {
           description: "",
           price: 0,
           stock: 0,
+          categoryIds: [],
         },
   });
 
@@ -142,6 +147,61 @@ export function ProductForm({ initialData }: ProductFormProps) {
               <FormControl>
                 <Input placeholder="Contoh: Kaca Film 3M" {...field} />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control as any}
+          name="categoryIds"
+          render={() => (
+            <FormItem>
+              <div className="mb-4">
+                <FormLabel className="text-base">Kategori</FormLabel>
+                <FormDescription>
+                  Pilih setidaknya 1 kategori produk ini.
+                </FormDescription>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                {categories.map((category) => (
+                  <FormField
+                    key={category.id}
+                    control={form.control as any}
+                    name="categoryIds"
+                    render={({ field }) => {
+                      return (
+                        <FormItem
+                          key={category.id}
+                          className="flex flex-row items-start space-x-3 space-y-0"
+                        >
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value?.includes(category.id)}
+                              onCheckedChange={(checked) => {
+                                return checked
+                                  ? field.onChange([
+                                      ...(field.value || []),
+                                      category.id,
+                                    ])
+                                  : field.onChange(
+                                      field.value?.filter(
+                                        (value: number) =>
+                                          value !== category.id,
+                                      ),
+                                    );
+                              }}
+                            />
+                          </FormControl>
+                          <FormLabel className="font-normal cursor-pointer">
+                            {category.name}
+                          </FormLabel>
+                        </FormItem>
+                      );
+                    }}
+                  />
+                ))}
+              </div>
               <FormMessage />
             </FormItem>
           )}

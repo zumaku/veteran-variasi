@@ -123,9 +123,7 @@ async function main() {
       price: 250000,
       stock: null, // Service tidak memiliki stok fisik
       images: { create: [{ url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }] },
-      categories: {
-        connect: [{ id: categoryService.id }]
-      }
+      categories: { connect: [{ id: categoryService.id }] }
     },
   })
 
@@ -141,9 +139,7 @@ async function main() {
       price: 2500000,
       stock: 15,
       images: { create: [{ url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }] },
-      categories: {
-        connect: [{ id: categoryAudio.id }, { id: categoryInterior.id }]
-      }
+      categories: { connect: [{ id: categoryAudio.id }, { id: categoryInterior.id }] }
     },
   })
 
@@ -159,9 +155,7 @@ async function main() {
       price: 1800000,
       stock: 20,
       images: { create: [{ url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }] },
-      categories: {
-        connect: [{ id: categoryEksterior.id }]
-      }
+      categories: { connect: [{ id: categoryEksterior.id }] }
     },
   })
 
@@ -177,9 +171,7 @@ async function main() {
       price: 850000,
       stock: 35,
       images: { create: [{ url: 'https://images.unsplash.com/photo-1601362840469-51e4d8d58785?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }] },
-      categories: {
-        connect: [{ id: categoryInterior.id }]
-      }
+      categories: { connect: [{ id: categoryInterior.id }] }
     },
   })
 
@@ -195,9 +187,7 @@ async function main() {
       price: 550000,
       stock: 50,
       images: { create: [{ url: 'https://images.unsplash.com/photo-1601362840468-51e4d8d58785?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }] },
-      categories: {
-        connect: [{ id: categoryEksterior.id }]
-      }
+      categories: { connect: [{ id: categoryEksterior.id }] }
     },
   })
 
@@ -213,9 +203,7 @@ async function main() {
       price: 750000,
       stock: 12,
       images: { create: [{ url: 'https://images.unsplash.com/photo-1533558701576-23c65e0272fb?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }] },
-      categories: {
-        connect: [{ id: categoryEksterior.id }]
-      }
+      categories: { connect: [{ id: categoryEksterior.id }] }
     },
   })
 
@@ -231,9 +219,7 @@ async function main() {
       price: 1500000,
       stock: 8,
       images: { create: [{ url: 'https://images.unsplash.com/photo-1580274455191-1c62238fa333?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }] },
-      categories: {
-        connect: [{ id: categoryInterior.id }]
-      }
+      categories: { connect: [{ id: categoryInterior.id }] }
     },
   })
 
@@ -249,9 +235,7 @@ async function main() {
       price: 250000,
       stock: 40,
       images: { create: [{ url: 'https://images.unsplash.com/photo-1541443131876-44b03de101c5?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }] },
-      categories: {
-        connect: [{ id: categoryEksterior.id }]
-      }
+      categories: { connect: [{ id: categoryEksterior.id }] }
     },
   })
 
@@ -267,9 +251,7 @@ async function main() {
       price: 600000,
       stock: 25,
       images: { create: [{ url: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }] },
-      categories: {
-        connect: [{ id: categoryEksterior.id }]
-      }
+      categories: { connect: [{ id: categoryEksterior.id }] }
     },
   })
 
@@ -285,9 +267,7 @@ async function main() {
       price: 450000,
       stock: 18,
       images: { create: [{ url: 'https://images.unsplash.com/photo-1533558701576-23c65e0272fb?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }] },
-      categories: {
-        connect: [{ id: categoryEksterior.id }]
-      }
+      categories: { connect: [{ id: categoryEksterior.id }] }
     },
   })
 

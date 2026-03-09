@@ -26,6 +26,10 @@ export default async function CreateProductPage() {
     redirect("/dashboard");
   }
 
+  const categories = await prisma.category.findMany({
+    orderBy: { name: "asc" },
+  });
+
   return (
     <div className="flex-1 space-y-4 p-8 pt-6">
       <div className="flex items-center space-x-4">
@@ -39,7 +43,7 @@ export default async function CreateProductPage() {
         </h2>
       </div>
       <div className="mt-8 border rounded-xl p-6 bg-white dark:bg-zinc-950">
-        <ProductForm />
+        <ProductForm categories={categories} />
       </div>
     </div>
   );

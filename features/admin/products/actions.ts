@@ -24,6 +24,7 @@ export async function createProductAction(prevState: any, formData: FormData) {
       description: formData.get("description") || null,
       price: formData.get("price"),
       stock: formData.get("stock") ? formData.get("stock") : null,
+      categoryIds: formData.getAll("categoryIds"),
     };
 
     const validatedData = createProductSchema.safeParse(rawData);
@@ -36,7 +37,7 @@ export async function createProductAction(prevState: any, formData: FormData) {
       };
     }
 
-    const { name, type, description, price, stock } = validatedData.data;
+    const { name, type, description, price, stock, categoryIds } = validatedData.data;
     const imageFiles = formData.getAll("images") as File[];
 
     // Generate a simple slug from the name
@@ -62,6 +63,9 @@ export async function createProductAction(prevState: any, formData: FormData) {
         description,
         price,
         stock,
+        categories: {
+          connect: categoryIds.map((id) => ({ id })),
+        },
         images: {
           create: imageUrls.map((url) => ({ url })),
         },
@@ -95,6 +99,7 @@ export async function updateProductAction(prevState: any, formData: FormData) {
       description: formData.get("description") || null,
       price: formData.get("price"),
       stock: formData.get("stock") ? formData.get("stock") : null,
+      categoryIds: formData.getAll("categoryIds"),
     };
 
     const validatedData = updateProductSchema.safeParse(rawData);
@@ -107,7 +112,7 @@ export async function updateProductAction(prevState: any, formData: FormData) {
       };
     }
 
-    const { id, name, type, description, price, stock } = validatedData.data;
+    const { id, name, type, description, price, stock, categoryIds } = validatedData.data;
     const imageFiles = formData.getAll("images") as File[];
     const removedImages = formData.getAll("removedImages") as string[];
 
@@ -124,6 +129,9 @@ export async function updateProductAction(prevState: any, formData: FormData) {
           description,
           price,
           stock,
+          categories: {
+            set: categoryIds.map((cId) => ({ id: cId })),
+          },
         },
       });
 

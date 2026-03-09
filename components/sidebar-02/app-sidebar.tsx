@@ -101,6 +101,12 @@ const adminRoutes: Route[] = [
     link: "/dashboard/admin/products",
   },
   {
+    id: "manage-categories",
+    title: "Kelola Kategori",
+    icon: <Package className="size-4" />,
+    link: "/dashboard/admin/categories",
+  },
+  {
     id: "manage-settings",
     title: "Pengaturan Website",
     icon: <Settings className="size-4" />,
