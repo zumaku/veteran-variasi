@@ -110,7 +110,14 @@ export function ProductTable({ products }: ProductTableProps) {
                       </div>
                     )}
                   </TableCell>
-                  <TableCell className="font-medium">{product.name}</TableCell>
+                  <TableCell className="font-medium">
+                    <Link
+                      href={`/dashboard/admin/products/${product.slug}`}
+                      className="cursor-pointer font-bold"
+                    >
+                      {product.name}
+                    </Link>
+                  </TableCell>
                   <TableCell>
                     {product.type === "ACCESSORY" ? "Aksesoris" : "Layanan"}
                   </TableCell>
@@ -127,7 +134,7 @@ export function ProductTable({ products }: ProductTableProps) {
                   <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
+                        <Button variant="ghost" className="h-8 w-8 p-0 cursor-pointer">
                           <span className="sr-only">Buka menu</span>
                           <MoreHorizontal className="h-4 w-4" />
                         </Button>
@@ -137,6 +144,7 @@ export function ProductTable({ products }: ProductTableProps) {
                         <DropdownMenuItem asChild>
                           <Link
                             href={`/dashboard/admin/products/${product.slug}`}
+                            className="cursor-pointer"
                           >
                             <Eye className="mr-2 h-4 w-4" /> Detail
                           </Link>
@@ -144,13 +152,14 @@ export function ProductTable({ products }: ProductTableProps) {
                         <DropdownMenuItem asChild>
                           <Link
                             href={`/dashboard/admin/products/${product.id}/edit`}
+                            className="cursor-pointer"
                           >
                             <Edit className="mr-2 h-4 w-4" /> Edit
                           </Link>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
-                          className="text-red-600 focus:text-red-600 focus:bg-red-50 dark:focus:bg-red-950"
+                          className="text-red-600 focus:text-red-600 focus:bg-red-50 dark:focus:bg-red-950 cursor-pointer"
                           onClick={() => setProductToDelete(product)}
                         >
                           <Trash2 className="mr-2 h-4 w-4" /> Hapus

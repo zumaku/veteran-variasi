@@ -24,7 +24,7 @@ export function ImageUpload({ value, onChange, onRemove }: ImageUploadProps) {
     accept: {
       "image/*": [".jpeg", ".png", ".jpg", ".webp"],
     },
-    maxSize: 4 * 1024 * 1024, // 4MB
+    maxSize: 1 * 1024 * 1024, // 1MB
   });
 
   const removeFile = (indexToRemove: number) => {
@@ -53,7 +53,7 @@ export function ImageUpload({ value, onChange, onRemove }: ImageUploadProps) {
           dan lepas
         </p>
         <p className="text-xs text-center text-muted-foreground">
-          PNG, JPG, WEBP maks 4MB
+          PNG, JPG, WEBP maks 1MB per foto
         </p>
       </div>
 

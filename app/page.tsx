@@ -29,10 +29,12 @@ export default function Home() {
             Berkendara
           </h1>
 
-          <Button variant="dark" size="xl" className="mt-4 rounded-full px-8">
-            <Box className="w-5 h-5" />
-            Lihat Koleksi
-          </Button>
+          <Link href="/catalog">
+            <Button variant="dark" size="xl" className="mt-4 rounded-full px-8 cursor-pointer">
+              <Box className="w-5 h-5" />
+              Lihat Koleksi
+            </Button>
+          </Link>
         </div>
 
         <div className="md:w-full w-xl max-w-5xl mt-32 md:mt-8 md:mt-14 px-2 sm:px-0">

@@ -1,11 +1,10 @@
 import { z } from "zod";
-import { ProductType } from "@prisma/preflight"; // wait, the Prisma generated client should be "@prisma/client" I will use z.enum(["ACCESSORY", "SERVICE"]).
 
 export const createProductSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters").max(255),
   slug: z.string().max(255).optional(),
   type: z.enum(["ACCESSORY", "SERVICE"], {
-    required_error: "Please select a product type",
+    message: "Please select a product type",
   }),
   description: z.string().nullable().optional(),
   price: z.coerce.number().min(0, "Price must be greater than or equal to 0"),
@@ -17,7 +16,7 @@ export const updateProductSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters").max(255),
   slug: z.string().max(255).optional(),
   type: z.enum(["ACCESSORY", "SERVICE"], {
-    required_error: "Please select a product type",
+    message: "Please select a product type",
   }),
   description: z.string().nullable().optional(),
   price: z.coerce.number().min(0, "Price must be greater than or equal to 0"),

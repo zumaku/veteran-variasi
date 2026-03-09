@@ -55,7 +55,7 @@ export function ProductForm({ initialData }: ProductFormProps) {
   const schema = isEditing ? updateProductSchema : createProductSchema;
 
   const form = useForm<CreateProductInput | UpdateProductInput>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema as any),
     defaultValues: initialData
       ? {
           id: initialData.id,
@@ -83,6 +83,10 @@ export function ProductForm({ initialData }: ProductFormProps) {
   const handleRemoveImage = (url: string) => {
     setRemovedImages((prev) => [...prev, url]);
   };
+
+  const hasOversizedImage = images.some(
+    (img) => img instanceof File && img.size > 1 * 1024 * 1024,
+  );
 
   const onSubmit = (values: any) => {
     startTransition(async () => {
@@ -114,7 +118,7 @@ export function ProductForm({ initialData }: ProductFormProps) {
           Object.keys(result.errors).forEach((key) => {
             form.setError(key as any, {
               type: "server",
-              message: result.errors[key]?.[0],
+              message: (result.errors as Record<string, string[]>)[key]?.[0],
             });
           });
         }
@@ -130,7 +134,7 @@ export function ProductForm({ initialData }: ProductFormProps) {
         className="space-y-6 max-w-2xl"
       >
         <FormField
-          control={form.control}
+          control={form.control as any}
           name="name"
           render={({ field }) => (
             <FormItem>
@@ -144,7 +148,7 @@ export function ProductForm({ initialData }: ProductFormProps) {
         />
 
         <FormField
-          control={form.control}
+          control={form.control as any}
           name="type"
           render={({ field }) => (
             <FormItem>
@@ -167,7 +171,7 @@ export function ProductForm({ initialData }: ProductFormProps) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
-            control={form.control}
+            control={form.control as any}
             name="price"
             render={({ field }) => (
               <FormItem>
@@ -181,7 +185,7 @@ export function ProductForm({ initialData }: ProductFormProps) {
           />
 
           <FormField
-            control={form.control}
+            control={form.control as any}
             name="stock"
             render={({ field }) => (
               <FormItem>
@@ -205,7 +209,7 @@ export function ProductForm({ initialData }: ProductFormProps) {
         </div>
 
         <FormField
-          control={form.control}
+          control={form.control as any}
           name="description"
           render={({ field }) => (
             <FormItem>
@@ -230,6 +234,12 @@ export function ProductForm({ initialData }: ProductFormProps) {
             onChange={setImages}
             onRemove={handleRemoveImage}
           />
+          {hasOversizedImage && (
+            <p className="text-sm font-medium text-destructive mt-2">
+              Terdapat foto yang ukurannya melebihi batas 1MB. Silakan kurangi
+              ukuran foto tersebut.
+            </p>
+          )}
         </div>
 
         <div className="flex justify-end gap-4">
@@ -241,7 +251,7 @@ export function ProductForm({ initialData }: ProductFormProps) {
           >
             Batal
           </Button>
-          <Button type="submit" disabled={isPending}>
+          <Button type="submit" disabled={isPending || hasOversizedImage}>
             {isPending ? "Menyimpan..." : "Simpan Produk"}
           </Button>
         </div>

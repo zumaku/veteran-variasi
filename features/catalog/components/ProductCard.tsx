@@ -84,11 +84,11 @@ export default function ProductCard({
             {rupiahConverter(product.price.toNumber())}
           </span>
           <div className="flex gap-2">
-            <Link href={`/catalog/${product.slug}`}>
+            {/* <Link href={`/catalog/${product.slug}`}>
               <Button variant="outline" className="cursor-pointer">
                 Detail
               </Button>
-            </Link>
+            </Link> */}
             <AddToCartButton productId={product.id} />
           </div>
         </div>
