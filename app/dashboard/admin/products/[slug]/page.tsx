@@ -56,7 +56,7 @@ export default async function ProductDetailsPage({
 
   const product = await prisma.product.findUnique({
     where: { slug: resolvedParams.slug },
-    include: { images: true },
+    include: { images: true, categories: true },
   });
 
   if (!product) {
@@ -80,92 +80,104 @@ export default async function ProductDetailsPage({
           </div>
         </div>
         <Button asChild>
-          <Link href={`/dashboard/admin/products/${product.id}/edit`}>
+          <Link href={`/dashboard/admin/products/${product.slug}/edit`}>
             <Edit className="mr-2 h-4 w-4" /> Edit Produk
           </Link>
         </Button>
       </div>
 
-      <div className="mt-8 grid gap-6 md:grid-cols-2">
+      <div className="mt-8 flex flex-col gap-6">
         <div className="border rounded-xl p-6 bg-white dark:bg-zinc-950 shadow-sm space-y-6">
           <h3 className="text-xl font-semibold border-b pb-4 flex items-center gap-2">
-            <Package className="h-5 w-5 text-primary" /> Informasi Dasar
+            <Package className="h-5 w-5 text-primary" /> Informasi Produk
           </h3>
 
-          <div className="space-y-4">
-            <div>
-              <p className="text-sm font-medium text-muted-foreground flex items-center gap-2 mb-1">
-                <Text className="h-4 w-4" /> Nama Produk
-              </p>
-              <p className="text-lg font-medium">{product.name}</p>
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="space-y-4">
+              <div>
+                <p className="text-sm font-medium text-muted-foreground flex items-center gap-2 mb-1">
+                  <Text className="h-4 w-4" /> Nama Produk
+                </p>
+                <p className="text-lg font-medium">{product.name}</p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground flex items-center gap-2 mb-1">
+                    <Tag className="h-4 w-4" /> Tipe
+                  </p>
+                  <div className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary/10 text-primary">
+                    {product.type === "ACCESSORY" ? "Aksesoris" : "Layanan"}
+                  </div>
+                </div>
+
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground flex items-center gap-2 mb-1">
+                    <Package className="h-4 w-4" /> Kategori
+                  </p>
+                  <div className="flex flex-wrap gap-2 mt-1">
+                    {product.categories && product.categories.length > 0 ? (
+                      product.categories.map((cat) => (
+                        <span
+                          key={cat.id}
+                          className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary text-secondary-foreground"
+                        >
+                          {cat.name}
+                        </span>
+                      ))
+                    ) : (
+                      <span className="text-sm text-muted-foreground italic">
+                        Belum ada kategori
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div>
-              <p className="text-sm font-medium text-muted-foreground flex items-center gap-2 mb-1">
-                <Hash className="h-4 w-4" /> Slug URL
-              </p>
-              <p className="text-lg font-medium text-muted-foreground bg-muted/50 p-2 rounded inline-block font-mono text-sm">
-                {product.slug}
-              </p>
-            </div>
+            <div className="space-y-4">
+              <div>
+                <p className="text-sm font-medium text-muted-foreground flex items-center gap-2 mb-1">
+                  <Coins className="h-4 w-4" /> Harga
+                </p>
+                <p className="text-2xl font-bold text-green-600 dark:text-green-500">
+                  {new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                    maximumFractionDigits: 0,
+                  }).format(Number(product.price))}
+                </p>
+              </div>
 
-            <div>
-              <p className="text-sm font-medium text-muted-foreground flex items-center gap-2 mb-1">
-                <Tag className="h-4 w-4" /> Tipe
-              </p>
-              <div className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary/10 text-primary">
-                {product.type === "ACCESSORY" ? "Aksesoris" : "Layanan"}
+              <div>
+                <p className="text-sm font-medium text-muted-foreground flex items-center gap-2 mb-1">
+                  <Layers className="h-4 w-4" /> Stok Tersedia
+                </p>
+                <p className="text-lg font-medium">
+                  {product.stock !== null
+                    ? product.stock
+                    : "Tidak Terbatas (N/A)"}
+                </p>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="border flex-1 rounded-xl p-6 bg-white dark:bg-zinc-950 shadow-sm space-y-6">
-          <h3 className="text-xl font-semibold border-b pb-4 flex items-center gap-2">
-            <Coins className="h-5 w-5 text-primary" /> Harga & Inventaris
-          </h3>
+          <div>
+            <p className="text-sm font-medium text-muted-foreground flex items-center gap-2 mb-1">
+              <Text className="h-4 w-4" /> Deskripsi Produk
+            </p>
 
-          <div className="space-y-4">
-            <div>
-              <p className="text-sm font-medium text-muted-foreground flex items-center gap-2 mb-1">
-                <Coins className="h-4 w-4" /> Harga
-              </p>
-              <p className="text-2xl font-bold text-green-600 dark:text-green-500">
-                {new Intl.NumberFormat("id-ID", {
-                  style: "currency",
-                  currency: "IDR",
-                  maximumFractionDigits: 0,
-                }).format(Number(product.price))}
-              </p>
-            </div>
-
-            <div>
-              <p className="text-sm font-medium text-muted-foreground flex items-center gap-2 mb-1">
-                <Layers className="h-4 w-4" /> Stok Tersedia
-              </p>
-              <p className="text-lg font-medium">
-                {product.stock !== null
-                  ? product.stock
-                  : "Tidak Terbatas (N/A)"}
-              </p>
+            <div className="bg-muted/30 rounded-lg whitespace-pre-wrap">
+              {product.description || (
+                <span className="text-muted-foreground italic">
+                  Tidak ada deskripsi yang ditambahkan untuk produk ini.
+                </span>
+              )}
             </div>
           </div>
         </div>
 
-        <div className="border rounded-xl p-6 bg-white dark:bg-zinc-950 shadow-sm md:col-span-2 space-y-6">
-          <h3 className="text-xl font-semibold border-b pb-4 flex items-center gap-2">
-            <Text className="h-5 w-5 text-primary" /> Deskripsi Produk
-          </h3>
-
-          <div className="bg-muted/30 p-4 rounded-lg min-h-[150px] whitespace-pre-wrap">
-            {product.description || (
-              <span className="text-muted-foreground italic">
-                Tidak ada deskripsi yang ditambahkan untuk produk ini.
-              </span>
-            )}
-          </div>
-        </div>
-        <div className="border rounded-xl p-6 bg-white dark:bg-zinc-950 shadow-sm md:col-span-2 space-y-6">
+        <div className="border rounded-xl p-6 bg-white dark:bg-zinc-950 shadow-sm space-y-6">
           <h3 className="text-xl font-semibold border-b pb-4 flex items-center gap-2">
             <ImageIcon className="h-5 w-5 text-primary" /> Foto Produk
           </h3>

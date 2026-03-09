@@ -97,8 +97,13 @@ export function ProductForm({ initialData, categories }: ProductFormProps) {
     startTransition(async () => {
       const formData = new FormData();
       Object.keys(values).forEach((key) => {
-        if (values[key] !== null && values[key] !== undefined) {
-          formData.append(key, values[key].toString());
+        const val = (values as any)[key];
+        if (val !== null && val !== undefined) {
+          if (Array.isArray(val)) {
+            val.forEach((item) => formData.append(key, item.toString()));
+          } else {
+            formData.append(key, val.toString());
+          }
         }
       });
 

@@ -186,7 +186,7 @@ async function main() {
       description: 'Lampu utama LED H4 dengan lensa projector mini. Cahaya putih terang dan cut-off rapi.',
       price: 550000,
       stock: 50,
-      images: { create: [{ url: 'https://images.unsplash.com/photo-1601362840468-51e4d8d58785?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }] },
+      images: { create: [{ url: 'https://images.unsplash.com/photo-1601362840469-51e4d8d58785?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }, { url: 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=800&q=80' }] },
       categories: { connect: [{ id: categoryEksterior.id }] }
     },
   })

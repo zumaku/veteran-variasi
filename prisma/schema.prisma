@@ -119,7 +119,7 @@ model OrderItem {
   priceAtBooking Decimal @map("price_at_booking") @db.Decimal(10, 2)
 
   order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  product Product @relation(fields: [productId], references: [id], onDelete: Restrict)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@map("order_items")
 }

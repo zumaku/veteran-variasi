@@ -72,17 +72,18 @@ export async function createProductAction(prevState: any, formData: FormData) {
       },
     });
 
+    revalidatePath("/dashboard/admin/products");
+    redirect(`/dashboard/admin/products/${slug}`);
   } catch (error) {
+    if (error instanceof Error && error.message === "NEXT_REDIRECT") {
+      throw error;
+    }
     console.error("Error creating product:", error);
     return {
       success: false,
       message: "Failed to create product. Please try again later.",
     };
   }
-
-  // Next.js redirect must be outside try-catch to work correctly
-  revalidatePath("/dashboard/admin/products");
-  redirect("/dashboard/admin/products");
 }
 
 /**
@@ -174,9 +175,18 @@ export async function updateProductAction(prevState: any, formData: FormData) {
     };
   }
 
+  const updatedProduct = await prisma.product.findUnique({
+    where: { id: Number(formData.get("id")) },
+    select: { slug: true },
+  });
+
   revalidatePath("/dashboard/admin/products");
-  revalidatePath(`/dashboard/admin/products/${formData.get("id")}`);
-  redirect("/dashboard/admin/products");
+  if (updatedProduct) {
+    revalidatePath(`/dashboard/admin/products/${updatedProduct.slug}`);
+    redirect(`/dashboard/admin/products/${updatedProduct.slug}`);
+  } else {
+    redirect("/dashboard/admin/products");
+  }
 }
 
 /**
@@ -185,13 +195,41 @@ export async function updateProductAction(prevState: any, formData: FormData) {
  */
 export async function deleteProductAction(id: number) {
   try {
+    // 1. Get image URLs before they are deleted via Cascade
+    const product = await prisma.product.findUnique({
+      where: { id },
+      select: { images: { select: { url: true } } },
+    });
+
+    const imageUrls = product?.images.map((img) => img.url) || [];
+
+    // 2. Delete the product (Cascades will hit images and order items)
     await prisma.product.delete({
       where: { id },
     });
+
+    // 3. Delete physical files from disk
+    imageUrls.forEach((url) => {
+      try {
+        const filePath = join(process.cwd(), "public", url);
+        unlinkSync(filePath);
+      } catch (e) {
+        console.error("Failed to delete local image file during product deletion:", url, e);
+      }
+    });
+
     revalidatePath("/dashboard/admin/products");
     return { success: true };
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error deleting product:", error);
-    return { success: false, message: "Failed to delete product" };
+    
+    if (error.code === 'P2003') {
+      return { 
+        success: false, 
+        message: "Gagal menghapus produk karena masih ada pesanan yang menggunakan produk ini. Anda harus menghapus pesanan terkait terlebih dahulu atau hubungi developer untuk merubah mode penghapusan." 
+      };
+    }
+    
+    return { success: false, message: "Gagal menghapus produk. Terjadi kesalahan pada server." };
   }
 }

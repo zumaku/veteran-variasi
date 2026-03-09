@@ -28,6 +28,7 @@ import { DeleteProductDialog } from "./DeleteProductDialog";
 type SerializedProduct = Omit<Product, "price"> & {
   price: number;
   images?: ProductImage[];
+  categories?: { id: number; name: string }[];
 };
 
 interface ProductTableProps {
@@ -76,6 +77,7 @@ export function ProductTable({ products }: ProductTableProps) {
               <TableHead className="w-[60px]">Foto</TableHead>
               <TableHead>Nama</TableHead>
               <TableHead>Tipe</TableHead>
+              <TableHead>Kategori</TableHead>
               <TableHead>Harga</TableHead>
               <TableHead>Stok</TableHead>
               <TableHead className="w-[80px]">Aksi</TableHead>
@@ -122,6 +124,20 @@ export function ProductTable({ products }: ProductTableProps) {
                     {product.type === "ACCESSORY" ? "Aksesoris" : "Layanan"}
                   </TableCell>
                   <TableCell>
+                    <div className="flex flex-wrap gap-1">
+                      {product.categories && product.categories.length > 0
+                        ? product.categories.map((c) => (
+                            <span
+                              key={c.id}
+                              className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary text-secondary-foreground"
+                            >
+                              {c.name}
+                            </span>
+                          ))
+                        : "-"}
+                    </div>
+                  </TableCell>
+                  <TableCell>
                     {new Intl.NumberFormat("id-ID", {
                       style: "currency",
                       currency: "IDR",
@@ -134,7 +150,10 @@ export function ProductTable({ products }: ProductTableProps) {
                   <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0 cursor-pointer">
+                        <Button
+                          variant="ghost"
+                          className="h-8 w-8 p-0 cursor-pointer"
+                        >
                           <span className="sr-only">Buka menu</span>
                           <MoreHorizontal className="h-4 w-4" />
                         </Button>
@@ -151,7 +170,7 @@ export function ProductTable({ products }: ProductTableProps) {
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
                           <Link
-                            href={`/dashboard/admin/products/${product.id}/edit`}
+                            href={`/dashboard/admin/products/${product.slug}/edit`}
                             className="cursor-pointer"
                           >
                             <Edit className="mr-2 h-4 w-4" /> Edit
