@@ -44,6 +44,8 @@ async function main() {
       password_hash: '$2b$10$6G9NUN42SD.XKIG1V2s3HeWt6xoWg/C4DRlOO8pK5md1oksXl7cLu',
       role: Role.CUSTOMER,
       phone: '089876543210',
+      address: 'Di Jalanin Aja Dulu No. 23',
+      image_url: '/uploads/profiles/59a951b815b9d803d8d9c12b5cc7f99b.jpeg',
     },
   })
 
