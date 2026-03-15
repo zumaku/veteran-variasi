@@ -63,7 +63,7 @@ async function main() {
           slug: 'nuaim-civic-2020',
           year: 2020,
           licensePlate: 'B 1234 ABC',
-          image: 'https://di-uploads-pod11.dealerinspire.com/hondaofkirkland/uploads/2020/06/2020-Civic-Sedan-LX.jpeg',
+          image: 'https://images.unsplash.com/photo-1580274455191-1c62238fa333?auto=format&fit=crop&w=800&q=80',
         },
     })
     
