@@ -64,7 +64,7 @@ export function ProductTable({ products }: ProductTableProps) {
           />
         </div>
         <Button asChild>
-          <Link href="/admin/products/create">
+          <Link href="/dashboard/admin/products/create">
             <Plus className="mr-2 h-4 w-4" /> Tambah Produk
           </Link>
         </Button>
@@ -114,7 +114,7 @@ export function ProductTable({ products }: ProductTableProps) {
                   </TableCell>
                   <TableCell className="font-medium">
                     <Link
-                      href={`/admin/products/${product.slug}`}
+                      href={`/dashboard/admin/products/${product.slug}`}
                       className="cursor-pointer font-bold"
                     >
                       {product.name}

@@ -74,9 +74,6 @@ export default async function ProductDetailsPage({
           </Button>
           <div className="grid">
             <h2 className="text-3xl font-bold tracking-tight">Detail Produk</h2>
-            <p className="text-muted-foreground w-full">
-              Melihat informasi lengkap produk.
-            </p>
           </div>
         </div>
         <Button asChild>

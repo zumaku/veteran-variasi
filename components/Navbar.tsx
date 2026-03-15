@@ -13,8 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
-import { Menu, Search, X, LogOut } from "lucide-react";
-import { logout } from "@/app/auth/actions";
+import { Menu, Search, X } from "lucide-react";
 
 export default function Navbar({
   user,
@@ -127,19 +126,10 @@ export default function Navbar({
                   if (isMobileMenuOpen) setIsMobileMenuOpen(false);
                 }}
               >
-                {user.name}
-              </Link>
-              <form action={logout}>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  type="submit"
-                  className="gap-2 cursor-pointer"
-                >
-                  <LogOut className="h-4 w-4" />
-                  Keluar
+                <Button className="cursor-pointer">
+                  Dashboard
                 </Button>
-              </form>
+              </Link>
             </div>
           ) : (
             <>
@@ -230,16 +220,6 @@ export default function Navbar({
                       Dashboard ({user.name})
                     </Button>
                   </Link>
-                  <form action={logout} className="w-full">
-                    <Button
-                      variant="outline"
-                      className="w-full justify-center gap-2 cursor-pointer"
-                      type="submit"
-                    >
-                      <LogOut className="h-4 w-4" />
-                      Keluar
-                    </Button>
-                  </form>
                 </div>
               ) : (
                 <>

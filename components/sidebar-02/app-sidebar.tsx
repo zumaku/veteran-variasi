@@ -19,6 +19,7 @@ import {
   ClipboardList,
   Package,
   Blocks,
+  LogOutIcon,
 } from "lucide-react";
 import { Logo } from "@/components/sidebar-02/logo";
 import type { Route } from "./nav-main";
@@ -26,6 +27,8 @@ import DashboardNavigation from "@/components/sidebar-02/nav-main";
 import { NotificationsPopover } from "@/components/sidebar-02/nav-notifications";
 import Link from "next/link";
 import Image from "next/image";
+import { Button } from "../ui/button";
+import { logout } from "@/app/auth/actions";
 
 const sampleNotifications = [
   {
@@ -136,15 +139,12 @@ export function DashboardSidebar({
             : "flex-row items-center justify-between",
         )}
       >
-        <Link
-          href="/"
-          className="flex items-center gap-2"
-        >
+        <Link href="/" className="flex items-center gap-2">
           <Image src="/logo.png" alt="Logo" width={24} height={24} />
           <p
             className={cn(
               "font-bold font-montserrat leading-none text-xs md:text-sm",
-              isCollapsed ? "hidden" : "hidden sm:block"
+              isCollapsed ? "hidden" : "hidden sm:block",
             )}
           >
             Veteran Variasi
@@ -165,8 +165,18 @@ export function DashboardSidebar({
           <SidebarTrigger />
         </motion.div>
       </SidebarHeader>
-      <SidebarContent className="gap-4 px-2 py-4">
+      <SidebarContent className="gap-4 px-2 py-4 flex flex-col justify-between">
         <DashboardNavigation routes={routesToRender} />
+        <form action={logout}>
+          <Button
+            variant="outline"
+            size="sm"
+            className="border-destructive text-destructive hover:text-destructive cursor-pointer hover:bg-destructive/10 w-full"
+          >
+            <LogOutIcon />
+            {!isCollapsed && "Logout"}
+          </Button>
+        </form>
       </SidebarContent>
     </Sidebar>
   );
