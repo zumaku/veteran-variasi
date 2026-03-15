@@ -18,11 +18,14 @@ import {
   Car,
   ClipboardList,
   Package,
+  Blocks,
 } from "lucide-react";
 import { Logo } from "@/components/sidebar-02/logo";
 import type { Route } from "./nav-main";
 import DashboardNavigation from "@/components/sidebar-02/nav-main";
 import { NotificationsPopover } from "@/components/sidebar-02/nav-notifications";
+import Link from "next/link";
+import Image from "next/image";
 
 const sampleNotifications = [
   {
@@ -103,7 +106,7 @@ const adminRoutes: Route[] = [
   {
     id: "manage-categories",
     title: "Kelola Kategori",
-    icon: <Package className="size-4" />,
+    icon: <Blocks className="size-4" />,
     link: "/dashboard/admin/categories",
   },
   {
@@ -129,18 +132,24 @@ export function DashboardSidebar({
         className={cn(
           "flex md:pt-3.5",
           isCollapsed
-            ? "flex-row items-center justify-between gap-y-4 md:flex-col md:items-start md:justify-start"
+            ? "flex-row items-center justify-between gap-y-4 md:flex-col md:items-center md:justify-start"
             : "flex-row items-center justify-between",
         )}
       >
-        {/* <a href="#" className="flex items-center gap-2">
-          <Logo className="h-8 w-8" />
-          {!isCollapsed && (
-            <span className="font-semibold text-black dark:text-white font-montserrat">
-              Veteran
-            </span>
-          )}
-        </a> */}
+        <Link
+          href="/"
+          className="flex items-center gap-2"
+        >
+          <Image src="/logo.png" alt="Logo" width={24} height={24} />
+          <p
+            className={cn(
+              "font-bold font-montserrat leading-none text-xs md:text-sm",
+              isCollapsed ? "hidden" : "hidden sm:block"
+            )}
+          >
+            Veteran Variasi
+          </p>
+        </Link>
 
         <motion.div
           key={isCollapsed ? "header-collapsed" : "header-expanded"}

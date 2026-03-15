@@ -64,7 +64,7 @@ export async function updateProfileAction(prevState: any, formData: FormData) {
       data: updateData,
     });
 
-    revalidatePath("/dashboard/profile");
+    revalidatePath("/profile");
     return { success: true, message: "Profil berhasil diperbarui." };
   } catch (error) {
     console.error("Error updating profile:", error);

@@ -1,8 +1,15 @@
+import type { Metadata } from "next";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { DashboardSidebar } from "@/components/sidebar-02/app-sidebar";
 import { getSession } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
+import { DashboardSidebar } from "@/components/sidebar-02/app-sidebar";
 
+
+
+export const metadata: Metadata = {
+  title: "Veteran Variasi",
+  description: "Rawat Mobil Anda Tanpa Antri Lama",
+};
 export default async function DashboardLayout({
   children,
 }: {

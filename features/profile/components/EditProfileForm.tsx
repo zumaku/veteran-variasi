@@ -86,7 +86,7 @@ export function EditProfileForm({ user }: EditProfileFormProps) {
 
     const result = await updateProfileAction(null, formData);
     if (result?.success) {
-      router.push("/dashboard/profile");
+      router.push("/profile");
       router.refresh();
     }
   }

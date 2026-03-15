@@ -67,7 +67,7 @@ export function CategoryTable({ categories }: CategoryTableProps) {
               <TableRow key={category.id}>
                 <TableCell className="font-medium">
                   <Link
-                    href={`/dashboard/admin/categories/${category.slug}`}
+                    href={`/admin/categories/${category.slug}`}
                     className="font-bold"
                   >
                     {category.name}
@@ -92,7 +92,7 @@ export function CategoryTable({ categories }: CategoryTableProps) {
                       <DropdownMenuSeparator />
                       <DropdownMenuItem asChild className="cursor-pointer">
                         <Link
-                          href={`/dashboard/admin/categories/${category.slug}`}
+                          href={`/admin/categories/${category.slug}`}
                           className="flex items-center"
                         >
                           <Eye className="mr-2 h-4 w-4" />
@@ -101,7 +101,7 @@ export function CategoryTable({ categories }: CategoryTableProps) {
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild className="cursor-pointer">
                         <Link
-                          href={`/dashboard/admin/categories/${category.slug}/edit`}
+                          href={`/admin/categories/${category.slug}/edit`}
                           className="flex items-center"
                         >
                           <Edit className="mr-2 h-4 w-4" />

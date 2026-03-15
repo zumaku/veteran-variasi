@@ -68,7 +68,7 @@ export async function createCategoryAction(
       },
     });
 
-    revalidatePath("/dashboard/admin/categories");
+    revalidatePath("/admin/categories");
     return { success: true };
   } catch (error) {
     console.error("Error creating category:", error);
@@ -119,7 +119,7 @@ export async function updateCategoryAction(
       },
     });
 
-    revalidatePath("/dashboard/admin/categories");
+    revalidatePath("/admin/categories");
     return { success: true };
   } catch (error) {
     console.error("Error updating category:", error);
@@ -138,7 +138,7 @@ export async function deleteCategoryAction(id: number): Promise<ActionResponse> 
       where: { id },
     });
 
-    revalidatePath("/dashboard/admin/categories");
+    revalidatePath("/admin/categories");
     return { success: true };
   } catch (error) {
     console.error("Error deleting category:", error);

@@ -76,7 +76,7 @@ export function CategoryForm({ initialData }: CategoryFormProps) {
           alert(result.message);
         }
       } else {
-        router.push("/dashboard/admin/categories");
+        router.push("/admin/categories");
         router.refresh();
       }
     });

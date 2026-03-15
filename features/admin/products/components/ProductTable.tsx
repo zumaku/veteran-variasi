@@ -64,7 +64,7 @@ export function ProductTable({ products }: ProductTableProps) {
           />
         </div>
         <Button asChild>
-          <Link href="/dashboard/admin/products/create">
+          <Link href="/admin/products/create">
             <Plus className="mr-2 h-4 w-4" /> Tambah Produk
           </Link>
         </Button>
@@ -114,7 +114,7 @@ export function ProductTable({ products }: ProductTableProps) {
                   </TableCell>
                   <TableCell className="font-medium">
                     <Link
-                      href={`/dashboard/admin/products/${product.slug}`}
+                      href={`/admin/products/${product.slug}`}
                       className="cursor-pointer font-bold"
                     >
                       {product.name}
@@ -162,7 +162,7 @@ export function ProductTable({ products }: ProductTableProps) {
                         <DropdownMenuLabel>Aksi</DropdownMenuLabel>
                         <DropdownMenuItem asChild>
                           <Link
-                            href={`/dashboard/admin/products/${product.slug}`}
+                            href={`/admin/products/${product.slug}`}
                             className="cursor-pointer"
                           >
                             <Eye className="mr-2 h-4 w-4" /> Detail
@@ -170,7 +170,7 @@ export function ProductTable({ products }: ProductTableProps) {
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
                           <Link
-                            href={`/dashboard/admin/products/${product.slug}/edit`}
+                            href={`/admin/products/${product.slug}/edit`}
                             className="cursor-pointer"
                           >
                             <Edit className="mr-2 h-4 w-4" /> Edit

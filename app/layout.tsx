@@ -3,6 +3,7 @@ import { Montserrat, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ConditionalLayout from "@/components/ConditionalLayout";
 import { getSession } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
 
@@ -41,9 +42,12 @@ export default async function RootLayout({
       <body
         className={`${montserrat.variable} ${inter.variable} font-inter antialiased`}
       >
-        <Navbar user={user} />
-        <main>{children}</main>
-        <Footer />
+        <ConditionalLayout 
+          navbar={<Navbar user={user} />}
+          footer={<Footer />}
+        >
+          <main>{children}</main>
+        </ConditionalLayout>
       </body>
     </html>
   );

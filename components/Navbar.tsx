@@ -63,7 +63,7 @@ export default function Navbar({
   }, [isMobileMenuOpen]);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <Image src="/logo.png" alt="Logo" width={35} height={35} />
@@ -221,7 +221,7 @@ export default function Navbar({
               </Dialog>
               {user ? (
                 <div className="flex flex-col gap-3">
-                  <Link href="/dashboard" passHref>
+                  <Link href="/profile" passHref>
                     <Button
                       variant="ghost"
                       className="w-full justify-center font-medium cursor-pointer"

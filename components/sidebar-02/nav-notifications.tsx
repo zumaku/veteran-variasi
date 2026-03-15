@@ -34,7 +34,7 @@ export function NotificationsPopover({
           className="rounded-full"
           aria-label="Open notifications"
         >
-          <BellIcon className="size-5" />
+          <BellIcon className="size-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent side="right" className="w-80 my-6">
