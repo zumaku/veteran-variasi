@@ -23,6 +23,7 @@ import {
 } from "../validations";
 import { createCategoryAction, updateCategoryAction } from "../actions";
 import { useRouter } from "next/navigation";
+import { toast } from "@/lib/toast-store";
 
 interface CategoryFormProps {
   initialData?: Category | null;
@@ -73,9 +74,10 @@ export function CategoryForm({ initialData }: CategoryFormProps) {
           });
         }
         if (result.message) {
-          alert(result.message);
+          toast.error(result.message);
         }
       } else {
+        toast.success(result?.message || "Kategori berhasil disimpan");
         router.push("/admin/categories");
         router.refresh();
       }

@@ -13,7 +13,7 @@ export async function createCarAction(prevState: any, formData: FormData) {
       userId: Number(formData.get("userId")),
       brand: formData.get("brand"),
       model: formData.get("model"),
-      year: formData.get("year"),
+      year: Number(formData.get("year")),
       licensePlate: formData.get("licensePlate"),
     };
 
@@ -81,7 +81,7 @@ export async function updateCarAction(prevState: any, formData: FormData) {
       userId: Number(formData.get("userId")),
       brand: formData.get("brand"),
       model: formData.get("model"),
-      year: formData.get("year"),
+      year: Number(formData.get("year")),
       licensePlate: formData.get("licensePlate"),
     };
 
@@ -91,7 +91,7 @@ export async function updateCarAction(prevState: any, formData: FormData) {
       return {
         success: false,
         errors: validatedData.error.flatten().fieldErrors,
-        message: "Lengkapi data dengan benar.",
+        message: "Data tidak valid. Periksa kembali isian Anda.",
       };
     }
 

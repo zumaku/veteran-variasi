@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ConditionalLayout from "@/components/ConditionalLayout";
+import { Toaster } from "@/components/ui/custom-toaster";
 import { getSession } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
 
@@ -48,6 +49,7 @@ export default async function RootLayout({
         >
           <main>{children}</main>
         </ConditionalLayout>
+        <Toaster />
       </body>
     </html>
   );

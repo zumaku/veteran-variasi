@@ -13,6 +13,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { deleteProductAction } from "../actions";
+import { toast } from "@/lib/toast-store";
 
 type SerializedProduct = Omit<Product, "price"> & { price: number };
 
@@ -42,9 +43,10 @@ export function DeleteProductDialog({
     startTransition(async () => {
       const result = await deleteProductAction(product.id);
       if (result.success) {
+        toast.success(result.message || "Produk berhasil dihapus");
         onOpenChange(false);
       } else {
-        alert(result.message || "Gagal menghapus produk");
+        toast.error(result.message || "Gagal menghapus produk");
       }
     });
   };

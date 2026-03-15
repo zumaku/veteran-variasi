@@ -23,6 +23,7 @@ import { Edit, MoreHorizontal, Trash2, Eye } from "lucide-react";
 import Link from "next/link";
 import { deleteCategoryAction } from "../actions";
 import { useRouter } from "next/navigation";
+import { toast } from "@/lib/toast-store";
 
 interface CategoryTableProps {
   categories: Category[];
@@ -37,9 +38,10 @@ export function CategoryTable({ categories }: CategoryTableProps) {
       startTransition(async () => {
         const result = await deleteCategoryAction(id);
         if (result.success) {
+          toast.success(result.message || "Kategori berhasil dihapus");
           router.refresh();
         } else {
-          alert(result.message || "Gagal menghapus kategori");
+          toast.error(result.message || "Gagal menghapus kategori");
         }
       });
     }

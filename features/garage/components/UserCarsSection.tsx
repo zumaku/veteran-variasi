@@ -3,8 +3,8 @@ import { getUserCars } from "../data/cars";
 import { CarCard } from "./CarCard";
 import { AddCarCard } from "./AddCarCard";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import { Plus } from "lucide-react";
-import { AddEditCarDialogWrapper } from "./AddEditCarDialogWrapper";
 import { CarWithLastService } from "../types";
 
 export default async function UserCarsSection() {
@@ -25,12 +25,12 @@ export default async function UserCarsSection() {
           </p>
         </div>
         
-        <AddEditCarDialogWrapper userId={userId}>
+        <Link href="/dashboard/user/garage/new">
             <Button className="hidden md:flex items-center gap-2 font-bold rounded-xl h-11">
               <Plus className="h-5 w-5" />
               Tambah Mobil Baru
             </Button>
-        </AddEditCarDialogWrapper>
+        </Link>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

@@ -28,3 +28,25 @@ export async function getCarById(id: number) {
     where: { id },
   });
 }
+
+export async function getCarBySlug(slug: string) {
+  const car = await prisma.car.findUnique({
+    where: { slug },
+    include: {
+      orders: {
+        include: {
+          items: {
+            include: {
+              product: true,
+            },
+          },
+        },
+        orderBy: {
+          bookingDate: "desc",
+        },
+      },
+    },
+  });
+
+  return car ? JSON.parse(JSON.stringify(car)) : null;
+}

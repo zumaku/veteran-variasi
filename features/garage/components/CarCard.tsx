@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { AddEditCarDialog } from "./AddEditCarDialog";
 import { CarWithLastService } from "../types";
 import { getRelativeTimeString } from "../utils/getRelativeTimeString";
 
@@ -13,8 +12,6 @@ interface CarCardProps {
 }
 
 export function CarCard({ car, userId }: CarCardProps) {
-  const [showEditDialog, setShowEditDialog] = useState(false);
-
   const lastService = car.orders[0]?.bookingDate;
   const lastServiceText = lastService
     ? getRelativeTimeString(new Date(lastService))
@@ -61,17 +58,12 @@ export function CarCard({ car, userId }: CarCardProps) {
           </div>
         </div>
 
-        <Button variant="dark" onClick={() => setShowEditDialog(true)}>
-          Detail
-        </Button>
+        <Link href={`/dashboard/user/garage/${car.slug}`}>
+          <Button variant="dark" className="w-full h-11 rounded-xl font-bold">
+            Detail
+          </Button>
+        </Link>
       </div>
-
-      <AddEditCarDialog
-        open={showEditDialog}
-        onOpenChange={setShowEditDialog}
-        userId={userId}
-        car={car}
-      />
     </div>
   );
 }

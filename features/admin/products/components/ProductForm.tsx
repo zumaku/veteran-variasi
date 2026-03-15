@@ -33,6 +33,7 @@ import {
 import { createProductAction, updateProductAction } from "../actions";
 import { useRouter } from "next/navigation";
 import { ImageUpload } from "./ImageUpload";
+import { toast } from "@/lib/toast-store";
 
 type SerializedProduct = Omit<Product, "price"> & {
   price: number;
@@ -132,7 +133,11 @@ export function ProductForm({ initialData, categories }: ProductFormProps) {
             });
           });
         }
-        alert(result.message || "An error occurred");
+        toast.error(result.message || "Terjadi kesalahan");
+      } else if (result?.success) {
+        toast.success(result.message);
+        router.push("/admin/products");
+        router.refresh();
       }
     });
   };
