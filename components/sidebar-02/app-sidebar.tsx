@@ -65,25 +65,25 @@ const customerRoutes: Route[] = [
     id: "profile",
     title: "Profil Saya",
     icon: <User className="size-4" />,
-    link: "/dashboard/profile",
+    link: "/dashboard/user/profile",
   },
   {
     id: "orders",
     title: "Pesananku",
     icon: <ShoppingBag className="size-4" />,
-    link: "/dashboard/orders",
+    link: "/dashboard/user/orders",
   },
   {
     id: "cars",
     title: "Mobil Saya",
     icon: <Car className="size-4" />,
-    link: "/dashboard/cars",
+    link: "/dashboard/user/cars",
   },
   {
     id: "settings",
     title: "Pengaturan",
     icon: <Settings className="size-4" />,
-    link: "/dashboard/settings",
+    link: "/dashboard/user/settings",
   },
 ];
 
