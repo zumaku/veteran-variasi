@@ -1,0 +1,76 @@
+'use server';
+
+import { getSession } from '@/lib/session';
+import { prisma } from '@/lib/prisma';
+import { redirect } from 'next/navigation';
+
+export async function submitCheckoutAction(formData: FormData) {
+  const session = await getSession();
+  if (!session || !session.userId) {
+    return { success: false, error: 'Unauthorized' };
+  }
+
+  const itemId = formData.get('itemId') as string;
+  const bookingDate = formData.get('bookingDate') as string;
+  const timeSlot = formData.get('timeSlot') as string;
+  const paymentMethod = formData.get('paymentMethod') as string;
+  const carId = formData.get('carId') as string;
+
+  if (!itemId || !bookingDate || !timeSlot || !paymentMethod || !carId) {
+    return { success: false, error: 'Harap lengkapi semua field yang diperlukan' };
+  }
+
+  let orderId;
+
+  try {
+    const cartItem = await prisma.cartItem.findUnique({
+      where: { id: parseInt(itemId) },
+      include: { product: true }
+    });
+
+    if (!cartItem) {
+      return { success: false, error: 'Item keranjang tidak ditemukan' };
+    }
+
+    const orderNumber = `ORD-${Date.now()}`;
+    const totalAmount = cartItem.quantity * Number(cartItem.product.price);
+    
+    // Set expiry 15 mins from now
+    const expiredAt = new Date(Date.now() + 15 * 60 * 1000);
+
+    const order = await prisma.order.create({
+      data: {
+        orderNumber,
+        userId: session.userId as number,
+        carId: parseInt(carId),
+        bookingDate: new Date(bookingDate),
+        timeSlot: parseInt(timeSlot),
+        totalAmount,
+        paymentMethod: paymentMethod as any,
+        status: 'PENDING',
+        expiredAt,
+        items: {
+          create: {
+            productId: cartItem.productId,
+            quantity: cartItem.quantity,
+            priceAtBooking: cartItem.product.price
+          }
+        }
+      } as any
+    });
+
+    // Delete from cart since it has been converted to an order
+    await prisma.cartItem.delete({
+      where: { id: cartItem.id }
+    });
+
+    orderId = order.id;
+
+  } catch (err) {
+    console.error(err);
+    return { success: false, error: 'Terjadi kesalahan saat membuat pesanan' };
+  }
+
+  // Redirect after checkout
+  redirect(`/dashboard/user/pesananku`); // Orders page
+}

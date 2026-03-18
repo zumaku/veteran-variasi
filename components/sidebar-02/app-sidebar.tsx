@@ -20,6 +20,7 @@ import {
   Package,
   Blocks,
   LogOutIcon,
+  ShoppingCartIcon,
 } from "lucide-react";
 import { Logo } from "@/components/sidebar-02/logo";
 import type { Route } from "./nav-main";
@@ -62,10 +63,10 @@ const customerRoutes: Route[] = [
     link: "/dashboard",
   },
   {
-    id: "profile",
-    title: "Profil Saya",
-    icon: <User className="size-4" />,
-    link: "/dashboard/user/profile",
+    id: "cart",
+    title: "Keranjang Saya",
+    icon: <ShoppingCartIcon className="size-4" />,
+    link: "/dashboard/user/cart",
   },
   {
     id: "orders",
@@ -74,10 +75,10 @@ const customerRoutes: Route[] = [
     link: "/dashboard/user/orders",
   },
   {
-    id: "cars",
-    title: "Mobil Saya",
-    icon: <Car className="size-4" />,
-    link: "/dashboard/user/cars",
+    id: "profile",
+    title: "Profil Saya",
+    icon: <User className="size-4" />,
+    link: "/dashboard/user/profile",
   },
   {
     id: "settings",
@@ -130,7 +131,7 @@ export function DashboardSidebar({
   const routesToRender = user?.role === "ADMIN" ? adminRoutes : customerRoutes;
 
   return (
-    <Sidebar variant="inset" collapsible="icon">
+    <Sidebar variant="inset" collapsible="icon" className="border-r">
       <SidebarHeader
         className={cn(
           "flex md:pt-3.5",

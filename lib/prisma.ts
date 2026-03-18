@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import { PrismaMariaDb } from '@prisma/adapter-mariadb'
 
-const globalForPrisma = globalThis as unknown as { prisma: PrismaClient }
+const globalForPrisma = globalThis as unknown as { prisma_cart: PrismaClient }
 
 const dbUrl = new URL(process.env.DATABASE_URL || 'mysql://localhost:3306/veteran_variasi')
 const adapter = new PrismaMariaDb({
@@ -12,6 +12,6 @@ const adapter = new PrismaMariaDb({
   database: dbUrl.pathname.slice(1),
 })
 
-export const prisma = globalForPrisma.prisma || new PrismaClient({ adapter })
+export const prisma = globalForPrisma.prisma_cart || new PrismaClient({ adapter })
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma_cart = prisma

@@ -19,6 +19,7 @@ model User {
   createdAt     DateTime @default(now()) @map("created_at")
   cars          Car[]
   orders        Order[]
+  cart          Cart?
 
   @@map("users")
 }
@@ -49,6 +50,7 @@ model Product {
   price       Decimal        @db.Decimal(10, 2)
   stock       Int?
   orderItems  OrderItem[]
+  cartItems   CartItem[]
   images      ProductImage[]
   categories  Category[]     @relation("CategoryToProduct")
 
@@ -66,20 +68,21 @@ model Category {
 }
 
 model Order {
-  id           Int         @id @default(autoincrement())
-  orderNumber  String      @unique @map("order_number") @db.VarChar(50)
-  userId       Int         @map("user_id")
-  carId        Int         @map("car_id")
-  bookingDate  DateTime    @map("booking_date") @db.Date
-  timeSlot     Int         @map("time_slot")
-  totalAmount  Decimal     @map("total_amount") @db.Decimal(10, 2)
-  status       OrderStatus @default(PENDING)
-  paymentToken String?     @map("payment_token") @db.VarChar(255)
-  expiredAt    DateTime?   @map("expired_at")
-  createdAt    DateTime    @default(now()) @map("created_at")
+  id           Int           @id @default(autoincrement())
+  orderNumber  String        @unique @map("order_number") @db.VarChar(50)
+  userId       Int           @map("user_id")
+  carId        Int?          @map("car_id")
+  bookingDate  DateTime?     @map("booking_date") @db.Date
+  timeSlot     Int?          @map("time_slot")
+  totalAmount  Decimal       @map("total_amount") @db.Decimal(10, 2)
+  status       OrderStatus   @default(PENDING)
+  paymentMethod PaymentMethod @default(TRANSFER_BANK) @map("payment_method")
+  paymentToken String?       @map("payment_token") @db.VarChar(255)
+  expiredAt    DateTime?     @map("expired_at")
+  createdAt    DateTime      @default(now()) @map("created_at")
   items        OrderItem[]
-  car          Car         @relation(fields: [carId], references: [id])
-  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  car          Car?          @relation(fields: [carId], references: [id])
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   review       Review?
 
   @@index([carId], map: "orders_car_id_fkey")
@@ -147,4 +150,38 @@ enum OrderStatus {
   PROCESSING
   COMPLETED
   CANCELLED
+}
+
+enum PaymentMethod {
+  TRANSFER_BANK
+  E_WALLET
+  BAYAR_DI_BENGKEL
+}
+
+model Cart {
+  id        Int        @id @default(autoincrement())
+  userId    Int?       @unique @map("user_id")
+  sessionId String?    @map("session_id") @db.VarChar(255)
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
+  user      User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items     CartItem[]
+
+  @@index([sessionId])
+  @@map("carts")
+}
+
+model CartItem {
+  id        Int      @id @default(autoincrement())
+  cartId    Int      @map("cart_id")
+  productId Int      @map("product_id")
+  quantity  Int      @default(1)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([cartId])
+  @@index([productId])
+  @@map("cart_items")
 }
