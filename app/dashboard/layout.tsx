@@ -28,7 +28,7 @@ export default async function DashboardLayout({
   return (
     <SidebarProvider>
       <DashboardSidebar user={user} />
-      <div className="w-full flex-1 overflow-hidden">{children}</div>
+      <div className="w-full flex-1">{children}</div>
     </SidebarProvider>
   );
 }

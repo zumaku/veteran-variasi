@@ -72,5 +72,87 @@ export async function submitCheckoutAction(formData: FormData) {
   }
 
   // Redirect after checkout
-  redirect(`/dashboard/user/pesananku`); // Orders page
+  redirect(`/payment/${orderId}`);
+}
+
+export async function checkAvailability(dateStr: string) {
+  try {
+    const orders = await prisma.order.findMany({
+      where: {
+        bookingDate: new Date(dateStr),
+        status: {
+          not: 'CANCELLED'
+        }
+      },
+      select: {
+        timeSlot: true
+      }
+    });
+
+    // Return array of booked timeSlot numbers
+    return orders.map(o => o.timeSlot).filter((val): val is number => val !== null);
+  } catch (err) {
+    console.error("Error checking availability:", err);
+    return [];
+  }
+}
+
+export async function getMonthlyAvailability(year: number, month: number) {
+  try {
+    const startDate = new Date(year, month, 1);
+    const endDate = new Date(year, month + 1, 0);
+
+    const orders = await prisma.order.findMany({
+      where: {
+        bookingDate: {
+          gte: startDate,
+          lte: endDate,
+        },
+        status: {
+          not: 'CANCELLED'
+        }
+      },
+      select: {
+        bookingDate: true,
+      }
+    });
+
+    const availability: Record<string, number> = {};
+    orders.forEach(order => {
+      if (!order.bookingDate) return;
+      const dateStr = order.bookingDate.toISOString().split('T')[0];
+      availability[dateStr] = (availability[dateStr] || 0) + 1;
+    });
+
+    return availability; 
+  } catch (err) {
+    console.error("Error getting monthly availability:", err);
+    return {};
+  }
+}
+
+export async function cancelOrderAction(orderId: number) {
+  const session = await getSession();
+  if (!session || !session.userId) {
+    return { success: false, error: 'Unauthorized' };
+  }
+
+  try {
+    const order = await prisma.order.findUnique({ where: { id: orderId } });
+    if (!order || order.userId !== session.userId) {
+      return { success: false, error: 'Order not found' };
+    }
+    if (order.status !== 'PENDING') {
+      return { success: false, error: 'Pesanan tidak bisa dibatalkan' };
+    }
+
+    await prisma.order.update({
+      where: { id: orderId },
+      data: { status: 'CANCELLED' }
+    });
+    return { success: true };
+  } catch (err) {
+    console.error("Error cancelling order:", err);
+    return { success: false, error: 'Gagal membatalkan pesanan' };
+  }
 }

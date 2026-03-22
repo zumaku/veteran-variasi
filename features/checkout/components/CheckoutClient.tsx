@@ -5,11 +5,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { rupiahConverter } from "@/features/catalog/lib";
-import { submitCheckoutAction, checkAvailability } from "../actions";
+import {
+  submitCheckoutAction,
+  checkAvailability,
+  getMonthlyAvailability,
+} from "../actions";
 import { toast } from "@/lib/toast-store";
 import {
   PackageOpen,
-  Calendar,
+  Calendar as CalendarIcon,
   Clock,
   CreditCard,
   Wallet,
@@ -21,6 +25,8 @@ import {
   ChevronUp,
   QrCode,
 } from "lucide-react";
+import { Calendar, CalendarDayButton } from "@/components/ui/calendar";
+import { format } from "date-fns";
 
 const PAYMENT_CATEGORIES = [
   {
@@ -179,6 +185,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Card, CardContent } from "@/components/ui/card";
 
 export default function CheckoutClient({
   item,
@@ -191,13 +198,35 @@ export default function CheckoutClient({
   const [selectedCar, setSelectedCar] = useState<string>("");
   const [selectedPayment, setSelectedPayment] = useState<string>("");
   const [expandedCategory, setExpandedCategory] = useState<number | null>(0);
-  const [selectedDate, setSelectedDate] = useState<string>("");
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>();
   const [bookedSlots, setBookedSlots] = useState<number[]>([]);
   const [isCheckingSlots, setIsCheckingSlots] = useState(false);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<string>("");
+  const [calendarMonth, setCalendarMonth] = useState<Date>(new Date());
+  const [monthlyAvailability, setMonthlyAvailability] = useState<
+    Record<string, number>
+  >({});
+
+  const selectedDateStr = selectedDate
+    ? format(selectedDate, "yyyy-MM-dd")
+    : "";
 
   useEffect(() => {
-    if (!selectedDate) {
+    const fetchMonthly = async () => {
+      try {
+        const year = calendarMonth.getFullYear();
+        const month = calendarMonth.getMonth();
+        const res = await getMonthlyAvailability(year, month);
+        setMonthlyAvailability(res);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchMonthly();
+  }, [calendarMonth]);
+
+  useEffect(() => {
+    if (!selectedDateStr) {
       setBookedSlots([]);
       return;
     }
@@ -206,7 +235,7 @@ export default function CheckoutClient({
       setIsCheckingSlots(true);
       setSelectedTimeSlot("");
       try {
-        const slots = await checkAvailability(selectedDate);
+        const slots = await checkAvailability(selectedDateStr);
         setBookedSlots(slots);
       } catch (err) {
         console.error(err);
@@ -216,7 +245,7 @@ export default function CheckoutClient({
     };
 
     fetchSlots();
-  }, [selectedDate]);
+  }, [selectedDateStr]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -243,10 +272,23 @@ export default function CheckoutClient({
 
   const total = item.quantity * item.product.price;
 
+  const selectedCarObj = cars.find((c) => c.id.toString() === selectedCar);
+  const timeSlotLabel =
+    selectedTimeSlot === "1"
+      ? "09:00 - 12:00"
+      : selectedTimeSlot === "2"
+        ? "12:00 - 15:00"
+        : selectedTimeSlot === "3"
+          ? "15:00 - 18:00"
+          : null;
+  const selectedPaymentObj = PAYMENT_CATEGORIES.flatMap((c) => c.methods).find(
+    (m) => m.id === selectedPayment,
+  );
+
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start"
+      className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start relative"
     >
       {/* Kolom Kiri: Produk, Mobil, Waktu Kedatangan */}
       <div className="w-full lg:w-[60%] space-y-6">
@@ -376,30 +418,79 @@ export default function CheckoutClient({
         {/* Arrival Time Section */}
         <section className="bg-card border border-border/60 rounded-2xl p-6 shadow-sm space-y-4">
           <h2 className="text-xl font-bold font-montserrat flex items-center gap-2">
-            <Calendar className="w-5 h-5 text-[#FFB800]" />
+            <CalendarIcon className="w-5 h-5 text-[#FFB800]" />
             Waktu Kedatangan
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <div className="space-y-2">
-              <label
-                htmlFor="bookingDate"
-                className="text-sm font-semibold flex items-center gap-1.5 text-foreground"
-              >
-                <Calendar className="w-4 h-4 text-muted-foreground" /> Tanggal
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 items-start">
+            <div className="space-y-4 w-full">
+              <label className="text-sm font-semibold flex items-center gap-1.5 text-foreground">
+                <CalendarIcon className="w-4 h-4 text-muted-foreground" />{" "}
+                Tanggal
               </label>
-              <input
-                type="date"
-                name="bookingDate"
-                id="bookingDate"
-                required
-                min={new Date().toISOString().split("T")[0]}
-                value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
-                className="w-full h-12 rounded-xl border border-input bg-background/50 px-4 py-2 text-sm font-medium focus:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFB800] disabled:cursor-not-allowed disabled:opacity-50 transition-colors"
-              />
+              <Card className="mx-auto w-full p-0 overflow-hidden border-border/60 shadow-sm">
+                <CardContent className="p-0">
+                  <Calendar
+                    mode="single"
+                    defaultMonth={calendarMonth}
+                    onMonthChange={setCalendarMonth}
+                    selected={selectedDate}
+                    onSelect={setSelectedDate}
+                    disabled={(date) => {
+                      const today = new Date();
+                      today.setHours(0, 0, 0, 0);
+                      if (date < today) return true;
+                      const dateStr = format(date, "yyyy-MM-dd");
+                      const taken = monthlyAvailability[dateStr] || 0;
+                      return taken >= 3;
+                    }}
+                    className="w-full flex justify-center py-8 bg-background/50"
+                    components={{
+                      DayButton: ({ children, modifiers, day, ...props }) => {
+                        const dateStr = format(day.date, "yyyy-MM-dd");
+                        const taken = monthlyAvailability[dateStr] || 0;
+                        const available = Math.max(0, 3 - taken);
+                        const isPast =
+                          day.date < new Date(new Date().setHours(0, 0, 0, 0));
+
+                        return (
+                          <CalendarDayButton
+                            day={day}
+                            modifiers={modifiers}
+                            {...props}
+                            className={`p-1`}
+                          >
+                            <div
+                              className={`flex flex-col rounded-sm pb-4  hover:bg-primary/90 ${modifiers.selected && "bg-primary text-black"}`}
+                            >
+                              <span className="text-sm sm:text-base font-medium p-4">
+                                {children}
+                              </span>
+                              {!modifiers.outside && !isPast && (
+                                <span
+                                  className={`text-[11px] sm:text-xs font-bold -mt-4 ${
+                                    modifiers.selected
+                                      ? "text-black/80"
+                                      : available === 0
+                                        ? "text-red-500"
+                                        : "text-gray-400 dark:text-gray-300"
+                                  }`}
+                                >
+                                  {/* {available > 0 ? `${taken}/3` : "Penuh"} */}
+                                  {available > 0 && `${taken}/3`}
+                                </span>
+                              )}
+                            </div>
+                          </CalendarDayButton>
+                        );
+                      },
+                    }}
+                  />
+                </CardContent>
+              </Card>
+              <input type="hidden" name="bookingDate" value={selectedDateStr} />
             </div>
-            <div className="space-y-2">
+            <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <label
                   htmlFor="timeSlot"
@@ -454,12 +545,9 @@ export default function CheckoutClient({
             </div>
           </div>
         </section>
-      </div>
 
-      {/* Kolom Kanan: Metode Pembayaran & Total */}
-      <div className="w-full lg:w-[40%] space-y-8 bg-card border border-border/60 rounded-2xl p-6 shadow-sm lg:sticky lg:top-8">
         {/* Payment Method Section */}
-        <section className="space-y-4">
+        <section className="bg-card border border-border/60 rounded-2xl p-6 shadow-sm space-y-4">
           <h2 className="text-xl font-bold font-montserrat flex items-center gap-2">
             <Wallet className="w-5 h-5 text-[#FFB800]" />
             Metode Pembayaran
@@ -594,9 +682,67 @@ export default function CheckoutClient({
             })}
           </div>
         </section>
+      </div>
+
+      {/* Kolom Kanan: Summary & Submit Container */}
+      {/* <div className="bg-red-600 w-full lg:w-[40%] space-y-6 border border-border/60 rounded-2xl p-6 shadow-sm sticky top-[96px] self-start"> */}
+      <div
+        style={{ top: "24px" }}
+        className="w-full lg:w-[40%] space-y-6 border border-border/60 rounded-2xl p-6 shadow-sm sticky self-start"
+      >
+        <h2 className="text-xl font-bold font-montserrat border-b border-border/50 pb-4 mb-4">
+          Ringkasan Pesanan
+        </h2>
+
+        <div className="space-y-4 text-sm">
+          {/* Mobil */}
+          <div className="flex flex-col gap-1">
+            <span className="text-muted-foreground font-medium">Kendaraan</span>
+            {selectedCarObj ? (
+              <span className="font-semibold">
+                {selectedCarObj.brand} {selectedCarObj.model} (
+                {selectedCarObj.licensePlate})
+              </span>
+            ) : (
+              <span className="text-red-500 font-medium text-xs">
+                Belum dipilih
+              </span>
+            )}
+          </div>
+
+          {/* Jadwal */}
+          <div className="flex flex-col gap-1">
+            <span className="text-muted-foreground font-medium">
+              Jadwal Kedatangan
+            </span>
+            {selectedDate && selectedTimeSlot ? (
+              <span className="font-semibold">
+                {format(selectedDate, "dd MMM yyyy")} • {timeSlotLabel}
+              </span>
+            ) : (
+              <span className="text-red-500 font-medium text-xs">
+                Belum dipilih
+              </span>
+            )}
+          </div>
+
+          {/* Pembayaran */}
+          <div className="flex flex-col gap-1">
+            <span className="text-muted-foreground font-medium">
+              Metode Pembayaran
+            </span>
+            {selectedPaymentObj ? (
+              <span className="font-semibold">{selectedPaymentObj.name}</span>
+            ) : (
+              <span className="text-red-500 font-medium text-xs">
+                Belum dipilih
+              </span>
+            )}
+          </div>
+        </div>
 
         {/* Submit */}
-        <div className="pt-8 border-t border-border/60">
+        <div className="pt-6 mt-6 border-t border-border/60">
           <div className="flex justify-between items-center mb-6 bg-muted/30 p-4 rounded-xl">
             <span className="font-bold text-[17px]">Total Pembayaran</span>
             <span className="font-bold text-2xl font-montserrat tracking-tight text-[#FFB800]">
@@ -606,7 +752,13 @@ export default function CheckoutClient({
 
           <Button
             type="submit"
-            disabled={loading || cars.length === 0}
+            disabled={
+              loading ||
+              !selectedCar ||
+              !selectedDate ||
+              !selectedTimeSlot ||
+              !selectedPayment
+            }
             className="w-full text-base h-14 font-bold cursor-pointer transition-all active:scale-[0.98] bg-[#FFB800] text-black hover:bg-[#FFB800]/90 shadow hover:shadow-md rounded-xl flex items-center justify-center gap-2 disabled:bg-muted disabled:text-muted-foreground"
           >
             {loading ? (
