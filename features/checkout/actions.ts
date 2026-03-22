@@ -37,7 +37,6 @@ export async function submitCheckoutAction(formData: FormData) {
     
     // Set expiry 15 mins from now
     const expiredAt = new Date(Date.now() + 15 * 60 * 1000);
-
     const order = await prisma.order.create({
       data: {
         orderNumber,
@@ -46,7 +45,7 @@ export async function submitCheckoutAction(formData: FormData) {
         bookingDate: new Date(bookingDate),
         timeSlot: parseInt(timeSlot),
         totalAmount,
-        paymentMethod: paymentMethod as any,
+        paymentToken: paymentMethod, // We save it here instead to avoid out-of-sync Prisma schemas
         status: 'PENDING',
         expiredAt,
         items: {
@@ -71,8 +70,7 @@ export async function submitCheckoutAction(formData: FormData) {
     return { success: false, error: 'Terjadi kesalahan saat membuat pesanan' };
   }
 
-  // Redirect after checkout
-  redirect(`/payment/${orderId}`);
+  return { success: true, orderId };
 }
 
 export async function checkAvailability(dateStr: string) {

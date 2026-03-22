@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -24,6 +25,9 @@ import {
   ChevronDown,
   ChevronUp,
   QrCode,
+  Sunrise,
+  Sun,
+  Sunset,
 } from "lucide-react";
 import { Calendar, CalendarDayButton } from "@/components/ui/calendar";
 import { format } from "date-fns";
@@ -178,13 +182,7 @@ const PAYMENT_CATEGORIES = [
     ],
   },
 ];
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function CheckoutClient({
@@ -194,6 +192,7 @@ export default function CheckoutClient({
   item: any;
   cars: any[];
 }) {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [selectedCar, setSelectedCar] = useState<string>("");
   const [selectedPayment, setSelectedPayment] = useState<string>("");
@@ -262,11 +261,11 @@ export default function CheckoutClient({
 
     const res = await submitCheckoutAction(formData);
 
-    // If it returns a response, it means there was an error
-    // because success redirects
     if (res?.error) {
       toast.error(res.error);
       setLoading(false);
+    } else if (res?.success && res.orderId) {
+      router.push(`/dashboard/user/payment/${res.orderId}`);
     }
   };
 
@@ -470,10 +469,11 @@ export default function CheckoutClient({
                                 <span
                                   className={`text-[11px] sm:text-xs font-bold -mt-4 ${
                                     modifiers.selected
-                                      ? "text-black/80"
+                                      ? "text-black/70"
                                       : available === 0
                                         ? "text-red-500"
-                                        : "text-gray-400 dark:text-gray-300"
+                                        : "text-muted-foreground dark:text-muted-foreground"
+                                          
                                   }`}
                                 >
                                   {/* {available > 0 ? `${taken}/3` : "Penuh"} */}
@@ -505,43 +505,81 @@ export default function CheckoutClient({
                   </span>
                 )}
               </div>
-              <Select
-                name="timeSlot"
-                required
-                disabled={
-                  !selectedDate || isCheckingSlots || bookedSlots.length === 3
-                }
-                value={selectedTimeSlot}
-                onValueChange={setSelectedTimeSlot}
-              >
-                <SelectTrigger
-                  id="timeSlot"
-                  className="w-full h-12 rounded-xl border border-input bg-background/50 px-4 py-2 text-sm font-medium focus:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFB800] disabled:cursor-not-allowed disabled:opacity-50 transition-colors cursor-pointer data-[disabled]:opacity-50"
-                >
-                  <SelectValue
-                    placeholder={
-                      !selectedDate
-                        ? "Pilih tanggal dulu"
-                        : isCheckingSlots
-                          ? "Mengecek jadwal..."
-                          : bookedSlots.length === 3
-                            ? "Jadwal penuh"
-                            : "Pilih Jam"
-                    }
-                  />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="1" disabled={bookedSlots.includes(1)}>
-                    09:00 - 12:00 {bookedSlots.includes(1) && "(Penuh)"}
-                  </SelectItem>
-                  <SelectItem value="2" disabled={bookedSlots.includes(2)}>
-                    12:00 - 15:00 {bookedSlots.includes(2) && "(Penuh)"}
-                  </SelectItem>
-                  <SelectItem value="3" disabled={bookedSlots.includes(3)}>
-                    15:00 - 18:00 {bookedSlots.includes(3) && "(Penuh)"}
-                  </SelectItem>
-                </SelectContent>
-              </Select>
+              {!selectedDate ? (
+                <div className="flex flex-col items-center justify-center h-full min-h-[160px] p-6 border-2 border-dashed border-border/60 rounded-xl bg-muted/30 text-center">
+                  <CalendarIcon className="w-8 h-8 text-muted-foreground/40 mb-2" />
+                  <p className="text-sm font-medium text-muted-foreground">Silakan reservasi tanggal terlebih dahulu pada kalender di samping.</p>
+                </div>
+              ) : isCheckingSlots ? (
+                <div className="flex flex-col items-center justify-center p-6 h-full min-h-[160px] border-2 border-border/60 rounded-xl bg-background/50">
+                  <div className="w-6 h-6 border-2 border-[#FFB800] border-t-transparent rounded-full animate-spin mb-3" />
+                  <p className="text-sm font-medium text-muted-foreground">Mengecek ketersediaan jam...</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 gap-3">
+                  {[
+                    { id: "1", label: "09:00 - 12:00", Icon: Sunrise },
+                    { id: "2", label: "12:00 - 15:00", Icon: Sun },
+                    { id: "3", label: "15:00 - 18:00", Icon: Sunset },
+                  ].map((slot) => {
+                    const isBooked = bookedSlots.includes(parseInt(slot.id));
+                    const isSelected = selectedTimeSlot === slot.id;
+
+                    return (
+                      <label
+                        key={slot.id}
+                        className={`relative flex items-center justify-between p-4 rounded-xl border-2 transition-all cursor-pointer ${
+                          isBooked
+                            ? "border-border/40 bg-muted/50 cursor-not-allowed opacity-60"
+                            : isSelected
+                              ? "border-[#FFB800] bg-[#FFB800]/5 ring-1 ring-[#FFB800] shadow-sm"
+                              : "border-border/60 bg-background/50 hover:border-[#FFB800]/50 hover:bg-muted/20"
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name="timeSlot"
+                          value={slot.id}
+                          required
+                          disabled={isBooked}
+                          checked={isSelected}
+                          onChange={(e) => setSelectedTimeSlot(e.target.value)}
+                          className="peer sr-only"
+                        />
+                        <div className="flex items-center gap-3">
+                          <slot.Icon 
+                            className={`w-5 h-5 ${
+                              isBooked 
+                                ? "text-muted-foreground/60" 
+                                : isSelected 
+                                  ? "text-[#FFB800]" 
+                                  : "text-muted-foreground"
+                            }`} 
+                          />
+                          <span 
+                            className={`font-semibold text-[15px] ${
+                              isBooked 
+                                ? "text-muted-foreground/60 line-through decoration-muted-foreground/40" 
+                                : "text-foreground"
+                            }`}
+                          >
+                            {slot.label}
+                          </span>
+                        </div>
+                        {isBooked ? (
+                          <span className="text-xs font-bold text-red-500 bg-red-500/10 px-2.5 py-1 rounded-md">Penuh</span>
+                        ) : isSelected ? (
+                          <div className="bg-[#FFB800] text-black w-5 h-5 rounded-full flex items-center justify-center shadow-sm">
+                            <Check className="w-3 h-3" strokeWidth={3} />
+                          </div>
+                        ) : (
+                          <div className="w-5 h-5 rounded-full border-2 border-muted-foreground/30" />
+                        )}
+                      </label>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </div>
         </section>
