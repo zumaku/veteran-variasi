@@ -11,6 +11,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { toast } from "@/lib/toast-store";
 import { OrderStatus } from "@prisma/client";
 import { updateOrderStatusAction } from "@/features/admin/actions";
@@ -37,6 +43,7 @@ export default function AdminOrderDetailClient({
 }) {
   const [order, setOrder] = useState(initialOrder);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -163,14 +170,21 @@ export default function AdminOrderDetailClient({
             <div className="space-y-4">
               <div className="flex items-center gap-3 min-w-0">
                 {order.car?.image ? (
-                  <div className="relative w-24 h-24 rounded-lg overflow-hidden">
+                  <div
+                    className="relative w-24 h-24 rounded-lg overflow-hidden cursor-pointer hover:ring-2 hover:ring-[#FFB800] transition-all group"
+                    onClick={() => setIsPreviewOpen(true)}
+                  >
                     <Image
                       src={order.car.image}
                       alt={order.car?.brand || "Car Image"}
-                      width={1000}
-                      height={1000}
-                      className="aspect-square object-cover"
+                      fill
+                      className="object-cover transition-transform group-hover:scale-105"
                     />
+                    <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                      <p className="text-[10px] text-white font-bold bg-black/40 px-2 py-1 rounded">
+                        LIHAT
+                      </p>
+                    </div>
                   </div>
                 ) : (
                   <div className="w-24 h-24 rounded-lg bg-muted border border-border/50 flex items-center justify-center shrink-0">
@@ -363,6 +377,23 @@ export default function AdminOrderDetailClient({
           </div>
         </div>
       </div>
+
+      {/* Image Preview Dialog */}
+      <Dialog open={isPreviewOpen} onOpenChange={setIsPreviewOpen}>
+        <DialogContent className="max-w-4xl p-0 overflow-hidden border-none bg-transparent shadow-none focus-visible:outline-none">
+          <DialogHeader className="sr-only">
+            <DialogTitle>Pratinjau Gambar Mobil</DialogTitle>
+          </DialogHeader>
+          <div className="relative w-full aspect-video sm:aspect-square h-screen">
+            <Image
+              src={order.car?.image || "/placeholder-car.png"}
+              alt="Car Preview"
+              fill
+              className="object-contain"
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
