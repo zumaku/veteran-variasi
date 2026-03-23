@@ -143,11 +143,11 @@ export default function PaymentClient({ order }: { order: any }) {
   };
 
   return (
-    <div className="max-w-3xl mx-auto pb-10 print:max-w-full print:p-0">
+    <div className="max-w-3xl mt-8 mx-auto pb-10 print:max-w-full print:p-0">
       {/* Header (Hidden in Print) */}
       <div className="mb-6 print:hidden">
         <Link
-          href="/dashboard/user/pesananku"
+          href="/dashboard/user/orders"
           className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
         >
           <ChevronLeft className="w-4 h-4 mr-1" />
@@ -321,11 +321,11 @@ export default function PaymentClient({ order }: { order: any }) {
         </div>
 
         {/* Actions - Hidden in Print */}
-        <div className="mt-8 flex flex-col sm:flex-row gap-4 print:hidden">
+        <div className="mt-8 flex flex-col sm:flex-row justify-end gap-4 print:hidden">
           {isPaid && (
             <Button
+              variant="default"
               onClick={handlePrint}
-              className="w-full sm:flex-1 h-14 text-base font-bold bg-[#FFB800] text-black hover:bg-[#FFB800]/90 rounded-xl flex items-center justify-center gap-2 shadow"
             >
               <Download className="w-5 h-5" />
               Download / Cetak Nota
@@ -337,7 +337,6 @@ export default function PaymentClient({ order }: { order: any }) {
               variant="outline"
               onClick={handleCancel}
               disabled={isCancelling}
-              className="w-full sm:flex-1 h-14 text-base font-bold border-red-500/50 text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-xl"
             >
               {isCancelling ? "Membatalkan..." : "Batalkan Pesanan"}
             </Button>
@@ -346,9 +345,8 @@ export default function PaymentClient({ order }: { order: any }) {
           <Button
             asChild
             variant={isPending ? "default" : "outline"}
-            className={`w-full sm:flex-1 h-14 text-base font-bold rounded-xl ${isPending ? 'bg-primary text-primary-foreground' : ''}`}
           >
-            <Link href="/dashboard/user/pesananku">
+            <Link href="/dashboard/user/orders">
               {isPaid ? "Lihat Semua Pesanan" : "Cek Status Pesanan"}
             </Link>
           </Button>

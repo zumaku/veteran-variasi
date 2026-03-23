@@ -94,7 +94,7 @@ export default function CartPage() {
       </div>
 
       {items.length === 0 ? (
-        <div className="bg-card border rounded-[20px] p-12 flex flex-col items-center justify-center min-h-[50vh] shadow-sm">
+        <div className="bg-card border rounded-md py-12 flex flex-col items-center justify-center min-h-[50vh] shadow-sm">
           <div className="w-24 h-24 mb-6 rounded-full bg-muted flex items-center justify-center">
             <ShoppingCartIcon className="w-12 h-12 text-muted-foreground/50" />
           </div>
