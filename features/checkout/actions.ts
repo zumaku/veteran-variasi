@@ -1,6 +1,7 @@
 'use server';
 
 import { getSession } from '@/lib/session';
+import { startOfDay, endOfDay } from 'date-fns';
 import { prisma } from '@/lib/prisma';
 import { redirect } from 'next/navigation';
 
@@ -92,6 +93,85 @@ export async function checkAvailability(dateStr: string) {
   } catch (err) {
     console.error("Error checking availability:", err);
     return [];
+  }
+}
+
+export async function checkSlotAvailabilityAction(
+  dateString: string
+): Promise<{ timeSlot: number; taken: number; isFull: boolean }[]> {
+  try {
+    const session = await getSession();
+    if (!session || !session.userId) {
+      throw new Error("Unauthorized");
+    }
+
+    const startOfDayNode = startOfDay(new Date(dateString));
+    const endOfDayNode = endOfDay(new Date(dateString));
+
+    const ordersOnDate = await prisma.order.findMany({
+      where: {
+        bookingDate: {
+          gte: startOfDayNode,
+          lte: endOfDayNode,
+        },
+        status: {
+          in: ["PENDING", "PAID"],
+        },
+      },
+      select: {
+        timeSlot: true,
+      },
+    });
+
+    const slots = [1, 2, 3];
+    return slots.map((slotNum) => {
+      const takenCount = ordersOnDate.filter(
+        (o) => o.timeSlot === slotNum
+      ).length;
+      return {
+        timeSlot: slotNum,
+        taken: takenCount,
+        isFull: takenCount >= 3,
+      };
+    });
+  } catch (error: any) {
+    console.error("Failed to check slot availability:", error);
+    return [];
+  }
+}
+
+export async function simulatePaymentAction(orderId: number) {
+  try {
+    const session = await getSession();
+    if (!session || !session.userId) {
+      return { success: false, error: "Unauthorized" };
+    }
+
+    const order = await prisma.order.findUnique({
+      where: { id: orderId },
+    });
+
+    if (!order) {
+      return { success: false, error: "Pesanan tidak ditemukan" };
+    }
+    
+    if (order.userId !== session.userId) {
+      return { success: false, error: "Unauthorized" };
+    }
+
+    if (order.status !== "PENDING") {
+      return { success: false, error: "Pesanan sudah diproses" };
+    }
+
+    await prisma.order.update({
+      where: { id: orderId },
+      data: { status: "PAID" },
+    });
+
+    return { success: true };
+  } catch (error: any) {
+    console.error("Failed to simulate payment:", error);
+    return { success: false, error: error.message || "Gagal menyimulasikan pembayaran" };
   }
 }
 
