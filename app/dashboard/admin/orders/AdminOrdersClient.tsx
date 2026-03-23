@@ -11,15 +11,34 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { toast } from "@/lib/toast-store";
 import { OrderStatus } from "@prisma/client";
 import { updateOrderStatusAction } from "@/features/admin/actions";
-import { PackageOpen, Clock, CheckCircle2, XCircle, ChevronRight } from "lucide-react";
+import {
+  PackageOpen,
+  Clock,
+  CheckCircle2,
+  XCircle,
+  ChevronRight,
+} from "lucide-react";
 import Link from "next/link";
 
 export default function AdminOrdersClient({ initialOrders }: { initialOrders: any[] }) {
   const [orders, setOrders] = useState(initialOrders);
   const [loadingId, setLoadingId] = useState<number | null>(null);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [tempStatus, setTempStatus] = useState<string | null>(null);
+  const [tempOrderId, setTempOrderId] = useState<number | null>(null);
 
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -37,16 +56,34 @@ export default function AdminOrdersClient({ initialOrders }: { initialOrders: an
     }
   };
 
-  const handleStatusChange = async (orderId: number, newStatus: string) => {
-    setLoadingId(orderId);
-    const res = await updateOrderStatusAction(orderId, newStatus as OrderStatus);
+  const handleStatusChange = (orderId: number, newStatus: string) => {
+    setTempOrderId(orderId);
+    setTempStatus(newStatus);
+    setIsConfirmOpen(true);
+  };
+
+  const confirmStatusChange = async () => {
+    if (!tempOrderId || !tempStatus) return;
+
+    setLoadingId(tempOrderId);
+    const res = await updateOrderStatusAction(
+      tempOrderId,
+      tempStatus as OrderStatus,
+    );
     if (res.success) {
       toast.success("Status pesanan diperbarui!");
-      setOrders(orders.map(o => o.id === orderId ? { ...o, status: newStatus } : o));
+      setOrders(
+        orders.map((o) =>
+          o.id === tempOrderId ? { ...o, status: tempStatus } : o,
+        ),
+      );
     } else {
       toast.error(res.error || "Gagal mengubah status");
     }
     setLoadingId(null);
+    setIsConfirmOpen(false);
+    setTempOrderId(null);
+    setTempStatus(null);
   };
 
   if (orders.length === 0) {
@@ -130,6 +167,49 @@ export default function AdminOrdersClient({ initialOrders }: { initialOrders: an
           })}
         </tbody>
       </table>
+
+      {/* Status Change Confirmation */}
+      <AlertDialog open={isConfirmOpen} onOpenChange={setIsConfirmOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Konfirmasi Perubahan Status</AlertDialogTitle>
+            <AlertDialogDescription>
+              Apakah Anda yakin ingin mengubah status pesanan ini menjadi{" "}
+              <span className="font-bold text-foreground">
+                {tempStatus === "PAID"
+                  ? "Menunggu Pengerjaan"
+                  : tempStatus === "PROCESSING"
+                    ? "Sedang Dikerjakan"
+                    : tempStatus === "COMPLETED"
+                      ? "Selesai"
+                      : tempStatus === "CANCELLED"
+                        ? "Dibatalkan"
+                        : tempStatus}
+              </span>
+              ? Perubahan ini akan langsung terlihat oleh pelanggan.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={loadingId !== null}>
+              Batal
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className={
+                tempStatus === "CANCELLED"
+                  ? "bg-red-600 hover:bg-red-700"
+                  : "bg-[#FFB800] hover:bg-[#E6A600] text-black font-bold"
+              }
+              onClick={(e) => {
+                e.preventDefault();
+                confirmStatusChange();
+              }}
+              disabled={loadingId !== null}
+            >
+              Ya, Ubah Sekarang
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
-  )
+  );
 }

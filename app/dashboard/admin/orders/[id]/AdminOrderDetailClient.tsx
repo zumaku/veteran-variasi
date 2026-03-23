@@ -17,6 +17,16 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { toast } from "@/lib/toast-store";
 import { OrderStatus } from "@prisma/client";
 import { updateOrderStatusAction } from "@/features/admin/actions";
@@ -44,6 +54,8 @@ export default function AdminOrderDetailClient({
   const [order, setOrder] = useState(initialOrder);
   const [isUpdating, setIsUpdating] = useState(false);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [tempStatus, setTempStatus] = useState<string | null>(null);
 
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -81,19 +93,30 @@ export default function AdminOrderDetailClient({
     }
   };
 
-  const handleStatusChange = async (newStatus: string) => {
+  const handleStatusChange = (newStatus: string) => {
+    setTempStatus(newStatus);
+    setIsConfirmOpen(true);
+  };
+
+  const confirmStatusChange = async () => {
+    if (!tempStatus) return;
+    
     setIsUpdating(true);
     const res = await updateOrderStatusAction(
       order.id,
-      newStatus as OrderStatus,
+      tempStatus as OrderStatus,
     );
+    
     if (res.success) {
       toast.success("Status pesanan diperbarui!");
-      setOrder({ ...order, status: newStatus });
+      setOrder({ ...order, status: tempStatus });
     } else {
       toast.error(res.error || "Gagal mengubah status");
     }
+    
     setIsUpdating(false);
+    setIsConfirmOpen(false);
+    setTempStatus(null);
   };
 
   return (
@@ -394,6 +417,43 @@ export default function AdminOrderDetailClient({
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Status Change Confirmation */}
+      <AlertDialog open={isConfirmOpen} onOpenChange={setIsConfirmOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Konfirmasi Perubahan Status</AlertDialogTitle>
+            <AlertDialogDescription>
+              Apakah Anda yakin ingin mengubah status pesanan ini menjadi{" "}
+              <span className="font-bold text-foreground">
+                {tempStatus === "PAID"
+                  ? "Menunggu Pengerjaan"
+                  : tempStatus === "PROCESSING"
+                    ? "Sedang Dikerjakan"
+                    : tempStatus === "COMPLETED"
+                      ? "Selesai"
+                      : tempStatus === "CANCELLED"
+                        ? "Dibatalkan"
+                        : tempStatus}
+              </span>
+              ? Perubahan ini akan langsung terlihat oleh pelanggan.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isUpdating}>Batal</AlertDialogCancel>
+            <AlertDialogAction
+              className={tempStatus === "CANCELLED" ? "bg-red-600 hover:bg-red-700" : "bg-[#FFB800] hover:bg-[#E6A600] text-black font-bold"}
+              onClick={(e) => {
+                e.preventDefault();
+                confirmStatusChange();
+              }}
+              disabled={isUpdating}
+            >
+              Ya, Ubah Sekarang
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
