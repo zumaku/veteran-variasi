@@ -25,6 +25,10 @@ import {
   Calendar,
   AlertTriangle,
   PackageOpen,
+  CreditCard,
+  ClipboardList,
+  Wrench,
+  BadgeCheck,
 } from "lucide-react";
 
 export const PAYMENT_LOGOS: Record<string, string> = {
@@ -59,6 +63,105 @@ export const PAYMENT_LOGOS: Record<string, string> = {
   CC_AMEX:
     "https://upload.wikimedia.org/wikipedia/commons/f/fa/American_Express_logo_%282018%29.svg",
 };
+
+const STEPS = [
+  { key: "PENDING", label: "Menunggu Pembayaran", icon: CreditCard },
+  { key: "PAID", label: "Menunggu Pengerjaan", icon: ClipboardList },
+  { key: "PROCESSING", label: "Sedang Dikerjakan", icon: Wrench },
+  { key: "COMPLETED", label: "Selesai", icon: BadgeCheck },
+];
+
+function getStepIndex(status: string) {
+  const idx = STEPS.findIndex((s) => s.key === status);
+  return idx === -1 ? 0 : idx;
+}
+
+function OrderProgressBar({ status }: { status: string }) {
+  const activeIdx = getStepIndex(status);
+
+  return (
+    <div className="bg-card border border-border/50 rounded-2xl p-6 mb-8 shadow-sm">
+      {/* Row 1: Circles + Connectors */}
+      <div className="flex items-center mb-3">
+        {STEPS.map((step, idx) => {
+          const isDone = idx < activeIdx;
+          const isActive = idx === activeIdx;
+          const isLast = idx === STEPS.length - 1;
+          const IconComp = step.icon;
+
+          return (
+            <div key={step.key} className={`flex items-center ${!isLast ? "flex-1" : ""}`}>
+              {/* Circle */}
+              <div
+                className="w-10 h-10 rounded-full flex items-center justify-center border-2 shrink-0 transition-all duration-300"
+                style={
+                  isDone
+                    ? { backgroundColor: "#22c55e", borderColor: "#16a34a", color: "#fff" }
+                    : isActive
+                      ? { backgroundColor: "#FFB800", borderColor: "#FFB800", color: "#000", boxShadow: "0 2px 8px rgba(255,184,0,0.4)" }
+                      : { backgroundColor: "var(--color-muted)", borderColor: "var(--color-border)", color: "var(--color-muted-foreground)" }
+                }
+              >
+                {isDone ? (
+                  <CheckCircle2 className="w-5 h-5" />
+                ) : (
+                  <IconComp className={`w-5 h-5 ${!isActive ? "opacity-40" : ""}`} />
+                )}
+              </div>
+
+              {/* Segment connector */}
+              {!isLast && (
+                <div
+                  className="flex-1 mx-2 rounded-full"
+                  style={{ height: "2px", backgroundColor: isDone ? "#22c55e" : "var(--color-border)" }}
+                />
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Row 2: Labels — mirrors Row 1 structure so labels sit under circles */}
+      <div className="flex">
+        {STEPS.map((step, idx) => {
+          const isDone = idx < activeIdx;
+          const isActive = idx === activeIdx;
+          const isLast = idx === STEPS.length - 1;
+
+          return (
+            <div key={step.key} className={`flex items-start ${!isLast ? "flex-1" : ""}`}>
+              {/* w-10 anchor = same width as circle above */}
+              <div className="w-10 shrink-0 flex justify-center">
+                <p
+                  className="text-xs font-semibold text-center leading-tight"
+                  style={
+                    isDone
+                      ? { color: "#16a34a" }
+                      : isActive
+                        ? { color: "#b45309", fontWeight: 700 }
+                        : { color: "var(--color-muted-foreground)", opacity: 0.5 }
+                  }
+                >
+                  {step.label}
+                </p>
+              </div>
+              {/* spacer mirrors connector width */}
+              {!isLast && <div className="flex-1 mx-2" />}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+
+
+
+
+
+
+
 
 export default function PaymentClient({ order }: { order: any }) {
   const router = useRouter();
@@ -182,6 +285,11 @@ export default function PaymentClient({ order }: { order: any }) {
           Kembali ke Pesananku
         </Link>
       </div>
+
+      {/* Progress Tracker (Only if not cancelled) */}
+      {order.status !== "CANCELLED" && !isExpired && (
+        <OrderProgressBar status={order.status} />
+      )}
 
       <div className="bg-card border border-border/60 rounded-3xl p-6 sm:p-10 shadow-sm print:shadow-none print:border-none print:bg-white print:text-black">
         {/* Print Only Header */}
@@ -434,11 +542,11 @@ export default function PaymentClient({ order }: { order: any }) {
             </>
           )}
 
-          <Button asChild variant={isPending ? "default" : "outline"}>
+          {/* <Button asChild variant={isPending ? "default" : "outline"}>
             <Link href="/dashboard/user/orders">
               {isPaid ? "Lihat Semua Pesanan" : "Cek Status Pesanan"}
             </Link>
-          </Button>
+          </Button> */}
         </div>
       </div>
     </div>

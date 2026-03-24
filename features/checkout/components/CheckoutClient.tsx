@@ -567,7 +567,7 @@ export default function CheckoutClient({
                           </span>
                         </div>
                         {isBooked ? (
-                          <span className="text-xs font-bold text-red-500 bg-red-500/10 px-2.5 py-1 rounded-md">Penuh</span>
+                          <span className="text-xs font-bold text-red-500 bg-red-500/10 px-2.5 py-1 rounded-md">Terisi</span>
                         ) : isSelected ? (
                           <div className="bg-[#FFB800] text-black w-5 h-5 rounded-full flex items-center justify-center shadow-sm">
                             <Check className="w-3 h-3" strokeWidth={3} />

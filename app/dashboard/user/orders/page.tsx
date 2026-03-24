@@ -19,6 +19,7 @@ export default async function OrdersPage() {
     orderBy: { createdAt: "desc" },
     include: {
       car: true,
+      review: true,
       items: {
         include: {
           product: {
