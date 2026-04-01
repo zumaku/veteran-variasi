@@ -14,6 +14,7 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 import { Menu, Search, X, ShoppingCartIcon } from "lucide-react";
+import { ThemeToggle } from "./ThemeToggle";
 
 export default function Navbar({
   user,
@@ -131,6 +132,7 @@ export default function Navbar({
           )}
           {user ? (
             <div className="flex items-center gap-4">
+              <ThemeToggle />
               <Link
                 href="/dashboard"
                 className="text-sm font-medium hover:text-primary transition-colors"
@@ -144,7 +146,8 @@ export default function Navbar({
               </Link>
             </div>
           ) : (
-            <>
+            <div className="flex items-center gap-4">
+              <ThemeToggle />
               <Link href="/auth/login">
                 <Button variant={"outline"} className="cursor-pointer">
                   Masuk
@@ -153,7 +156,7 @@ export default function Navbar({
               <Link href="/auth/register">
                 <Button className="cursor-pointer">Daftar</Button>
               </Link>
-            </>
+            </div>
           )}
         </div>
 
@@ -250,6 +253,10 @@ export default function Navbar({
                   </Link>
                 </>
               )}
+              <div className="pt-2 flex items-center justify-between border-t px-1">
+                <span className="text-sm font-medium">Auto Theme Mode</span>
+                <ThemeToggle />
+              </div>
             </div>
           </nav>
         </div>

@@ -24,7 +24,7 @@ export default function Home() {
       {/* Hero Section */}
       <section className="px-4 h-fit md:h-fit flex flex-col justify-between md:justify-center items-center w-full max-w-[100vw] overflow-x-hidden">
         <div className="flex flex-col items-center gap-4">
-          <h1 className="pt-12 md:pt-20 text-center text-3xl sm:text-4xl lg:text-6xl font-bold font-montserrat uppercase leading-[1.2] md:leading-[1.1] tracking-tight text-foreground max-w-4xl">
+          <h1 className="pt-12 md:pt-20 text-center text-3xl sm:text-4xl lg:text-6xl font-bold font-semakin uppercase leading-[1.2] md:leading-[1.1] tracking-tight text-foreground max-w-4xl">
             Aksesoris Modern Untuk <br className="hidden sm:block" /> Performa
             Berkendara
           </h1>
@@ -53,7 +53,7 @@ export default function Home() {
       <section id="tentang-kami" className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-montserrat uppercase tracking-wide">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-semakin uppercase tracking-wide">
               Kami Siap Melayani. Jaminan Mobil Layak, Layanan Profesional
             </h2>
           </div>
@@ -154,7 +154,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="flex flex-col gap-8">
               <div>
-                <h2 className="text-3xl md:text-4xl font-bold font-montserrat mb-4">
+                <h2 className="text-3xl md:text-4xl font-bold font-semakin mb-4">
                   Kunjungi Bengkel Kami
                 </h2>
                 <p className="text-secondary-foreground/70">
@@ -226,7 +226,7 @@ export default function Home() {
       {/* 7. CTA Section */}
       <section className="bg-primary py-20 border-t border-border/50">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold font-montserrat mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold font-semakin mb-6">
             Siap Merawat Mobil Kesayangan Anda?
           </h2>
           <p className="text-primary-foreground max-w-2xl mx-auto mb-8">

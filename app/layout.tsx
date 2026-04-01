@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Montserrat, Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -17,6 +18,11 @@ const montserrat = Montserrat({
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+});
+
+const semakin = localFont({
+  src: "../assets/fonts/semakin/Semakin.otf",
+  variable: "--font-semakin",
 });
 
 export const metadata: Metadata = {
@@ -60,8 +66,23 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                  document.documentElement.classList.add('dark')
+                } else {
+                  document.documentElement.classList.remove('dark')
+                }
+              } catch (_) {}
+            `,
+          }}
+        />
+      </head>
       <body
-        className={`${montserrat.variable} ${inter.variable} font-inter antialiased`}
+        className={`${montserrat.variable} ${inter.variable} ${semakin.variable} font-inter antialiased`}
       >
         <ConditionalLayout 
           navbar={<Navbar user={user} cartData={serializedCart} />}
