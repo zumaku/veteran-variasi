@@ -30,20 +30,32 @@ export default function Home() {
           </h1>
 
           <Link href="/catalog">
-            <Button variant="dark" size="xl" className="mt-4 rounded-full px-8 cursor-pointer">
+            <Button
+              variant="dark"
+              size="xl"
+              className="mt-4 rounded-full px-8 cursor-pointer"
+            >
               <Box className="w-5 h-5" />
               Lihat Koleksi
             </Button>
           </Link>
         </div>
 
-        <div className="md:w-full w-xl max-w-5xl mt-32 md:mt-8 md:mt-14 px-2 sm:px-0">
+        <div className="md:w-full w-xl max-w-5xl mt-32 md:mt-14 px-2 sm:px-0">
           <Image
-            src="/hero_image.png"
-            alt="Koleksi Aksesoris Mobil Premium"
+            src="/hero-light.png"
+            alt="Hero"
             width={1000}
             height={500}
-            className="w-full h-auto object-contain"
+            className="w-full h-auto object-contain dark:hidden"
+            priority
+          />
+          <Image
+            src="/hero-dark.png"
+            alt="Hero"
+            width={1000}
+            height={500}
+            className="hidden dark:block w-full h-auto object-contain"
             priority
           />
         </div>
@@ -98,11 +110,18 @@ export default function Home() {
             {/* Center Car Image */}
             <div className="flex-shrink-0 lg:w-96 relative order-1 lg:order-2">
               <Image
-                src="/top-down-car.png"
+                src="/car-light.png"
                 alt="Mobil Veteran Variasi"
                 width={1000}
                 height={1000}
-                className="w-full h-auto object-contain"
+                className="block dark:hidden w-full h-auto object-contain"
+              />
+              <Image
+                src="/car-dark.png"
+                alt="Mobil Veteran Variasi"
+                width={1000}
+                height={1000}
+                className="hidden dark:block w-full h-auto object-contain"
               />
             </div>
 

@@ -22,7 +22,6 @@ import {
   LogOutIcon,
   ShoppingCartIcon,
 } from "lucide-react";
-import { Logo } from "@/components/sidebar-02/logo";
 import type { Route } from "./nav-main";
 import DashboardNavigation from "@/components/sidebar-02/nav-main";
 import { NotificationsPopover } from "@/components/sidebar-02/nav-notifications";
@@ -30,6 +29,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { logout } from "@/app/auth/actions";
+import Logo from "../Logo";
 
 const sampleNotifications = [
   {
@@ -141,7 +141,7 @@ export function DashboardSidebar({
         )}
       >
         <Link href="/" className="flex items-center gap-2">
-          <Image src="/logo.png" alt="Logo" width={24} height={24} />
+          <Logo className="text-primary" size={24} />
           <p
             className={cn(
               "font-bold font-montserrat leading-none text-xs md:text-sm",

@@ -15,6 +15,7 @@ import {
 } from "./ui/dialog";
 import { Menu, Search, X, ShoppingCartIcon } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
+import Logo from "./Logo";
 
 export default function Navbar({
   user,
@@ -68,7 +69,7 @@ export default function Navbar({
     <header className="w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <Image src="/logo.png" alt="Logo" width={35} height={35} />
+          <Logo className="text-primary" size={32} />
           <p className="font-bold font-montserrat hidden sm:block leading-none text-xl md:text-2xl">
             Veteran Variasi
           </p>
