@@ -5,7 +5,7 @@ import { prisma } from '@/lib/prisma'
 
 const links = [
     {
-        title: 'Catalog',
+        title: 'Katalog',
         href: '/catalog',
     },
     {

@@ -79,7 +79,7 @@ export default function Navbar({
             href="/catalog"
             className="text-foreground/80 hover:text-primary transition-colors"
           >
-            Catalog
+            Katalog
           </Link>
           <Link
             href="#tentang-kami"
@@ -183,7 +183,7 @@ export default function Navbar({
               className="text-foreground/80 hover:text-primary transition-colors py-2 font-medium"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Catalog
+              Katalog
             </Link>
             <Link
               href="#tentang-kami"
