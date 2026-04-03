@@ -65,7 +65,7 @@ export default async function RootLayout({
   } : null;
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{

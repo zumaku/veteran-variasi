@@ -13,7 +13,8 @@ import {
   ChevronRight,
   Plus,
   History,
-  LayoutGrid
+  LayoutGrid,
+  Calendar as CalendarIcon
 } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { rupiahConverter } from "@/features/catalog/lib";
@@ -153,7 +154,10 @@ export default async function DashboardPage() {
   }
 
   // --- LOGIKA DATA UNTUK CUSTOMER ---
-  const [totalCars, activeOrders, completedOrders] = await Promise.all([
+  const today = new Date();
+  today.setHours(0,0,0,0);
+
+  const [totalCars, activeOrders, completedOrders, upcomingServices] = await Promise.all([
     prisma.car.count({ where: { userId: user.id } }),
     prisma.order.count({
       where: {
@@ -167,6 +171,16 @@ export default async function DashboardPage() {
         status: "COMPLETED",
       },
     }),
+    prisma.order.findMany({
+      where: {
+        userId: user.id,
+        status: { in: ["PAID", "PROCESSING"] },
+        bookingDate: { gte: today }
+      },
+      include: { car: true },
+      orderBy: { bookingDate: 'asc' },
+      take: 3
+    })
   ]);
 
   return (
@@ -202,6 +216,69 @@ export default async function DashboardPage() {
         />
       </div>
 
+      {/* Upcoming Service Section */}
+      <div className="mb-10">
+        <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+          <CalendarIcon className="w-5 h-5 text-primary" /> Jadwal Booking Anda
+        </h3>
+        
+        {upcomingServices.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {upcomingServices.map(service => {
+              const bDate = service.bookingDate ? new Date(service.bookingDate) : null;
+              
+              // Calculate days difference
+              let timeRemaining = "";
+              if (bDate) {
+                const diffTime = bDate.getTime() - today.getTime();
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                if (diffDays === 0) timeRemaining = "Hari ini";
+                else if (diffDays === 1) timeRemaining = "Besok";
+                else timeRemaining = `${diffDays} hari lagi`;
+              }
+              
+              return (
+                <Link 
+                  href="/dashboard/user/orders"
+                  key={service.id} 
+                  className="bg-card border-l-4 border-l-primary border-y border-r border-border/60 rounded-xl p-5 shadow-sm hover:shadow-md transition-all group"
+                >
+                  <div className="flex justify-between items-start mb-3">
+                    <span className="text-xs font-bold px-2 py-0.5 bg-primary/10 text-primary rounded-md">
+                      #{service.orderNumber}
+                    </span>
+                    {timeRemaining && (
+                      <span className={`text-[11px] font-bold px-2 py-1 rounded-full ${timeRemaining === 'Hari ini' ? 'bg-red-500 text-white animate-pulse' : 'bg-secondary text-secondary-foreground'}`}>
+                        {timeRemaining}
+                      </span>
+                    )}
+                  </div>
+                  
+                  <h4 className="font-bold text-foreground mb-1">
+                    {bDate ? new Intl.DateTimeFormat('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(bDate) : "Tanggal belum ditentukan"}
+                  </h4>
+                  
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground mt-3">
+                    <Car className="w-4 h-4" />
+                    <span className="truncate">
+                      {service.car ? `${service.car.brand} ${service.car.model}` : 'Tanpa Info Kendaraan'}
+                    </span>
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-border/50 text-[11px] text-primary font-semibold flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity">
+                    Harap bawa mobil Anda sesuai jadwal <ChevronRight className="w-3 h-3" />
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="bg-muted/20 border border-border/40 rounded-2xl p-6 text-center text-muted-foreground">
+            <CalendarIcon className="w-8 h-8 opacity-20 mx-auto mb-2" />
+            <p className="text-sm">Tidak ada jadwal pasang/servis dalam waktu dekat.</p>
+          </div>
+        )}
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div className="bg-card border border-border/60 rounded-3xl p-8 shadow-sm">
           <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
@@ -232,7 +309,7 @@ export default async function DashboardPage() {
             Daftarkan kendaraan Anda agar memudahkan proses booking di Veteran Variasi.
           </p>
           <Button asChild className="rounded-xl font-bold px-8">
-            <Link href="/dashboard/user/cars">Daftarkan Sekarang</Link>
+            <Link href="/dashboard/user/garage">Daftarkan Sekarang</Link>
           </Button>
         </div>
       </div>
