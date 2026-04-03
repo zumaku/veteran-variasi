@@ -2,9 +2,10 @@
 
 import * as React from "react";
 import { Moon, Sun } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
-export function ThemeToggle() {
+export function ThemeToggle({ minimal = false }: { minimal?: boolean }) {
   const [theme, setTheme] = React.useState<"light" | "dark">("light");
 
   React.useEffect(() => {
@@ -40,7 +41,10 @@ export function ThemeToggle() {
     <Button
       variant="ghost"
       size="icon"
-      className="rounded-full w-9 h-9 border bg-background hover:bg-accent ring-offset-background transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+      className={cn(
+        "rounded-full w-9 h-9 transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+        !minimal && "border bg-background hover:bg-accent ring-offset-background"
+      )}
       onClick={toggleTheme}
       aria-label="Toggle theme"
     >

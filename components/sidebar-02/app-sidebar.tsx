@@ -31,6 +31,8 @@ import { Button } from "../ui/button";
 import { logout } from "@/app/auth/actions";
 import Logo from "../Logo";
 
+import { ThemeToggle } from "@/components/ThemeToggle";
+
 const sampleNotifications = [
   {
     id: "1",
@@ -138,7 +140,7 @@ export function DashboardSidebar({
           <Logo className="text-primary" size={24} />
           <p
             className={cn(
-              "font-bold font-montserrat leading-none text-xs md:text-sm",
+              "font-bold font-montserrat leading-none text-xs md:text-sm whitespace-nowrap",
               isCollapsed ? "hidden" : "hidden sm:block",
             )}
           >
@@ -160,19 +162,24 @@ export function DashboardSidebar({
           <SidebarTrigger />
         </motion.div>
       </SidebarHeader>
-      <SidebarContent className="gap-4 px-2 py-4 flex flex-col justify-between">
+      <SidebarContent className="gap-4 px-2 py-4 flex flex-col">
         <DashboardNavigation routes={routesToRender} />
-        <form action={logout}>
-          <Button
-            variant="outline"
-            size="sm"
-            className="border-destructive text-destructive hover:text-destructive cursor-pointer hover:bg-destructive/10 w-full"
-          >
-            <LogOutIcon />
-            {!isCollapsed && "Logout"}
-          </Button>
-        </form>
       </SidebarContent>
+      <SidebarFooter className="p-2 flex flex-col gap-2">
+        <div className={cn("flex items-center gap-2", isCollapsed ? "flex-col" : "flex-row")}>
+          <ThemeToggle minimal />
+          <form action={logout} className="w-full">
+            <Button
+              variant="outline"
+              size="sm"
+              className="border-destructive text-destructive hover:text-destructive cursor-pointer hover:bg-destructive/10 w-full"
+            >
+              <LogOutIcon />
+              {!isCollapsed && "Logout"}
+            </Button>
+          </form>
+        </div>
+      </SidebarFooter>
     </Sidebar>
   );
 }
