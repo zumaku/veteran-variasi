@@ -154,10 +154,18 @@ export default async function ProductDetailPage({
 
           {/* Item Code & Tags */}
           <div className="flex flex-col gap-2 text-sm text-muted-foreground mb-10 pt-6 border-t border-border">
-            <p>
+            {/* <p>
               <strong className="text-foreground mr-1">Item Code:</strong>
               {product.id.toString().padStart(8, "0")}
-            </p>
+            </p> */}
+            {product.stock !== null && (
+              <p>
+                <strong className="text-foreground mr-1">Stok:</strong>
+                <span className={product.stock > 0 ? "text-green-600 font-bold" : "text-red-500 font-bold"}>
+                  {product.stock > 0 ? `${product.stock} unit` : "Stok Habis"}
+                </span>
+              </p>
+            )}
             <p>
               <strong className="text-foreground mr-1">Tags:</strong>
               {product.categories.map((c) => c.name).join(", ")}
