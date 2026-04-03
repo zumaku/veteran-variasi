@@ -62,7 +62,7 @@ export default function Home() {
       </section>
 
       {/* 4. Why Choose Us Section */}
-      <section id="tentang-kami" className="py-16 bg-background">
+      <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-semakin uppercase tracking-wide">
@@ -168,7 +168,10 @@ export default function Home() {
       <TopThreeProducts />
 
       {/* 5. Location Section */}
-      <section className="bg-secondary text-secondary-foreground py-20 relative overflow-hidden">
+      <section
+        id="tentang-kami"
+        className="bg-secondary text-secondary-foreground py-20 relative overflow-hidden"
+      >
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="flex flex-col gap-8">

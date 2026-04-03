@@ -82,13 +82,13 @@ export default function Navbar({
             Katalog
           </Link>
           <Link
-            href="#tentang-kami"
+            href="/#tentang-kami"
             className="text-foreground/80 hover:text-primary transition-colors"
           >
             Tentang Kami
           </Link>
           <Link
-            href="#faq"
+            href="/#faq"
             className="text-foreground/80 hover:text-primary transition-colors"
           >
             FAQ
