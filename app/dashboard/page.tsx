@@ -148,7 +148,7 @@ export default async function DashboardPage() {
         </div>
         
         {/* Orders Calendar View */}
-        <OrderCalendar orders={recentOrders as any} />
+        <OrderCalendar orders={JSON.parse(JSON.stringify(recentOrders))} />
       </main>
     );
   }
