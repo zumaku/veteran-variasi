@@ -49,16 +49,22 @@ function OrderStatusCompact({ status }: { status: string }) {
 
   return (
     <div className="flex items-center gap-2 bg-muted/50 dark:bg-muted/10 px-3 py-2 rounded-xl border border-border/50">
-      <div className={`w-8 h-8 rounded-full flex items-center justify-center
+      <div
+        className={`w-8 h-8 rounded-full flex items-center justify-center
         ${status === "COMPLETED" ? "bg-green-500 text-white" : "bg-primary text-white animate-pulse"}
-      `}>
+      `}
+      >
         <IconComp className="w-4 h-4" />
       </div>
       <div className="flex flex-col">
-        <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider leading-none mb-0.5">Status Sekarang</p>
-        <p className={`text-xs font-black
+        <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider leading-none mb-0.5">
+          Status Sekarang
+        </p>
+        <p
+          className={`text-xs font-black
           ${status === "COMPLETED" ? "text-green-600 dark:text-green-400" : "text-primary"}
-        `}>
+        `}
+        >
           {step.label}
         </p>
       </div>
@@ -98,9 +104,7 @@ function ReviewDialog({
 
   return (
     <>
-      <Button
-        onClick={() => setOpen(true)}
-      >
+      <Button onClick={() => setOpen(true)}>
         <MessageSquarePlus className="w-3.5 h-3.5" /> Beri Ulasan
       </Button>
 
@@ -129,7 +133,7 @@ function ReviewDialog({
                     className="transition-transform hover:scale-110 active:scale-95"
                   >
                     <Star
-                      className={`w-9 h-9 transition-colors ${
+                      className={`w-9 h-9 transition-colors text-yellow-500 ${
                         star <= (hovered || rating)
                           ? "fill-primary text-primary"
                           : "text-muted-foreground/30"
@@ -140,7 +144,16 @@ function ReviewDialog({
               </div>
               {rating > 0 && (
                 <p className="text-xs text-muted-foreground mt-2">
-                  {["", "Sangat Buruk", "Buruk", "Cukup", "Bagus", "Luar Biasa"][rating]}
+                  {
+                    [
+                      "",
+                      "Sangat Buruk",
+                      "Buruk",
+                      "Cukup",
+                      "Bagus",
+                      "Luar Biasa",
+                    ][rating]
+                  }
                 </p>
               )}
             </div>
@@ -166,10 +179,7 @@ function ReviewDialog({
               </p>
             </div>
 
-            <Button
-              onClick={handleSubmit}
-              disabled={loading || rating === 0}
-            >
+            <Button onClick={handleSubmit} disabled={loading || rating === 0}>
               {loading ? "Mengirim..." : "Kirim Ulasan"}
             </Button>
           </div>
@@ -238,7 +248,9 @@ export default function OrdersClient({
                 <span className="font-bold text-sm tracking-tight">
                   #{order.orderNumber}
                 </span>
-                <span className="text-muted-foreground/40 hidden sm:block">•</span>
+                <span className="text-muted-foreground/40 hidden sm:block">
+                  •
+                </span>
                 <span className="text-sm text-muted-foreground font-medium">
                   {format(new Date(order.createdAt), "dd MMM yyyy, HH:mm", {
                     locale: id,
@@ -251,8 +263,6 @@ export default function OrdersClient({
                 </div>
               )}
             </div>
-
-
 
             {/* Body */}
             <div className="px-6 py-4">
@@ -342,21 +352,17 @@ export default function OrdersClient({
 
               {/* Action Buttons on Right */}
               <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  asChild
-                >
+                <Button variant="outline" asChild>
                   <Link href={`/dashboard/user/payment/${order.id}`}>
                     Lihat Detail
                   </Link>
                 </Button>
 
                 {isPending && (
-                  <Button
-                    asChild
-                  >
+                  <Button asChild>
                     <Link href={`/dashboard/user/payment/${order.id}`}>
-                      Bayar Sekarang <ChevronRight className="w-3.5 h-3.5 ml-0.5" />
+                      Bayar Sekarang{" "}
+                      <ChevronRight className="w-3.5 h-3.5 ml-0.5" />
                     </Link>
                   </Button>
                 )}

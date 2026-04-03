@@ -61,7 +61,7 @@ export default function ProductCard({
           {[...Array(5)].map((_, i) => (
             <Star
               key={i}
-              className={`w-4 h-4 ${
+              className={`w-4 h-4 text-yellow-500 ${
                 i < Math.round(ratingStats.average)
                   ? "fill-primary text-primary"
                   : "fill-muted text-muted"

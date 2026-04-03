@@ -176,7 +176,7 @@ export default function CartPage() {
                 <Link href={`/dashboard/user/checkout?item=${item.id}`}>
                   <button
                     disabled={loadingItemId === item.id}
-                    className="bg-primary text-white hover:bg-primary/90 transition-all cursor-pointer rounded-xl px-6 py-2 text-sm font-bold h-11 flex items-center justify-center gap-2 shadow-sm hover:shadow active:scale-[0.98]"
+                    className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all cursor-pointer rounded-xl px-6 py-2 text-sm font-bold h-11 flex items-center justify-center gap-2 shadow-sm hover:shadow active:scale-[0.98]"
                   >
                     Checkout <ChevronRight className="w-4 h-4" />
                   </button>

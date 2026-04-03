@@ -36,9 +36,12 @@ export default async function ProductDetailPage({
     notFound();
   }
 
-  const reviews: Review[] = product.orderItems
-    .flatMap((item) => item.order.review)
-    .filter((review): review is Review => review !== null);
+  const reviews = product.orderItems
+    .filter((item) => item.order.review !== null)
+    .map((item) => ({
+      ...item.order.review!,
+      user: item.order.user,
+    }));
 
   const ratingStats = calculateRatingStats(reviews);
   const primaryCategory = product.categories[0]?.name || "Uncategorized";
@@ -106,7 +109,7 @@ export default async function ProductDetailPage({
             </div>
 
             <div className="flex items-center gap-2 mb-6 text-sm">
-              <div className="flex text-primary">
+              <div className="flex text-yellow-500">
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
@@ -171,21 +174,33 @@ export default async function ProductDetailPage({
                   {reviews.map((review) => (
                     <div
                       key={review.id}
-                      className="p-4 bg-muted/30 rounded-2xl"
+                      className="p-4 bg-muted/30 rounded-2xl border border-border/50"
                     >
-                      <div className="flex text-primary mb-2">
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            className={`w-4 h-4 ${
-                              i < review.rating
-                                ? "fill-current"
-                                : "text-muted-foreground/30"
-                            }`}
-                          />
-                        ))}
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">
+                            {review.user?.name?.charAt(0) || "U"}
+                          </div>
+                          <div>
+                            <p className="text-sm font-bold text-foreground leading-none">
+                              {review.user?.name || "Anonymous"}
+                            </p>
+                            <div className="flex text-yellow-500">
+                              {[...Array(5)].map((_, i) => (
+                                <Star
+                                  key={i}
+                                  className={`w-3 h-3 ${
+                                    i < review.rating
+                                      ? "fill-current"
+                                      : "text-muted-foreground/30"
+                                  }`}
+                                />
+                              ))}
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <p className="text-sm text-foreground leading-relaxed">
+                      <p className="text-sm text-foreground leading-relaxed pl-11">
                         {review.comment || "Tanpa komentar"}
                       </p>
                     </div>

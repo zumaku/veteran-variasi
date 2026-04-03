@@ -16,6 +16,7 @@ export async function getProductBySlug(slug: string) {
           order: {
             include: {
               review: true,
+              user: true,
             }
           }
         }

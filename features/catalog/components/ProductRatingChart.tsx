@@ -34,7 +34,7 @@ export default function ProductRatingChart({ stats }: ProductRatingChartProps) {
           <span className="text-muted-foreground text-lg">out of 5</span>
         </div>
 
-        <div className="flex text-primary mb-2">
+        <div className="flex text-yellow-500 mb-2">
           {[...Array(5)].map((_, i) => (
             <Star
               key={i}
@@ -67,7 +67,7 @@ export default function ProductRatingChart({ stats }: ProductRatingChartProps) {
               {/* Force the progress indicator color to match the mockup yellow */}
               <div className="flex-1 h-3 rounded-full overflow-hidden bg-muted">
                 <div
-                  className="h-full bg-primary rounded-full transition-all"
+                  className="h-full bg-yellow-500 rounded-full transition-all"
                   style={{ width: `${percentage}%` }}
                 />
               </div>
