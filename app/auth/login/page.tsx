@@ -28,7 +28,7 @@ export default function LoginPage() {
       >
         <div className="p-8 pb-6">
           <div className="text-center">
-            <Link href="/" aria-label="go home" className="mx-auto block w-fit">
+            <Link href="/" aria-label="go home" className="mx-auto block w-fit text-primary">
               <Logo />
             </Link>
             <h1 className="mb-1 mt-6 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">

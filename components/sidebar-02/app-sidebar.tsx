@@ -113,12 +113,6 @@ const adminRoutes: Route[] = [
     icon: <Blocks className="size-4" />,
     link: "/dashboard/admin/categories",
   },
-  {
-    id: "manage-settings",
-    title: "Pengaturan Website",
-    icon: <Settings className="size-4" />,
-    link: "/dashboard/admin/settings",
-  },
 ];
 
 export function DashboardSidebar({

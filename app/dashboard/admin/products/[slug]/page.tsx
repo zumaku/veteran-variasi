@@ -15,6 +15,9 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { Star, MessageSquare } from "lucide-react";
+import ProductRatingChart from "@/features/catalog/components/ProductRatingChart";
+import { calculateRatingStats } from "@/features/catalog/lib";
 
 export async function generateMetadata({
   params,
@@ -56,12 +59,34 @@ export default async function ProductDetailsPage({
 
   const product = await prisma.product.findUnique({
     where: { slug: resolvedParams.slug },
-    include: { images: true, categories: true },
+    include: {
+      images: true,
+      categories: true,
+      orderItems: {
+        include: {
+          order: {
+            include: {
+              review: true,
+              user: true,
+            },
+          },
+        },
+      },
+    },
   });
 
   if (!product) {
     redirect("/dashboard/admin/products");
   }
+
+  const reviews = product.orderItems
+    .filter((item) => item.order.review !== null)
+    .map((item) => ({
+      ...item.order.review!,
+      user: item.order.user,
+    }));
+
+  const ratingStats = calculateRatingStats(reviews as any);
 
   return (
     <div className="flex-1 space-y-4 p-8 pt-6">
@@ -203,6 +228,68 @@ export default async function ProductDetailsPage({
               </span>
             </div>
           )}
+        </div>
+        <div className="border rounded-xl p-6 bg-white dark:bg-zinc-950 shadow-sm space-y-6">
+          <h3 className="text-xl font-semibold border-b pb-4 flex items-center gap-2">
+            <Star className="h-5 w-5 text-primary" /> Rating & Penilaian
+          </h3>
+
+          <div className="w-full pt-4">
+            <ProductRatingChart stats={ratingStats} />
+
+            <div className="mt-12 pt-8 border-t">
+              <h3 className="text-base font-bold mb-6 flex items-center gap-2">
+                <MessageSquare className="w-4 h-4 text-muted-foreground" /> Ulasan Pelanggan ({reviews.length})
+              </h3>
+              {reviews.length > 0 ? (
+                <div className="space-y-4">
+                  {reviews.map((review) => (
+                    <div
+                      key={review.id}
+                      className="p-4 bg-muted/20 rounded-xl border border-border/50"
+                    >
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">
+                            {review.user?.name?.charAt(0) || "U"}
+                          </div>
+                          <div>
+                            <p className="text-sm font-bold text-foreground leading-none">
+                              {review.user?.name || "Anonymous"}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex text-yellow-500">
+                          {[...Array(5)].map((_, i) => (
+                            <Star
+                              key={i}
+                              className={`w-3 h-3 ${
+                                i < review.rating
+                                  ? "fill-current"
+                                  : "text-muted-foreground/30"
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                      <p className="text-sm text-foreground leading-relaxed pl-11">
+                        {review.comment || (
+                          <span className="text-muted-foreground italic">Tanpa komentar</span>
+                        )}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="bg-muted/10 p-8 rounded-xl flex flex-col items-center justify-center text-center">
+                  <Star className="w-8 h-8 text-muted-foreground/20 mb-2" />
+                  <p className="text-sm text-muted-foreground italic">
+                    Belum ada ulasan untuk produk ini.
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>
