@@ -22,6 +22,7 @@ type CartItem = {
     name: string;
     slug: string;
     price: any;
+    stock: number | null;
     images?: { url: string }[];
   };
 };
@@ -136,7 +137,7 @@ export default function CartPage() {
                       src={item.product.images[0].url}
                       alt={item.product.name}
                       fill
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      className="w-full h-full object-cover"
                     />
                   ) : (
                     <span className="text-muted-foreground italic font-medium text-[10px] leading-tight flex flex-col items-center gap-1">
@@ -157,6 +158,15 @@ export default function CartPage() {
                   <p className="text-primary font-bold text-[16px] mt-2 font-montserrat tracking-tight">
                     {rupiahConverter(Number(item.product.price))}
                   </p>
+                  {item.product.stock !== null && (
+                    <p
+                      className={`text-[11px] font-bold mt-1 ${item.product.stock > 0 ? "text-foreground" : "text-red-500"}`}
+                    >
+                      {item.product.stock > 0
+                        ? `Stok tersedia: ${item.product.stock}`
+                        : "Stok sedang habis"}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -173,12 +183,33 @@ export default function CartPage() {
                   </span>
                 </button>
 
-                <Link href={`/dashboard/user/checkout?item=${item.id}`}>
+                <Link
+                  href={
+                    item.product.stock !== null && item.product.stock <= 0
+                      ? "#"
+                      : `/dashboard/user/checkout?item=${item.id}`
+                  }
+                  className={
+                    item.product.stock !== null && item.product.stock <= 0
+                      ? "cursor-not-allowed pointer-events-none"
+                      : ""
+                  }
+                >
                   <button
-                    disabled={loadingItemId === item.id}
-                    className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all cursor-pointer rounded-xl px-6 py-2 text-sm font-bold h-11 flex items-center justify-center gap-2 shadow-sm hover:shadow active:scale-[0.98]"
+                    disabled={
+                      loadingItemId === item.id ||
+                      (item.product.stock !== null && item.product.stock <= 0)
+                    }
+                    className={`bg-primary text-primary-foreground hover:bg-primary/90 transition-all cursor-pointer rounded-xl px-6 py-2 text-sm font-bold h-11 flex items-center justify-center gap-2 shadow-sm hover:shadow active:scale-[0.98] ${
+                      item.product.stock !== null && item.product.stock <= 0
+                        ? "opacity-50 grayscale cursor-not-allowed"
+                        : ""
+                    }`}
                   >
-                    Checkout <ChevronRight className="w-4 h-4" />
+                    {item.product.stock !== null && item.product.stock <= 0
+                      ? "Stok Habis"
+                      : "Checkout"}{" "}
+                    <ChevronRight className="w-4 h-4" />
                   </button>
                 </Link>
               </div>

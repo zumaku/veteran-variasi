@@ -368,7 +368,7 @@ export default function CheckoutClient({
                             src={c.image}
                             alt={`${c.brand} ${c.model}`}
                             fill
-                            className="object-cover transition-transform duration-300 group-hover:scale-105"
+                            className="object-cover"
                           />
                         ) : (
                           <CarFront className="w-10 h-10 text-muted-foreground/30" />
@@ -421,7 +421,7 @@ export default function CheckoutClient({
             Waktu Kedatangan
           </h2>
 
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 items-start">
+          <div className="grid grid-cols-1 gap-5 items-start">
             <div className="space-y-4 w-full">
               <label className="text-sm font-semibold flex items-center gap-1.5 text-foreground">
                 <CalendarIcon className="w-4 h-4 text-muted-foreground" />{" "}
