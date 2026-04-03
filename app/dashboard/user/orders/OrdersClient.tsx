@@ -50,14 +50,14 @@ function OrderStatusCompact({ status }: { status: string }) {
   return (
     <div className="flex items-center gap-2 bg-muted/50 dark:bg-muted/10 px-3 py-2 rounded-xl border border-border/50">
       <div className={`w-8 h-8 rounded-full flex items-center justify-center
-        ${status === "COMPLETED" ? "bg-green-500 text-white" : "bg-[#FFB800] text-black animate-pulse"}
+        ${status === "COMPLETED" ? "bg-green-500 text-white" : "bg-primary text-white animate-pulse"}
       `}>
         <IconComp className="w-4 h-4" />
       </div>
       <div className="flex flex-col">
         <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider leading-none mb-0.5">Status Sekarang</p>
         <p className={`text-xs font-black
-          ${status === "COMPLETED" ? "text-green-600 dark:text-green-400" : "text-[#FFB800]"}
+          ${status === "COMPLETED" ? "text-green-600 dark:text-green-400" : "text-primary"}
         `}>
           {step.label}
         </p>
@@ -131,7 +131,7 @@ function ReviewDialog({
                     <Star
                       className={`w-9 h-9 transition-colors ${
                         star <= (hovered || rating)
-                          ? "fill-[#FFB800] text-[#FFB800]"
+                          ? "fill-primary text-primary"
                           : "text-muted-foreground/30"
                       }`}
                     />
@@ -313,7 +313,7 @@ export default function OrdersClient({
                     <p className="text-xs text-muted-foreground mb-1">
                       Total Belanja
                     </p>
-                    <p className="font-bold text-lg text-[#FFB800]">
+                    <p className="font-bold text-lg text-primary">
                       {rupiahConverter(order.totalAmount)}
                     </p>
                   </div>

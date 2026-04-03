@@ -129,7 +129,7 @@ export default function AdminOrdersClient({ initialOrders }: { initialOrders: an
                     </p>
                   </td>
                   <td className="px-6 py-4 align-middle">
-                    <p className="font-bold text-sm text-[#FFB800]">{rupiahConverter(order.totalAmount)}</p>
+                    <p className="font-bold text-sm text-priamry">{rupiahConverter(order.totalAmount)}</p>
                     <p className="text-[10px] font-bold text-muted-foreground mt-0.5 uppercase tracking-wider">
                       {(order.paymentToken || order.paymentMethod).replace(/_/g, " ")}
                     </p>
@@ -197,7 +197,7 @@ export default function AdminOrdersClient({ initialOrders }: { initialOrders: an
               className={
                 tempStatus === "CANCELLED"
                   ? "bg-red-600 hover:bg-red-700"
-                  : "bg-[#FFB800] hover:bg-[#E6A600] text-black font-bold"
+                  : "bg-primary hover:bg-primary text-white font-bold"
               }
               onClick={(e) => {
                 e.preventDefault();

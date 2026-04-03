@@ -125,7 +125,7 @@ export default function Navbar({
             <Link href="/dashboard/user/cart" className="relative cursor-pointer flex items-center justify-center p-2 text-muted-foreground hover:text-foreground transition-colors mr-2">
               <ShoppingCartIcon className="h-[22px] w-[22px]" />
               {cartData?.items?.length > 0 && (
-                <span className="absolute top-0 right-0 bg-[#FFB800] text-black text-[10px] font-bold rounded-full h-[18px] w-[18px] flex items-center justify-center transform translate-x-1/4 -translate-y-1/4 border border-background">
+                <span className="absolute top-0 right-0 bg-primary text-background text-[10px] font-bold rounded-full h-[18px] w-[18px] flex items-center justify-center transform translate-x-1/4 -translate-y-1/4 border border-background">
                   {cartData.items.reduce((acc: number, item: any) => acc + item.quantity, 0)}
                 </span>
               )}

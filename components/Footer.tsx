@@ -26,7 +26,7 @@ export default async function Footer() {
                     href="/"
                     aria-label="go home"
                     className="mx-auto block size-fit flex items-center gap-2">
-                    <Logo size={32} />
+                    <Logo className="text-primary" size={32} />
                     <p className='text-2xl font-bold'>Veteran Variasi</p>
                 </Link>
 

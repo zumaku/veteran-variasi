@@ -245,7 +245,7 @@ export default function Home() {
       {/* 7. CTA Section */}
       <section className="bg-primary py-20 border-t border-border/50">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold font-semakin mb-6">
+          <h2 className="text-background text-3xl md:text-4xl font-bold font-semakin mb-6">
             Siap Merawat Mobil Kesayangan Anda?
           </h2>
           <p className="text-primary-foreground max-w-2xl mx-auto mb-8">

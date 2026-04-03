@@ -72,7 +72,7 @@ export default function CartPage() {
     return (
       <div className="flex items-center justify-center p-12 min-h-[60vh]">
         <div className="flex flex-col items-center gap-4">
-          <div className="h-8 w-8 border-4 border-[#FFB800] border-t-transparent rounded-full animate-spin"></div>
+          <div className="h-8 w-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
           <p className="text-muted-foreground font-medium">
             Memuat keranjang...
           </p>
@@ -108,7 +108,7 @@ export default function CartPage() {
           <Link href="/catalog">
             <Button
               size="lg"
-              className="font-bold cursor-pointer px-8 bg-[#FFB800] text-black hover:bg-[#FFB800]/90 transition-all rounded-xl h-12"
+              className="font-bold cursor-pointer px-8 bg-primary text-white hover:bg-primary/90 transition-all rounded-xl h-12"
             >
               Mulai Belanja
             </Button>
@@ -119,7 +119,7 @@ export default function CartPage() {
           {items.map((item) => (
             <div
               key={item.id}
-              className="bg-card border border-border/60 rounded-2xl p-6 transition-all duration-300 relative flex flex-col sm:flex-row items-center justify-between min-h-[120px] hover:border-[#FFB800]/50 hover:shadow-sm group"
+              className="bg-card border border-border/60 rounded-2xl p-6 transition-all duration-300 relative flex flex-col sm:flex-row items-center justify-between min-h-[120px] hover:border-primary/50 hover:shadow-sm group"
             >
               {loadingItemId === item.id && (
                 <div className="absolute inset-0 bg-background/50 flex items-center justify-center z-10 backdrop-blur-[1px] rounded-[20px]">
@@ -150,11 +150,11 @@ export default function CartPage() {
                 <div className="flex flex-col py-1">
                   <Link
                     href={`/catalog/${item.product.slug}`}
-                    className="font-bold text-[17px] leading-tight hover:text-[#FFB800] transition-colors text-foreground line-clamp-2 pr-4"
+                    className="font-bold text-[17px] leading-tight hover:text-primary transition-colors text-foreground line-clamp-2 pr-4"
                   >
                     {item.product.name}
                   </Link>
-                  <p className="text-[#FFB800] font-bold text-[16px] mt-2 font-montserrat tracking-tight">
+                  <p className="text-primary font-bold text-[16px] mt-2 font-montserrat tracking-tight">
                     {rupiahConverter(Number(item.product.price))}
                   </p>
                 </div>
@@ -176,7 +176,7 @@ export default function CartPage() {
                 <Link href={`/dashboard/user/checkout?item=${item.id}`}>
                   <button
                     disabled={loadingItemId === item.id}
-                    className="bg-[#FFB800] text-black hover:bg-[#FFB800]/90 transition-all cursor-pointer rounded-xl px-6 py-2 text-sm font-bold h-11 flex items-center justify-center gap-2 shadow-sm hover:shadow active:scale-[0.98]"
+                    className="bg-primary text-white hover:bg-primary/90 transition-all cursor-pointer rounded-xl px-6 py-2 text-sm font-bold h-11 flex items-center justify-center gap-2 shadow-sm hover:shadow active:scale-[0.98]"
                   >
                     Checkout <ChevronRight className="w-4 h-4" />
                   </button>

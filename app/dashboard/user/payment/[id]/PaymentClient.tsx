@@ -311,7 +311,7 @@ export default function PaymentClient({ order }: { order: any }) {
               <p className="text-muted-foreground text-sm">
                 Selesaikan pembayaran dalam waktu
               </p>
-              <div className="text-4xl font-black font-montserrat text-[#FFB800] tracking-tight">
+              <div className="text-4xl font-black font-montserrat text-primary tracking-tight">
                 {String(timeLeft.minutes).padStart(2, "0")}:
                 {String(timeLeft.seconds).padStart(2, "0")}
               </div>
@@ -413,7 +413,7 @@ export default function PaymentClient({ order }: { order: any }) {
           </div>
 
           {/* Payment Instructions / Bill */}
-          <div className="bg-background rounded-2xl p-6 border-2 border-[#FFB800]/20 shadow-sm print:border-none print:shadow-none print:p-0">
+          <div className="bg-background rounded-2xl p-6 border-2 border-primary/20 shadow-sm print:border-none print:shadow-none print:p-0">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 print:mb-4 pb-4 border-b border-border/50 print:border-gray-200">
               <div>
                 <p className="text-sm text-muted-foreground font-semibold flex items-center gap-1.5 mb-2">
@@ -447,7 +447,7 @@ export default function PaymentClient({ order }: { order: any }) {
                 <p className="text-sm text-muted-foreground font-semibold mb-1 print:text-left print:sm:text-right">
                   Total Tagihan
                 </p>
-                <p className="text-2xl font-black font-montserrat text-[#FFB800] tracking-tight print:text-black">
+                <p className="text-2xl font-black font-montserrat text-primary tracking-tight print:text-black">
                   {rupiahConverter(order.totalAmount)}
                 </p>
               </div>
@@ -459,14 +459,14 @@ export default function PaymentClient({ order }: { order: any }) {
                   <p className="text-sm font-semibold mb-2 text-foreground/80">
                     Kode Pembayaran / Virtual Account
                   </p>
-                  <div className="flex items-center justify-between bg-background p-3 rounded-lg border-2 border-border focus-within:border-[#FFB800] transition-colors">
+                  <div className="flex items-center justify-between bg-background p-3 rounded-lg border-2 border-border focus-within:border-primary transition-colors">
                     <span className="font-mono text-xl font-bold tracking-widest">
                       {paymentCode}
                     </span>
                     <button
                       type="button"
                       onClick={() => handleCopy(paymentCode)}
-                      className="p-2 text-muted-foreground hover:text-[#FFB800] hover:bg-[#FFB800]/10 rounded-md transition-colors"
+                      className="p-2 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-md transition-colors"
                     >
                       <Copy className="w-5 h-5" />
                     </button>

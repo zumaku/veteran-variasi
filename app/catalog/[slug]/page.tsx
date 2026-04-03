@@ -106,7 +106,7 @@ export default async function ProductDetailPage({
             </div>
 
             <div className="flex items-center gap-2 mb-6 text-sm">
-              <div className="flex text-[#FFB800]">
+              <div className="flex text-primary">
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
@@ -173,7 +173,7 @@ export default async function ProductDetailPage({
                       key={review.id}
                       className="p-4 bg-muted/30 rounded-2xl"
                     >
-                      <div className="flex text-[#FFB800] mb-2">
+                      <div className="flex text-primary mb-2">
                         {[...Array(5)].map((_, i) => (
                           <Star
                             key={i}

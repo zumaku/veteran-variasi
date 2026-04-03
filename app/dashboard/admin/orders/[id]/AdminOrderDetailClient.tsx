@@ -194,7 +194,7 @@ export default function AdminOrderDetailClient({
               <div className="flex items-center gap-3 min-w-0">
                 {order.car?.image ? (
                   <div
-                    className="relative w-24 h-24 rounded-lg overflow-hidden cursor-pointer hover:ring-2 hover:ring-[#FFB800] transition-all group"
+                    className="relative w-24 h-24 rounded-lg overflow-hidden cursor-pointer hover:ring-2 hover:ring-primary transition-all group"
                     onClick={() => setIsPreviewOpen(true)}
                   >
                     <Image
@@ -242,7 +242,7 @@ export default function AdminOrderDetailClient({
                     : "Tanpa Jadwal"}
                 </p>
                 {order.timeSlot && (
-                  <p className="text-xs bg-[#FFB800]/10 text-[#FFB800] font-bold px-2 py-1 rounded w-fit mt-1.5">
+                  <p className="text-xs bg-primary/10 text-primary font-bold px-2 py-1 rounded w-fit mt-1.5">
                     Sesi {order.timeSlot}
                   </p>
                 )}
@@ -282,7 +282,7 @@ export default function AdminOrderDetailClient({
                   <div className="flex-1 min-w-0 flex flex-col justify-center">
                     <Link
                       href={`/catalog/${item.product.slug}`}
-                      className="font-bold text-sm text-foreground mb-1 truncate hover:text-[#FFB800] hover:underline underline-offset-2 decoration-[#FFB800]/50 transition-all block w-fit max-w-full"
+                      className="font-bold text-sm text-foreground mb-1 truncate hover:text-primary hover:underline underline-offset-2 decoration-primary/50 transition-all block w-fit max-w-full"
                     >
                       {item.product.name}
                     </Link>
@@ -298,7 +298,7 @@ export default function AdminOrderDetailClient({
                       {item.quantity}
                     </span>
                   </p>
-                  <p className="text-sm font-bold text-[#FFB800] mt-1">
+                  <p className="text-sm font-bold text-primary mt-1">
                     {rupiahConverter(item.priceAtBooking * item.quantity)}
                   </p>
                 </div>
@@ -392,7 +392,7 @@ export default function AdminOrderDetailClient({
                 <p className="font-bold text-foreground text-sm">
                   Total Tagihan
                 </p>
-                <p className="text-2xl font-black text-[#FFB800] font-montserrat tracking-tight">
+                <p className="text-2xl font-black text-primary font-montserrat tracking-tight">
                   {rupiahConverter(order.totalAmount)}
                 </p>
               </div>
@@ -442,7 +442,7 @@ export default function AdminOrderDetailClient({
           <AlertDialogFooter>
             <AlertDialogCancel disabled={isUpdating}>Batal</AlertDialogCancel>
             <AlertDialogAction
-              className={tempStatus === "CANCELLED" ? "bg-red-600 hover:bg-red-700" : "bg-[#FFB800] hover:bg-[#E6A600] text-black font-bold"}
+              className={tempStatus === "CANCELLED" ? "bg-red-600 hover:bg-red-700" : "bg-primary hover:bg-primary text-white font-bold"}
               onClick={(e) => {
                 e.preventDefault();
                 confirmStatusChange();

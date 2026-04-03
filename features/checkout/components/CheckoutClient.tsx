@@ -294,11 +294,11 @@ export default function CheckoutClient({
         {/* Total Product Section */}
         <section className="bg-card border border-border/60 rounded-2xl p-6 shadow-sm space-y-4">
           <h2 className="text-xl font-bold font-montserrat flex items-center gap-2">
-            <PackageOpen className="w-5 h-5 text-[#FFB800]" />
+            <PackageOpen className="w-5 h-5 text-primary" />
             Produk Pesanan
           </h2>
 
-          <div className="flex bg-background rounded-lg border border-border/80 p-4 rounded-[16px] items-center gap-4 transition-all hover:border-[#FFB800]/50 hover:shadow-sm">
+          <div className="flex bg-background rounded-lg border border-border/80 p-4 rounded-[16px] items-center gap-4 transition-all hover:border-primary/50 hover:shadow-sm">
             <div className="relative w-20 h-20 rounded-xl overflow-hidden bg-muted flex-shrink-0 border flex items-center justify-center">
               {item.product.images?.[0]?.url ? (
                 <Image
@@ -321,7 +321,7 @@ export default function CheckoutClient({
               </span>
             </div>
 
-            <div className="font-bold text-[#FFB800] text-lg font-montserrat tracking-tight">
+            <div className="font-bold text-primary text-lg font-montserrat tracking-tight">
               {rupiahConverter(total)}
             </div>
           </div>
@@ -330,7 +330,7 @@ export default function CheckoutClient({
         {/* Car Selection Section */}
         <section className="bg-card border border-border/60 rounded-2xl p-6 shadow-sm space-y-4">
           <h2 className="text-xl font-bold font-montserrat flex items-center gap-2">
-            <CarFront className="w-5 h-5 text-[#FFB800]" />
+            <CarFront className="w-5 h-5 text-primary" />
             Mobil (Kendaraan)
           </h2>
 
@@ -345,9 +345,9 @@ export default function CheckoutClient({
                   return (
                     <label
                       key={c.id}
-                      className={`relative flex flex-col h-full overflow-hidden bg-background border-2 rounded-xl cursor-pointer hover:border-[#FFB800] hover:shadow-sm transition-all group ${
+                      className={`relative flex flex-col h-full overflow-hidden bg-background border-2 rounded-xl cursor-pointer hover:border-primary hover:shadow-sm transition-all group ${
                         isSelected
-                          ? "border-[#FFB800] ring-1 ring-[#FFB800] bg-[#FFB800]/5 shadow-md"
+                          ? "border-primary ring-1 ring-primary bg-primary/5 shadow-md"
                           : "border-border/60"
                       }`}
                     >
@@ -387,7 +387,7 @@ export default function CheckoutClient({
 
                       {/* Checked indicator */}
                       <div
-                        className={`absolute top-2 right-2 bg-[#FFB800] text-black w-6 h-6 rounded-full flex items-center justify-center transition-all shadow-sm z-10 ${
+                        className={`absolute top-2 right-2 bg-primary text-primary-foreground w-6 h-6 rounded-full flex items-center justify-center transition-all shadow-sm z-10 ${
                           isSelected
                             ? "opacity-100 scale-100"
                             : "opacity-0 scale-50"
@@ -417,7 +417,7 @@ export default function CheckoutClient({
         {/* Arrival Time Section */}
         <section className="bg-card border border-border/60 rounded-2xl p-6 shadow-sm space-y-4">
           <h2 className="text-xl font-bold font-montserrat flex items-center gap-2">
-            <CalendarIcon className="w-5 h-5 text-[#FFB800]" />
+            <CalendarIcon className="w-5 h-5 text-primary" />
             Waktu Kedatangan
           </h2>
 
@@ -460,7 +460,7 @@ export default function CheckoutClient({
                             className={`p-1`}
                           >
                             <div
-                              className={`flex flex-col rounded-sm pb-4  hover:bg-primary/90 ${modifiers.selected && "bg-primary text-black"}`}
+                              className={`flex flex-col rounded-sm pb-4  hover:bg-primary/90 ${modifiers.selected && "bg-primary text-primary-foreground"}`}
                             >
                               <span className="text-sm sm:text-base font-medium p-4">
                                 {children}
@@ -469,7 +469,7 @@ export default function CheckoutClient({
                                 <span
                                   className={`text-[11px] sm:text-xs font-bold -mt-4 ${
                                     modifiers.selected
-                                      ? "text-black/70"
+                                      ? "text-primary-foreground/70"
                                       : available === 0
                                         ? "text-red-500"
                                         : "text-muted-foreground dark:text-muted-foreground"
@@ -512,7 +512,7 @@ export default function CheckoutClient({
                 </div>
               ) : isCheckingSlots ? (
                 <div className="flex flex-col items-center justify-center p-6 h-full min-h-[160px] border-2 border-border/60 rounded-xl bg-background/50">
-                  <div className="w-6 h-6 border-2 border-[#FFB800] border-t-transparent rounded-full animate-spin mb-3" />
+                  <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin mb-3" />
                   <p className="text-sm font-medium text-muted-foreground">Mengecek ketersediaan jam...</p>
                 </div>
               ) : (
@@ -532,8 +532,8 @@ export default function CheckoutClient({
                           isBooked
                             ? "border-border/40 bg-muted/50 cursor-not-allowed opacity-60"
                             : isSelected
-                              ? "border-[#FFB800] bg-[#FFB800]/5 ring-1 ring-[#FFB800] shadow-sm"
-                              : "border-border/60 bg-background/50 hover:border-[#FFB800]/50 hover:bg-muted/20"
+                              ? "border-primary bg-primary/5 ring-1 ring-primary shadow-sm"
+                              : "border-border/60 bg-background/50 hover:border-primary/50 hover:bg-muted/20"
                         }`}
                       >
                         <input
@@ -552,7 +552,7 @@ export default function CheckoutClient({
                               isBooked 
                                 ? "text-muted-foreground/60" 
                                 : isSelected 
-                                  ? "text-[#FFB800]" 
+                                  ? "text-primary" 
                                   : "text-muted-foreground"
                             }`} 
                           />
@@ -569,7 +569,7 @@ export default function CheckoutClient({
                         {isBooked ? (
                           <span className="text-xs font-bold text-red-500 bg-red-500/10 px-2.5 py-1 rounded-md">Terisi</span>
                         ) : isSelected ? (
-                          <div className="bg-[#FFB800] text-black w-5 h-5 rounded-full flex items-center justify-center shadow-sm">
+                          <div className="bg-primary text-primary-foreground w-5 h-5 rounded-full flex items-center justify-center shadow-sm">
                             <Check className="w-3 h-3" strokeWidth={3} />
                           </div>
                         ) : (
@@ -587,7 +587,7 @@ export default function CheckoutClient({
         {/* Payment Method Section */}
         <section className="bg-card border border-border/60 rounded-2xl p-6 shadow-sm space-y-4">
           <h2 className="text-xl font-bold font-montserrat flex items-center gap-2">
-            <Wallet className="w-5 h-5 text-[#FFB800]" />
+            <Wallet className="w-5 h-5 text-primary" />
             Metode Pembayaran
           </h2>
 
@@ -603,7 +603,7 @@ export default function CheckoutClient({
                   key={category.id}
                   className={`border rounded-2xl overflow-hidden transition-all duration-300 ${
                     isExpanded
-                      ? "border-[#FFB800] bg-background shadow-sm"
+                      ? "border-primary bg-background shadow-sm"
                       : "border-border/60 bg-background/50 hover:border-border"
                   }`}
                 >
@@ -618,7 +618,7 @@ export default function CheckoutClient({
                       <div
                         className={`p-2 rounded-xl flex items-center justify-center transition-colors ${
                           hasSelectedMethod || isExpanded
-                            ? "bg-[#FFB800]/20 text-[#FFB800]"
+                            ? "bg-primary/20 text-primary"
                             : "bg-muted text-muted-foreground"
                         }`}
                       >
@@ -645,9 +645,9 @@ export default function CheckoutClient({
                           return (
                             <label
                               key={method.id}
-                              className={`relative flex items-center gap-4 p-4 rounded-xl cursor-pointer hover:border-[#FFB800] hover:shadow-sm transition-all border-2 bg-background group w-full ${
+                              className={`relative flex items-center gap-4 p-4 rounded-xl cursor-pointer hover:border-primary hover:shadow-sm transition-all border-2 bg-background group w-full ${
                                 isSelected
-                                  ? "border-[#FFB800] ring-[#FFB800] bg-[#FFB800]/5 shadow-sm"
+                                  ? "border-primary ring-primary bg-primary/5 shadow-sm"
                                   : "border-border/60"
                               }`}
                             >
@@ -696,7 +696,7 @@ export default function CheckoutClient({
                               </span>
 
                               <div
-                                className={`mt-0.5 ml-auto bg-[#FFB800] text-black w-5 h-5 rounded-full flex items-center justify-center transition-all shadow-sm ${
+                                className={`mt-0.5 ml-auto bg-primary text-primary-foreground w-5 h-5 rounded-full flex items-center justify-center transition-all shadow-sm ${
                                   isSelected
                                     ? "opacity-100 scale-100"
                                     : "bg-transparent border-2 border-border opacity-50"
@@ -783,7 +783,7 @@ export default function CheckoutClient({
         <div className="pt-6 mt-6 border-t border-border/60">
           <div className="flex justify-between items-center mb-6 bg-muted/30 p-4 rounded-xl">
             <span className="font-bold text-[17px]">Total Pembayaran</span>
-            <span className="font-bold text-2xl font-montserrat tracking-tight text-[#FFB800]">
+            <span className="font-bold text-2xl font-montserrat tracking-tight text-primary">
               {rupiahConverter(total)}
             </span>
           </div>
@@ -797,7 +797,7 @@ export default function CheckoutClient({
               !selectedTimeSlot ||
               !selectedPayment
             }
-            className="w-full text-base h-14 font-bold cursor-pointer transition-all active:scale-[0.98] bg-[#FFB800] text-black hover:bg-[#FFB800]/90 shadow hover:shadow-md rounded-xl flex items-center justify-center gap-2 disabled:bg-muted disabled:text-muted-foreground"
+            className="w-full text-base h-14 font-bold cursor-pointer transition-all active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 shadow hover:shadow-md rounded-xl flex items-center justify-center gap-2 disabled:bg-muted disabled:text-muted-foreground"
           >
             {loading ? (
               <>
