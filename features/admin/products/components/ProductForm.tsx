@@ -243,15 +243,42 @@ export function ProductForm({ initialData, categories }: ProductFormProps) {
           <FormField
             control={form.control as any}
             name="price"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Harga (Rp)</FormLabel>
-                <FormControl>
-                  <Input type="number" min="0" placeholder="0" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            render={({ field }) => {
+              const formatRupiah = (val: number | string) => {
+                if (val === undefined || val === null || val === "") return "";
+                const numberString = val.toString().replace(/[^0-9]/g, "");
+                if (!numberString) return "";
+                const num = parseInt(numberString, 10);
+                return new Intl.NumberFormat("id-ID").format(num);
+              };
+
+              const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+                const rawValue = e.target.value.replace(/[^0-9]/g, "");
+                field.onChange(rawValue ? Number(rawValue) : 0);
+              };
+
+              return (
+                <FormItem>
+                  <FormLabel>Harga</FormLabel>
+                  <FormControl>
+                    <div className="relative flex items-center">
+                      <span className="absolute left-3 text-muted-foreground text-sm">
+                        Rp.
+                      </span>
+                      <Input
+                        type="text"
+                        className="pl-9"
+                        placeholder="0"
+                        {...field}
+                        value={formatRupiah(field.value)}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              );
+            }}
           />
 
           <FormField
