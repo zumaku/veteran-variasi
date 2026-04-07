@@ -78,7 +78,7 @@ export function CategoryForm({ initialData }: CategoryFormProps) {
         }
       } else {
         toast.success(result?.message || "Kategori berhasil disimpan");
-        router.push("/admin/categories");
+        router.push("/dashboard/admin/categories");
         router.refresh();
       }
     });

@@ -94,7 +94,7 @@ export function CategoryTable({ categories }: CategoryTableProps) {
                       <DropdownMenuSeparator />
                       <DropdownMenuItem asChild className="cursor-pointer">
                         <Link
-                          href={`/admin/categories/${category.slug}`}
+                          href={`/dashboard/admin/categories/${category.slug}`}
                           className="flex items-center"
                         >
                           <Eye className="mr-2 h-4 w-4" />
