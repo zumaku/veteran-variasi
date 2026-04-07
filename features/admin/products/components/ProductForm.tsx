@@ -136,7 +136,7 @@ export function ProductForm({ initialData, categories }: ProductFormProps) {
         toast.error(result.message || "Terjadi kesalahan");
       } else if (result?.success) {
         toast.success(result.message);
-        router.push("/admin/products");
+        router.push("/dashboard/admin/products");
         router.refresh();
       }
     });

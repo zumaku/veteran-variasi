@@ -72,8 +72,8 @@ export async function createProductAction(prevState: any, formData: FormData) {
       },
     });
 
-    revalidatePath("/admin/products");
-    redirect(`/admin/products/${slug}`);
+    revalidatePath("/dashboard/admin/products");
+    redirect(`/dashboard/admin/products/${slug}`);
   } catch (error) {
     if (error instanceof Error && error.message === "NEXT_REDIRECT") {
       throw error;
@@ -180,12 +180,12 @@ export async function updateProductAction(prevState: any, formData: FormData) {
     select: { slug: true },
   });
 
-  revalidatePath("/admin/products");
+  revalidatePath("/dashboard/admin/products");
   if (updatedProduct) {
-    revalidatePath(`/admin/products/${updatedProduct.slug}`);
-    redirect(`/admin/products/${updatedProduct.slug}`);
+    revalidatePath(`/dashboard/admin/products/${updatedProduct.slug}`);
+    redirect(`/dashboard/admin/products/${updatedProduct.slug}`);
   } else {
-    redirect("/admin/products");
+    redirect("/dashboard/admin/products");
   }
 }
 
@@ -218,7 +218,7 @@ export async function deleteProductAction(id: number) {
       }
     });
 
-    revalidatePath("/admin/products");
+    revalidatePath("/dashboard/admin/products");
     return { success: true };
   } catch (error: any) {
     console.error("Error deleting product:", error);

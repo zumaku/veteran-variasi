@@ -162,7 +162,7 @@ export function ProductTable({ products }: ProductTableProps) {
                         <DropdownMenuLabel>Aksi</DropdownMenuLabel>
                         <DropdownMenuItem asChild>
                           <Link
-                            href={`/admin/products/${product.slug}`}
+                            href={`/dashboard/admin/products/${product.slug}`}
                             className="cursor-pointer"
                           >
                             <Eye className="mr-2 h-4 w-4" /> Detail
@@ -170,7 +170,7 @@ export function ProductTable({ products }: ProductTableProps) {
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
                           <Link
-                            href={`/admin/products/${product.slug}/edit`}
+                            href={`/dashboard/admin/products/${product.slug}/edit`}
                             className="cursor-pointer"
                           >
                             <Edit className="mr-2 h-4 w-4" /> Edit
