@@ -135,7 +135,7 @@ function ReviewDialog({
                     <Star
                       className={`w-9 h-9 transition-colors text-yellow-500 ${
                         star <= (hovered || rating)
-                          ? "fill-primary text-primary"
+                          ? "fill-yellow-500 text-yellow-500"
                           : "text-muted-foreground/30"
                       }`}
                     />
