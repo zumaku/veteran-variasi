@@ -2,6 +2,9 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/session";
 import AdminOrdersClient from "./AdminOrdersClient";
+import Link from "next/link";
+import { PlusCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export const metadata = {
   title: "Kelola Pesanan | Veteran Variasi (Admin)",
@@ -9,12 +12,14 @@ export const metadata = {
 
 export default async function AdminOrdersPage() {
   const session = await getSession();
-  
+
   if (!session || !session.userId) {
     redirect("/auth/login");
   }
 
-  const user = await prisma.user.findUnique({ where: { id: session.userId as number } });
+  const user = await prisma.user.findUnique({
+    where: { id: session.userId as number },
+  });
   if (!user || user.role !== "ADMIN") {
     redirect("/dashboard");
   }
@@ -38,9 +43,21 @@ export default async function AdminOrdersPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-black font-montserrat tracking-tight mb-2">Manajemen Pesanan</h1>
-        <p className="text-muted-foreground">Atur jadwal pengerjaan dan pantau status tagihan pelanggan.</p>
+      <div className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-black font-montserrat tracking-tight mb-2">
+            Manajemen Pesanan
+          </h1>
+          <p className="text-muted-foreground">
+            Atur jadwal pengerjaan dan pantau status tagihan pelanggan.
+          </p>
+        </div>
+        <Link href="/dashboard/admin/orders/new">
+          <Button>
+            <PlusCircle className="w-5 h-5" />
+            Pesanan Offline
+          </Button>
+        </Link>
       </div>
       <AdminOrdersClient initialOrders={JSON.parse(JSON.stringify(orders))} />
     </div>
