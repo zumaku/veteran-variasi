@@ -60,6 +60,14 @@ npm run dev
 ```
 Buka [http://localhost:3000](http://localhost:3000) pada browser Anda untuk mencoba aplikasinya.
 
+### 5. Mendownload Pembaruan
+Jalankan perintah berikut untuk mendownload pembaruan dari repository:
+```bash
+git pull
+```
+
+Note: *Pastikan tidak ada perubahan kode di local untuk menghindari adanya konflik.*
+
 ## 🗂️ Struktur Utama Proyek
 - `app/`: Direktori utama pola Next.js App Router yang memuat seluruh pembuatan halaman dan API route (contoh: `/auth`, `/admin`, `/catalog`, `/dashboard`, `/checkout`).
 - `features/`: Kumpulan komponen dan logika yang dipisah berdasarkan fiturnya (contoh: `cart`, `orders`, `profile`, `garage`).
